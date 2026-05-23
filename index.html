@@ -282,7 +282,7 @@ function svgPlot(opts) {
 const MODULES = [
   { id: 'M1', name: '预备知识', desc: '函数与初等运算' },
   { id: 'M2', name: '极限与连续', desc: '微积分的基石' },
-  { id: 'M3', name: '导数', desc: '变化率与切线 · 部分上线' },
+  { id: 'M3', name: '导数', desc: '微积分的核心 · 7 节完整' },
   { id: 'M4', name: '导数的应用', desc: '即将开放…' },
   { id: 'M5', name: '积分', desc: '即将开放…' },
   { id: 'M6', name: '积分的应用', desc: '即将开放…' },
@@ -1188,6 +1188,408 @@ x = 0.01 →  x = 0.01    x² = 0.0001   x³ = 0.000001</pre>
       },
     ],
   },
+
+  {
+    id: 14, module: 'M3', title: '四则运算法则',
+    hook: '上节我们记熟了基本公式表——但实际函数往往是基本函数加减乘除拼出来的"组合体"，比如 $x^2 \\sin x$ 或 $\\dfrac{x+1}{x^2+2}$。这一节学这四种组合的求导规则。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">和差与常数倍——直觉规则</h3>
+        <p>这两条最简单：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          $$\\bigl[f(x) \\pm g(x)\\bigr]' = f'(x) \\pm g'(x)$$
+          $$\\bigl[c \\cdot f(x)\\bigr]' = c \\cdot f'(x) \\quad (c \\text{ 是常数})$$
+        </div>
+        <p>直觉：把函数想象成"两段独立的运动"。整体的变化率，就是各自变化率的和。常数倍同理——速度放大 $c$ 倍，速度的变化率也跟着放大 $c$ 倍。</p>
+        <p><strong>例 1</strong>：求 $f(x) = 3x^2 + \\sin x$ 的导数。</p>
+        <p>$f'(x) = (3x^2)' + (\\sin x)' = 3 \\cdot 2x + \\cos x = 6x + \\cos x$。</p>
+        <p>就这么直接——和差与常数倍可以"逐项处理"。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">乘积法则——容易记错的</h3>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          $$\\bigl[f(x) \\cdot g(x)\\bigr]' = f'(x) \\cdot g(x) + f(x) \\cdot g'(x)$$
+        </div>
+        <p>注意：<strong>不是 $f' \\cdot g'$</strong>！很多人会想当然写成"导数的乘积"，但那是错的。正确公式是<strong>"左导右不导 + 左不导右导"</strong>。</p>
+        <p>为什么是这样？想象一个矩形，长 $f$ 宽 $g$，面积是 $fg$。如果长增加 $\\Delta f$、宽增加 $\\Delta g$，面积变化主要来自两部分：长边方向的增量 $\\Delta f \\cdot g$ 和宽边方向的增量 $f \\cdot \\Delta g$（再加一个微小的 $\\Delta f \\cdot \\Delta g$，是二阶小量可忽略）。取极限就是公式。</p>
+        <p><strong>例 2</strong>：求 $f(x) = x^2 \\sin x$ 的导数。</p>
+        <p>设 $u = x^2$，$v = \\sin x$。则 $u' = 2x$，$v' = \\cos x$。</p>
+        <p>$f'(x) = u'v + uv' = 2x \\cdot \\sin x + x^2 \\cdot \\cos x = 2x \\sin x + x^2 \\cos x$。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">商法则——长得有点吓人</h3>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          $$\\left[\\frac{f(x)}{g(x)}\\right]' = \\frac{f'(x) \\cdot g(x) - f(x) \\cdot g'(x)}{[g(x)]^2}$$
+        </div>
+        <p>记忆口诀：<strong>"分子是导差，分母平方"</strong>。</p>
+        <ul>
+          <li>分子：上导 × 下 $-$ 上 × 下导（注意是<strong>减</strong>号，顺序不能反）</li>
+          <li>分母：原来的分母 $g(x)$ 平方</li>
+        </ul>
+        <p><strong>例 3</strong>：求 $f(x) = \\dfrac{\\sin x}{x}$ 的导数（$x \\neq 0$）。</p>
+        <p>分子 $= (\\sin x)' \\cdot x - \\sin x \\cdot (x)' = \\cos x \\cdot x - \\sin x \\cdot 1 = x \\cos x - \\sin x$。</p>
+        <p>分母 $= x^2$。</p>
+        <p>所以 $f'(x) = \\dfrac{x \\cos x - \\sin x}{x^2}$。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做几道</h3>
+        <p><strong>例 4</strong>：求 $f(x) = (x^2 + 1)(x^3 - 2x)$ 的导数。</p>
+        <p>用乘积法则。$u = x^2 + 1$，$v = x^3 - 2x$。$u' = 2x$，$v' = 3x^2 - 2$。</p>
+        <p>$f'(x) = u'v + uv' = 2x(x^3 - 2x) + (x^2 + 1)(3x^2 - 2)$。</p>
+        <p>展开化简：$= 2x^4 - 4x^2 + 3x^4 - 2x^2 + 3x^2 - 2 = 5x^4 - 3x^2 - 2$。</p>
+
+        <p style="margin-top:1.4em;"><strong>例 5</strong>：求 $f(x) = \\dfrac{e^x}{x}$ 的导数。</p>
+        <p>商法则。$u = e^x$，$v = x$。$u' = e^x$，$v' = 1$。</p>
+        <p>$f'(x) = \\dfrac{e^x \\cdot x - e^x \\cdot 1}{x^2} = \\dfrac{e^x(x - 1)}{x^2}$。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：乘积法则<strong>最常错</strong>——很多人会想当然写成 $f'g'$。用"左导右不导 + 左不导右导"的口诀避免。商法则的减号顺序也容易反——记住<strong>分子开头是"上导×下"</strong>就不会错。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$(x^3 + 2x + 1)\' = $',
+        answer: '3x^2+2',
+        accept: ['3x^2+2', '3x²+2', '3*x^2+2'],
+        hint: '和差法则：$(x^3)\' + (2x)\' + (1)\'$，每一项分别求导。',
+        solution: '$(x^3)\' = 3x^2$，$(2x)\' = 2$，$(1)\' = 0$（常数导数为 0）。相加：$3x^2 + 2$。',
+      },
+      {
+        type: 'fill',
+        q: '$(x^2 \\cdot e^x)\' = $（写成 "(...)e^x" 的形式）',
+        answer: '(2x+x^2)e^x',
+        accept: ['(2x+x^2)e^x', '(x^2+2x)e^x', '(x^2+2x)*e^x', '2xe^x+x^2e^x'],
+        hint: '乘积法则 $(uv)\' = u\'v + uv\'$。设 $u = x^2$, $v = e^x$，则 $u\' = 2x$, $v\' = e^x$。',
+        solution: '$(x^2 e^x)\' = 2x \\cdot e^x + x^2 \\cdot e^x = (2x + x^2)e^x$。',
+      },
+      {
+        type: 'mc',
+        q: '$\\left(\\dfrac{x}{x^2 + 1}\\right)\' = $？',
+        options: [
+          '$\\dfrac{1}{2x}$',
+          '$\\dfrac{1 - x^2}{(x^2 + 1)^2}$',
+          '$\\dfrac{2x^2 + 1}{(x^2 + 1)^2}$',
+          '$\\dfrac{x^2 + 1 - 2x^2}{x^2 + 1}$',
+        ],
+        answer: 1,
+        hint: '商法则：分子 $= (x)\' \\cdot (x^2+1) - x \\cdot (x^2+1)\'$，分母 $= (x^2+1)^2$。',
+        solution: '分子：$1 \\cdot (x^2+1) - x \\cdot 2x = x^2 + 1 - 2x^2 = 1 - x^2$。分母：$(x^2+1)^2$。结果 $\\dfrac{1 - x^2}{(x^2+1)^2}$。',
+      },
+    ],
+  },
+
+  {
+    id: 15, module: 'M3', title: '链式法则：剥洋葱',
+    hook: '这一节是整个微积分计算技巧里<strong>最关键</strong>的一条规则。掌握了链式法则，你几乎能求任何函数的导数；不会，那大多数"看起来复杂"的函数都束手无策。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">先回顾：复合函数</h3>
+        <p>L2 学过：复合函数就是"函数套函数"，记作 $f(g(x))$ 或 $(f \\circ g)(x)$，意思是"先用 $g$，再用 $f$"。</p>
+        <p>几个例子：</p>
+        <ul>
+          <li>$\\sin(x^2)$：外层 $f(u) = \\sin u$，内层 $g(x) = x^2$</li>
+          <li>$e^{2x + 1}$：外层 $f(u) = e^u$，内层 $g(x) = 2x + 1$</li>
+          <li>$\\ln(\\cos x)$：外层 $f(u) = \\ln u$，内层 $g(x) = \\cos x$</li>
+        </ul>
+        <p>要求这种"套娃函数"的导数，光凭基本公式表 + 四则法则<strong>不够用</strong>——必须有专门的规则。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">链式法则</h3>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          $$\\bigl[f(g(x))\\bigr]' = f'(g(x)) \\cdot g'(x)$$
+          <p style="margin-top:0.6em;margin-bottom:0;">用 Leibniz 记号更直观（设 $y = f(u)$，$u = g(x)$）：</p>
+          $$\\frac{dy}{dx} = \\frac{dy}{du} \\cdot \\frac{du}{dx}$$
+        </div>
+        <p>口诀：<strong>"外层的导数（保留内层不动）× 内层的导数"</strong>。像剥洋葱——从外到里一层层处理。</p>
+        <p>Leibniz 记号像分数相乘，这并非巧合——它把"$y$ 通过中间变量 $u$ 间接依赖 $x$"这一关系直接表达了出来。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做几道（详细推导）</h3>
+        <p><strong>例 1</strong>：求 $(\\sin(2x))'$。</p>
+        <p>识别结构：外层 $f(u) = \\sin u$，内层 $g(x) = 2x$。</p>
+        <ul>
+          <li>外层导数：$f'(u) = \\cos u$。代回 $u = 2x$，得 $\\cos(2x)$。</li>
+          <li>内层导数：$g'(x) = 2$。</li>
+        </ul>
+        <p>链式相乘：$(\\sin(2x))' = \\cos(2x) \\cdot 2 = 2\\cos(2x)$。</p>
+
+        <p style="margin-top:1.4em;"><strong>例 2</strong>：求 $(e^{x^2})'$。</p>
+        <p>外层 $f(u) = e^u$，内层 $g(x) = x^2$。</p>
+        <ul>
+          <li>外层导数：$f'(u) = e^u$。代回得 $e^{x^2}$。</li>
+          <li>内层导数：$g'(x) = 2x$。</li>
+        </ul>
+        <p>$(e^{x^2})' = e^{x^2} \\cdot 2x = 2x \\, e^{x^2}$。</p>
+
+        <p style="margin-top:1.4em;"><strong>例 3</strong>：求 $(\\ln(x^2 + 1))'$。</p>
+        <p>外层 $f(u) = \\ln u$，内层 $g(x) = x^2 + 1$。</p>
+        <ul>
+          <li>外层导数：$f'(u) = \\dfrac{1}{u}$，代回得 $\\dfrac{1}{x^2 + 1}$。</li>
+          <li>内层导数：$g'(x) = 2x$。</li>
+        </ul>
+        <p>$(\\ln(x^2 + 1))' = \\dfrac{1}{x^2 + 1} \\cdot 2x = \\dfrac{2x}{x^2 + 1}$。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">多层嵌套</h3>
+        <p>函数可以"三层套娃"以上——比如 $\\sin(e^{x^2})$。处理办法：从最外层开始，一层一层往里剥。</p>
+        <p><strong>例 4</strong>：求 $(\\sin(e^{x^2}))'$。</p>
+        <p>结构分析：</p>
+        <ul>
+          <li>最外层：$\\sin(\\cdot)$</li>
+          <li>中间层：$e^{(\\cdot)}$</li>
+          <li>最内层：$x^2$</li>
+        </ul>
+        <p>从外到内逐层求导（每层都保留内部不动）：</p>
+        <ul>
+          <li>最外层 $\\sin$ 导出：$\\cos(e^{x^2})$</li>
+          <li>中间层 $e^u$ 导出：$e^{x^2}$</li>
+          <li>最内层 $x^2$ 导出：$2x$</li>
+        </ul>
+        <p>三个连乘：$(\\sin(e^{x^2}))' = \\cos(e^{x^2}) \\cdot e^{x^2} \\cdot 2x = 2x \\, e^{x^2} \\cos(e^{x^2})$。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">和其他法则联合</h3>
+        <p>链式法则经常和四则法则配合用。比如 $(x^2 \\sin(3x))'$ 既是乘积、里面又有复合：</p>
+        <ul>
+          <li>外层是乘积法则：$u\' v + u v\'$，其中 $u = x^2$，$v = \\sin(3x)$</li>
+          <li>$u\' = 2x$</li>
+          <li>$v\'$ 用链式：外 $\\sin$ 导出 $\\cos(3x)$，内 $3x$ 导出 $3$，得 $v\' = 3\\cos(3x)$</li>
+          <li>合起来：$2x \\cdot \\sin(3x) + x^2 \\cdot 3\\cos(3x) = 2x\\sin(3x) + 3x^2\\cos(3x)$</li>
+        </ul>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：链式法则是<strong>练出来的</strong>能力——读 10 次不如做 5 道题。看到复合函数，先停下来识别"外层是什么、内层是什么"。多层嵌套时，从外到内，机械地按"外导（保留内）× 内导"一层层处理。配合 Leibniz 记号 $\\dfrac{dy}{du} \\cdot \\dfrac{du}{dx}$，更不容易出错。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$(\\sin(3x))\' = $',
+        answer: '3cos(3x)',
+        accept: ['3cos(3x)', '3*cos(3x)', '3cos3x'],
+        hint: '外层 $\\sin u$ 导出 $\\cos u$（保留内层 $3x$），内层 $3x$ 导出 $3$。链式相乘。',
+        solution: '外导：$\\cos(3x)$；内导：$3$。相乘：$\\cos(3x) \\cdot 3 = 3\\cos(3x)$。',
+      },
+      {
+        type: 'fill',
+        q: '$(e^{2x})\' = $',
+        answer: '2e^(2x)',
+        accept: ['2e^(2x)', '2e^2x', '2*e^(2x)', '2*e^2x'],
+        hint: '外层 $e^u$ 导出 $e^u$（自身），代回 $u = 2x$；内层 $2x$ 导出 $2$。',
+        solution: '外导：$e^{2x}$；内导：$2$。相乘：$2 e^{2x}$。',
+      },
+      {
+        type: 'mc',
+        q: '$(\\ln(x^2))\' = $？',
+        options: [
+          '$\\dfrac{1}{x^2}$',
+          '$\\dfrac{2x}{x^2} = \\dfrac{2}{x}$',
+          '$\\dfrac{1}{2x}$',
+          '$2x \\ln x$',
+        ],
+        answer: 1,
+        hint: '外层 $\\ln u$ 导出 $\\dfrac{1}{u}$（代回 $u = x^2$）；内层 $x^2$ 导出 $2x$。',
+        solution: '$\\dfrac{1}{x^2} \\cdot 2x = \\dfrac{2x}{x^2} = \\dfrac{2}{x}$。',
+      },
+    ],
+  },
+
+  {
+    id: 16, module: 'M3', title: '隐函数与参数方程求导',
+    hook: '之前所有函数都长 $y = f(x)$ 的样——给 $x$ 直接算 $y$。但有时候 $y$ 藏在方程里（圆 $x^2 + y^2 = 1$），或者由第三个变量控制（$x = \\cos t,\\, y = \\sin t$）。这一节学这两种情况怎么求导。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">什么是隐函数</h3>
+        <p><strong>显函数</strong>：$y = f(x)$，给 $x$ 直接算 $y$，如 $y = x^2 + 1$。</p>
+        <p><strong>隐函数</strong>：$y$ 没有显式表达式，只通过方程和 $x$ 关联，如 $x^2 + y^2 = 1$（单位圆）。</p>
+        <p>圆上每个 $x \\in (-1, 1)$ 实际对应<strong>两个</strong> $y$（上半圆和下半圆），所以严格说"圆"不是单值函数。但<strong>局部</strong>看，每一段都可以视为 $y$ 关于 $x$ 的函数——只是写不出闭合公式罢了。</p>
+        <p>我们想求曲线上某点的切线斜率 $\\dfrac{dy}{dx}$——但 $y$ 都没显式表达，怎么求导？</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">隐函数求导：对方程两边求导</h3>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          <strong>做法</strong>：方程两边都对 $x$ 求导。<strong>关键</strong>：把 $y$ 当成 $x$ 的函数——求 $y$ 的某个函数（比如 $y^2$）的导数时，要用<strong>链式法则</strong>。
+        </div>
+        <p>具体说：</p>
+        <ul>
+          <li>$(y^2)' = 2y \\cdot y'$（外层 $u^2$ 导出 $2u$，内层 $y$ 对 $x$ 求导是 $y'$）</li>
+          <li>$(\\sin y)' = \\cos y \\cdot y'$</li>
+          <li>$(e^y)' = e^y \\cdot y'$</li>
+        </ul>
+        <p>注意每一项后面都跟个 $y'$——这是链式法则在起作用。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做一道（圆）</h3>
+        <p>求 $x^2 + y^2 = 1$ 的 $\\dfrac{dy}{dx}$。</p>
+        <p>第一步，两边对 $x$ 求导：</p>
+        <p>$$(x^2)' + (y^2)' = (1)'$$</p>
+        <p>第二步，每项分别处理：</p>
+        <ul>
+          <li>$(x^2)' = 2x$</li>
+          <li>$(y^2)' = 2y \\cdot y'$（链式法则！$y$ 是 $x$ 的函数）</li>
+          <li>$(1)' = 0$</li>
+        </ul>
+        <p>合起来：$2x + 2y \\cdot y' = 0$。</p>
+        <p>第三步，解 $y'$：</p>
+        <p>$$y' = -\\frac{x}{y}.$$</p>
+        <p><strong>意义</strong>：圆上点 $(x, y)$ 处的切线斜率是 $-\\dfrac{x}{y}$。验证一下：点 $(0, 1)$（最上方）斜率 $0$（水平切线，对！）；点 $(1, 0)$（最右）分母为 0 → 斜率无穷大（垂直切线，对！）。</p>
+      ` },
+      { type: 'viz', id: 'viz-l16', label: '拖动 θ 看圆上不同点的切线' },
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">复杂一点的例题</h3>
+        <p>求 $xy + \\sin y = 1$ 的 $\\dfrac{dy}{dx}$。</p>
+        <p>两边对 $x$ 求导。注意 $xy$ 要用<strong>乘积法则</strong>：</p>
+        <ul>
+          <li>$(xy)' = (x)' \\cdot y + x \\cdot (y)' = y + x \\cdot y'$</li>
+          <li>$(\\sin y)' = \\cos y \\cdot y'$（链式）</li>
+          <li>$(1)' = 0$</li>
+        </ul>
+        <p>合起来：$y + x \\cdot y' + \\cos y \\cdot y' = 0$。</p>
+        <p>把含 $y'$ 的项归到一边：$y'(x + \\cos y) = -y$，解得 $y' = \\dfrac{-y}{x + \\cos y}$。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">参数方程求导</h3>
+        <p>第二种情形：$x$ 和 $y$ 都是某个第三变量（通常叫参数 $t$）的函数：</p>
+        <p>$$x = x(t), \\quad y = y(t).$$</p>
+        <p>例如圆的参数方程：$x = \\cos t,\\, y = \\sin t$（$t$ 是角度）。要求 $\\dfrac{dy}{dx}$ 怎么办？</p>
+        <p>用链式法则的 Leibniz 形式：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          $$\\frac{dy}{dx} = \\frac{dy/dt}{dx/dt}.$$
+        </div>
+        <p>直觉：$y$ 对 $t$ 的变化率，除以 $x$ 对 $t$ 的变化率。中间变量 $t$ 被消掉了。</p>
+        <p><strong>例</strong>：圆 $x = \\cos t,\\, y = \\sin t$。</p>
+        <ul>
+          <li>$\\dfrac{dx}{dt} = -\\sin t$</li>
+          <li>$\\dfrac{dy}{dt} = \\cos t$</li>
+        </ul>
+        <p>$\\dfrac{dy}{dx} = \\dfrac{\\cos t}{-\\sin t} = -\\cot t$。</p>
+        <p>验证和隐函数结果一致：在角度 $t$ 处 $x = \\cos t, y = \\sin t$，套 $-x/y = -\\cos t / \\sin t = -\\cot t$ ✓。两种方法殊途同归。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：隐函数求导的<strong>核心是链式法则</strong>——所有 $y$ 的函数求导都要乘 $y'$，最后把 $y'$ 解出来。参数方程则直接套 $\\dfrac{dy/dt}{dx/dt}$。两种方法在后续应用（相关变化率、曲线积分等）中会反复出现，必须熟练。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '由 $x^2 + y^2 = 25$ 求 $\\dfrac{dy}{dx} = $（用 $x, y$ 表示）',
+        answer: '-x/y',
+        accept: ['-x/y', '(-x)/y'],
+        hint: '两边对 $x$ 求导：$(x^2)\' + (y^2)\' = 0$。前者 $= 2x$，后者用链式 $= 2y \\cdot y\'$。解出 $y\'$。',
+        solution: '$2x + 2y \\cdot y\' = 0 \\Rightarrow y\' = -\\dfrac{x}{y}$。（注：和半径为 1 的圆形式相同，半径变化不影响斜率公式。）',
+      },
+      {
+        type: 'fill',
+        q: '$(y^3)\' = $（注意 $y$ 是 $x$ 的隐函数，用 $y\'$ 表示导数）',
+        answer: '3y^2y\'',
+        accept: ['3y^2y\'', '3y^2*y\'', '3y²y\'', '3*y^2*y\''],
+        hint: '链式法则：外层 $u^3$ 导出 $3u^2$，代回 $u = y$；内层 $y$ 对 $x$ 求导是 $y\'$。',
+        solution: '$(y^3)\' = 3y^2 \\cdot y\'$（链式法则）。',
+      },
+      {
+        type: 'fill',
+        q: '由参数方程 $x = t^2,\\, y = t^3$ 求 $\\dfrac{dy}{dx} = $（用 $t$ 表示）',
+        answer: '3t/2',
+        accept: ['3t/2', '(3t)/2', '3/2*t', '3/2t', '1.5t'],
+        hint: '套公式 $\\dfrac{dy}{dx} = \\dfrac{dy/dt}{dx/dt}$。先算 $\\dfrac{dx}{dt}$ 和 $\\dfrac{dy}{dt}$。',
+        solution: '$\\dfrac{dx}{dt} = 2t$，$\\dfrac{dy}{dt} = 3t^2$。所以 $\\dfrac{dy}{dx} = \\dfrac{3t^2}{2t} = \\dfrac{3t}{2}$。',
+      },
+    ],
+  },
+
+  {
+    id: 17, module: 'M3', title: '高阶导数',
+    hook: '导数本身也是个函数——既然是函数，就可以继续对它求导。这叫<strong>高阶导数</strong>。物理上你已经见过一连串：位移 → 速度 → 加速度 → 急动度。这一节把这种"导了再导"系统化。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">二阶导数</h3>
+        <p>函数 $f(x)$ 的导数 $f'(x)$ 仍是一个函数；对它再求一次导，得到的就是<strong>二阶导数</strong>，记作：</p>
+        <p>$$f''(x), \\quad \\frac{d^2 y}{d x^2}, \\quad \\frac{d^2 f}{d x^2}.$$</p>
+        <p><strong>例</strong>：$f(x) = x^3$。</p>
+        <ul>
+          <li>一阶：$f'(x) = 3x^2$</li>
+          <li>二阶：$f''(x) = (3x^2)' = 6x$</li>
+        </ul>
+        <p>就这么简单——把"求导"这个动作重复两次。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">更高阶</h3>
+        <p>类推下去：</p>
+        <p>$$f'''(x), \\quad f^{(4)}(x), \\quad f^{(5)}(x), \\, \\ldots, \\quad f^{(n)}(x).$$</p>
+        <p>三阶以前一般写 $f'''$（三撇），从第 4 阶开始用 $f^{(n)}$（圆括号内写数字，避免撇号太多看不清）。</p>
+        <p>Leibniz 记号同理：$\\dfrac{d^3 y}{d x^3}, \\dfrac{d^4 y}{d x^4}, \\ldots, \\dfrac{d^n y}{d x^n}$。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">几个值得记住的例子</h3>
+        <p><strong>多项式：阶数高到底就归零。</strong> $f(x) = x^4$：</p>
+        <ul>
+          <li>$f' = 4x^3$，$f'' = 12x^2$，$f''' = 24x$，$f^{(4)} = 24$，$f^{(5)} = 0$ → 之后全是 0</li>
+        </ul>
+        <p>规律：$x^n$ 的第 $n$ 阶导数 $= n!$（阶乘），从第 $n+1$ 阶开始全是 0。</p>
+
+        <p style="margin-top:1.4em;"><strong>$e^x$：所有高阶都是 $e^x$。</strong></p>
+        <p>$f^{(n)}(x) = e^x$ 对任意 $n$ 成立——这就是 $e^x$ 在微积分里的"超能力"。</p>
+
+        <p style="margin-top:1.4em;"><strong>$\\sin x$：4 阶一个周期。</strong></p>
+        <ul>
+          <li>$f = \\sin x$</li>
+          <li>$f' = \\cos x$</li>
+          <li>$f'' = -\\sin x$</li>
+          <li>$f''' = -\\cos x$</li>
+          <li>$f^{(4)} = \\sin x$（回到起点！）</li>
+        </ul>
+        <p>所以 $f^{(n)}$ 只要看 $n$ 除以 4 的余数就知道是哪个。</p>
+      ` },
+      { type: 'viz', id: 'viz-l17', label: 'sin 与它的前三阶导数：每条相对前一条向左平移 π/2' },
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">物理意义：导数的"导数链"</h3>
+        <p>把位移 $s(t)$ 关于时间求导，你会得到一串熟悉的物理量：</p>
+        <ul>
+          <li>$s(t)$ —— <strong>位移</strong>（位置）</li>
+          <li>$s'(t)$ —— <strong>速度</strong>（位置的变化率）</li>
+          <li>$s''(t)$ —— <strong>加速度</strong>（速度的变化率）</li>
+          <li>$s'''(t)$ —— <strong>急动度 jerk</strong>（加速度的变化率；过山车那种"猛地一晃"的感觉）</li>
+        </ul>
+        <p>所以加速度本质上就是"位移的二阶导数"——这在牛顿第二定律 $F = ma$ 里直接出现。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">几何意义：二阶导数与凹凸</h3>
+        <p>$f'$ 告诉你函数<strong>上升还是下降</strong>。$f''$ 告诉你函数<strong>凹向哪边</strong>：</p>
+        <ul>
+          <li>$f''(x) > 0$：图像<strong>凹向上</strong>（像一个碗 $\\cup$）</li>
+          <li>$f''(x) < 0$：图像<strong>凹向下</strong>（像一个盖 $\\cap$）</li>
+          <li>$f''(x) = 0$（且符号变化）：可能是<strong>拐点</strong>（凹凸性切换）</li>
+        </ul>
+        <p>这些是 M4（导数的应用）会专门讲的——目前知道有这回事就行。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：高阶导数计算上没有新难点——就是"求导"重复几次。但<strong>记号</strong>要分清：$f''$ 是二阶导数；$(f')^2$ 是一阶导数的平方，两者完全不同。$\\sin/\\cos$ 的周期循环和 $e^x$ 自身循环是<strong>必须背的</strong>，后面 M5 微分方程会反复用。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$f(x) = x^4 - 2x + 3$，则 $f\'\'(x) = $',
+        answer: '12x^2',
+        accept: ['12x^2', '12x²', '12*x^2'],
+        hint: '先求 $f\'(x)$ 再对它求一次导。$f\'(x) = 4x^3 - 2$，再求导得？',
+        solution: '$f\'(x) = 4x^3 - 2$。$f\'\'(x) = (4x^3 - 2)\' = 12x^2$（常数 $-2$ 导数为 0）。',
+      },
+      {
+        type: 'fill',
+        q: '$f(x) = \\sin x$，则 $f^{(4)}(x) = $（注意是<strong>四阶</strong>导数）',
+        answer: 'sin x',
+        accept: ['sinx', 'sin(x)', 'sin x', '\\sin x'],
+        hint: '逐步求导：$f\' = \\cos x$，$f\'\' = -\\sin x$，$f\'\'\' = -\\cos x$，再导一次回到？',
+        solution: '$\\sin \\to \\cos \\to -\\sin \\to -\\cos \\to \\sin$。四阶导数回到 $\\sin x$。',
+      },
+      {
+        type: 'mc',
+        q: '$f(x) = e^x$ 的 100 阶导数 $f^{(100)}(x) = $？',
+        options: [
+          '$0$（高阶归零）',
+          '$100 \\cdot e^x$',
+          '$e^x$',
+          '$e^{100 x}$',
+        ],
+        answer: 2,
+        hint: '$e^x$ 求一次导是什么？两次呢？',
+        solution: '$(e^x)\' = e^x$（"自身就是自身的导数"）。每求一次导都不变，所以任意阶导数都还是 $e^x$。',
+      },
+    ],
+  },
 ];
 
 // ---------- Visualizations ----------
@@ -1453,6 +1855,52 @@ function renderViz(id, container) {
       container.querySelector('input[type=range]').oninput = e => { x0 = parseFloat(e.target.value); draw(); };
       draw();
     },
+    'viz-l16': () => {
+      let theta = Math.PI / 6;
+      const draw = () => {
+        const cx = Math.cos(theta);
+        const cy = Math.sin(theta);
+        const slope = Math.abs(cy) < 0.02 ? null : -cx / cy;
+        const fns = [
+          {fn: x => Math.abs(x) <= 1 ? Math.sqrt(1 - x*x) : NaN, color: '#2c4a7a', label: 'x² + y² = 1'},
+          {fn: x => Math.abs(x) <= 1 ? -Math.sqrt(1 - x*x) : NaN, color: '#2c4a7a'},
+        ];
+        if (slope !== null) fns.push({fn: x => slope * (x - cx) + cy, color: '#b04030', label: '切线 (斜率 ' + slope.toFixed(2) + ')'});
+        const svg = svgPlot({
+          fn: fns,
+          xMin: -1.8, xMax: 1.8, yMin: -1.8, yMax: 1.8,
+          points: [{x: cx, y: cy, color: '#b04030'}],
+          width: 360, height: 360,
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        const slopeStr = slope === null ? '±∞（垂直切线）' : slope.toFixed(3);
+        container.querySelector('.viz-readout').innerHTML =
+          `点 (x, y) = (${cx.toFixed(2)}, ${cy.toFixed(2)}) &nbsp;|&nbsp; 切线斜率 = -x/y = <strong>${slopeStr}</strong>`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg" style="display:flex;justify-content:center;"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">圆上角度 θ:</span>
+          <input type="range" min="0" max="6.28" step="0.04" value="${theta}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>`;
+      container.querySelector('input').oninput = e => { theta = parseFloat(e.target.value); draw(); };
+      draw();
+    },
+    'viz-l17': () => {
+      const svg = svgPlot({
+        fn: [
+          {fn: x =>  Math.sin(x), color: '#2c4a7a', label: 'f = sin x'},
+          {fn: x =>  Math.cos(x), color: '#b04030', label: "f′ = cos x"},
+          {fn: x => -Math.sin(x), color: '#2f7a4d', label: "f″ = -sin x"},
+          {fn: x => -Math.cos(x), color: '#c89860', label: "f‴ = -cos x"},
+        ],
+        xMin: -0.5, xMax: 7,
+        yMin: -1.4, yMax: 1.4,
+      });
+      container.innerHTML = `<div class="viz-svg">${svg}</div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;line-height:1.5;">sin 的高阶导数 4 阶一个周期。注意每条曲线相对前一条「向左平移 π/2」——这就是"求导 = 相位前移 90°"的几何对应。</p>`;
+    },
   };
   if (renderers[id]) renderers[id]();
   else container.innerHTML = '<p style="color:#888;font-size:0.85em;">（可视化加载中…）</p>';
@@ -1523,7 +1971,7 @@ function renderNav() {
   const doneCount = state.done.length;
   const total = LESSONS.length; // 10 so far
   document.getElementById('progress-summary').innerHTML =
-    `已完成 <strong>${doneCount}</strong> / ${total} 节 · M1–M2 完整 · M3 前 3 节`;
+    `已完成 <strong>${doneCount}</strong> / ${total} 节 · M1 + M2 + M3 全部上线`;
 }
 
 function renderLesson(id) {
