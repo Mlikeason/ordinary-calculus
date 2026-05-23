@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>一个普通人的微积分</title>
+<meta name="description" content="一个普通人的微积分 · 由浅入深，36 节课配交互可视化与练习提示。" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="微积分" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="theme-color" content="#2c4a7a" />
+
+<!-- Tailwind Play CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- KaTeX -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="window.__katexReady = true; renderAllMath();"></script>
+
+<style>
+  :root {
+    --bg: #faf8f5;
+    --paper: #ffffff;
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --line: #e8e4dd;
+    --accent: #2c4a7a;
+    --accent-soft: #e8eef7;
+    --good: #2f7a4d;
+    --good-soft: #e6f2eb;
+    --bad: #b04030;
+    --bad-soft: #f8e8e4;
+  }
+  html, body { background: var(--bg); color: var(--ink); }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
+                 "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.7;
+  }
+  .serif {
+    font-family: "Source Serif 4", "Source Serif Pro", "Songti SC", Georgia, serif;
+    font-feature-settings: "lnum";
+  }
+  .prose-body { max-width: 68ch; }
+  .prose-body p { margin-bottom: 1em; color: var(--ink); }
+  .prose-body ul { list-style: disc; padding-left: 1.5em; margin-bottom: 1em; }
+  .prose-body ul li { margin-bottom: 0.35em; }
+  .prose-body strong { font-weight: 600; }
+  .lesson-card { background: var(--paper); border: 1px solid var(--line); }
+  .nav-item { transition: background-color 120ms ease, color 120ms ease; }
+  .nav-item:hover { background: var(--accent-soft); }
+  .nav-active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .nav-done::after {
+    content: "✓"; color: var(--good); margin-left: 0.5em; font-weight: 700;
+  }
+  .katex { font-size: 1.05em; }
+  .katex-display { margin: 1em 0; }
+
+  /* Exercise styles */
+  .ex-option {
+    border: 1px solid var(--line); background: var(--paper);
+    transition: all 120ms ease;
+  }
+  .ex-option:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .ex-option.correct { border-color: var(--good); background: var(--good-soft); }
+  .ex-option.wrong { border-color: var(--bad); background: var(--bad-soft); }
+  .ex-option.selected { border-color: var(--accent); }
+
+  .fill-input {
+    border: 1px solid var(--line); background: var(--paper);
+    padding: 0.4em 0.6em; border-radius: 6px; width: 9em;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  .fill-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .fill-input.wrong { border-color: var(--bad); background: var(--bad-soft); }
+
+  .solution-block {
+    background: var(--accent-soft); border-left: 3px solid var(--accent);
+    padding: 0.75em 1em; margin-top: 0.75em; border-radius: 4px;
+  }
+  .hint-block {
+    background: #fdf6ec; border-left: 3px solid #c89860;
+    padding: 0.6em 0.9em; margin-top: 0.6em; margin-bottom: 0.6em;
+    border-radius: 4px; font-size: 0.93em; color: #5a4a2e;
+  }
+  .ex-hint-btn {
+    background: none; border: none; padding: 0;
+    color: var(--muted); font-size: 0.8em;
+    text-decoration: underline; cursor: pointer;
+  }
+  .ex-hint-btn:hover { color: var(--accent); }
+
+  /* Visualization */
+  .viz-wrap {
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 8px; padding: 1em; margin: 1.2em 0;
+  }
+  .viz-controls {
+    display: flex; flex-wrap: wrap; gap: 0.5em; margin-top: 0.8em; align-items: center;
+  }
+  .viz-controls button {
+    border: 1px solid var(--line); background: var(--paper);
+    padding: 0.3em 0.75em; border-radius: 6px; font-size: 0.85em;
+  }
+  .viz-controls button.active {
+    background: var(--accent); color: white; border-color: var(--accent);
+  }
+  .viz-controls input[type="range"] { flex: 1; min-width: 120px; }
+
+  /* Mobile drawer */
+  @media (max-width: 768px) {
+    .sidebar-drawer {
+      position: fixed; inset: 0 30% 0 0; background: var(--paper);
+      box-shadow: 4px 0 24px rgba(0,0,0,0.1); z-index: 50;
+      transform: translateX(-100%); transition: transform 220ms ease;
+      overflow-y: auto;
+    }
+    .sidebar-drawer.open { transform: translateX(0); }
+    .drawer-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 49;
+      opacity: 0; pointer-events: none; transition: opacity 220ms ease;
+    }
+    .drawer-backdrop.open { opacity: 1; pointer-events: auto; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #d4cec3; border-radius: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- Mobile header -->
+<header class="md:hidden sticky top-0 z-30 bg-white border-b border-[var(--line)] px-4 py-3 flex items-center gap-3">
+  <button id="menu-btn" class="p-1" aria-label="目录">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+  <div class="serif text-lg font-semibold">一个普通人的微积分</div>
+</header>
+
+<div class="drawer-backdrop md:hidden" id="drawer-backdrop"></div>
+
+<div class="flex">
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar-drawer md:sidebar-static md:w-72 lg:w-80 md:sticky md:top-0 md:h-screen md:border-r md:border-[var(--line)] md:bg-[var(--paper)] flex-shrink-0 overflow-y-auto"
+         style="--sidebar-static-static:true;">
+    <div class="p-6">
+      <div class="text-xs text-[var(--muted)] tracking-wide mb-1">一个普通人的</div>
+      <div class="serif text-3xl font-semibold leading-tight mb-1">微积分</div>
+      <div class="text-sm text-[var(--muted)] mb-6">由浅入深 · 36 节</div>
+      <div id="progress-summary" class="text-xs text-[var(--muted)] mb-4"></div>
+      <nav id="course-nav" class="space-y-4 text-sm"></nav>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="flex-1 min-w-0">
+    <div class="max-w-3xl mx-auto px-5 md:px-10 py-8 md:py-14">
+      <div id="lesson-view"></div>
+
+      <!-- Prev/Next nav -->
+      <div class="flex items-center justify-between mt-12 pt-6 border-t border-[var(--line)] text-sm">
+        <button id="prev-btn" class="text-[var(--accent)] hover:underline disabled:opacity-30 disabled:no-underline">← 上一节</button>
+        <button id="next-btn" class="text-[var(--accent)] hover:underline disabled:opacity-30 disabled:no-underline">下一节 →</button>
+      </div>
+
+      <footer class="mt-16 text-xs text-[var(--muted)] text-center">
+        进度自动保存于本地浏览器 · M 的自学计划 · 2026
+      </footer>
+    </div>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   微积分自学 web app · 单文件实现
+   ============================================================ */
+
+// ---------- SVG Function Plotter Utility ----------
+function svgPlot(opts) {
+  const {
+    fn,                       // function or array of {fn, color, dashed, label}
+    xMin = -5, xMax = 5,
+    yMin = -5, yMax = 5,
+    width = 560, height = 320,
+    samples = 400,
+    points = [],              // [{x, y, color, hollow, label}]
+    extras = [],              // raw SVG fragments
+    title = '',
+    axisLabels = {x: 'x', y: 'y'},
+  } = opts;
+
+  const padL = 38, padR = 14, padT = 14, padB = 28;
+  const plotW = width - padL - padR;
+  const plotH = height - padT - padB;
+  const sx = x => padL + ((x - xMin) / (xMax - xMin)) * plotW;
+  const sy = y => padT + (1 - (y - yMin) / (yMax - yMin)) * plotH;
+
+  const fns = Array.isArray(fn) ? fn : (fn ? [{fn, color: '#2c4a7a'}] : []);
+
+  // Grid
+  let grid = '';
+  for (let gx = Math.ceil(xMin); gx <= Math.floor(xMax); gx++) {
+    const x = sx(gx);
+    grid += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT + plotH}" stroke="#eee" stroke-width="1"/>`;
+    if (gx !== 0) grid += `<text x="${x}" y="${padT + plotH + 14}" font-size="10" fill="#888" text-anchor="middle">${gx}</text>`;
+  }
+  for (let gy = Math.ceil(yMin); gy <= Math.floor(yMax); gy++) {
+    const y = sy(gy);
+    grid += `<line x1="${padL}" y1="${y}" x2="${padL + plotW}" y2="${y}" stroke="#eee" stroke-width="1"/>`;
+    if (gy !== 0) grid += `<text x="${padL - 4}" y="${y + 3}" font-size="10" fill="#888" text-anchor="end">${gy}</text>`;
+  }
+
+  // Axes
+  const x0 = (0 >= xMin && 0 <= xMax) ? sx(0) : null;
+  const y0 = (0 >= yMin && 0 <= yMax) ? sy(0) : null;
+  let axes = '';
+  if (y0 !== null) axes += `<line x1="${padL}" y1="${y0}" x2="${padL + plotW}" y2="${y0}" stroke="#666" stroke-width="1"/>`;
+  if (x0 !== null) axes += `<line x1="${x0}" y1="${padT}" x2="${x0}" y2="${padT + plotH}" stroke="#666" stroke-width="1"/>`;
+
+  // Function paths
+  let paths = '';
+  for (const f of fns) {
+    let d = '';
+    let prevValid = false;
+    for (let i = 0; i <= samples; i++) {
+      const x = xMin + (i / samples) * (xMax - xMin);
+      let y;
+      try { y = f.fn(x); } catch(e) { y = NaN; }
+      if (!isFinite(y)) { prevValid = false; continue; }
+      if (y < yMin - (yMax - yMin) || y > yMax + (yMax - yMin)) { prevValid = false; continue; }
+      const px = sx(x), py = sy(Math.max(yMin - 10, Math.min(yMax + 10, y)));
+      d += (prevValid ? ' L' : ' M') + px.toFixed(2) + ' ' + py.toFixed(2);
+      prevValid = true;
+    }
+    paths += `<path d="${d.trim()}" fill="none" stroke="${f.color || '#2c4a7a'}" stroke-width="${f.width || 2}" ${f.dashed ? 'stroke-dasharray="5 4"' : ''}/>`;
+  }
+
+  // Points
+  let pts = '';
+  for (const p of points) {
+    const px = sx(p.x), py = sy(p.y);
+    if (p.hollow) {
+      pts += `<circle cx="${px}" cy="${py}" r="5" fill="white" stroke="${p.color || '#2c4a7a'}" stroke-width="2"/>`;
+    } else {
+      pts += `<circle cx="${px}" cy="${py}" r="4.5" fill="${p.color || '#2c4a7a'}"/>`;
+    }
+    if (p.label) {
+      pts += `<text x="${px + 8}" y="${py - 8}" font-size="11" fill="${p.color || '#2c4a7a'}">${p.label}</text>`;
+    }
+  }
+
+  // Legend
+  let legend = '';
+  if (fns.some(f => f.label)) {
+    let lx = padL + 8, ly = padT + 14;
+    for (const f of fns) {
+      if (!f.label) continue;
+      legend += `<line x1="${lx}" y1="${ly}" x2="${lx + 18}" y2="${ly}" stroke="${f.color || '#2c4a7a'}" stroke-width="2" ${f.dashed ? 'stroke-dasharray="4 3"' : ''}/>`;
+      legend += `<text x="${lx + 24}" y="${ly + 4}" font-size="11" fill="#333">${f.label}</text>`;
+      ly += 16;
+    }
+  }
+
+  const titleEl = title ? `<text x="${width/2}" y="${padT - 2}" font-size="11" fill="#666" text-anchor="middle">${title}</text>` : '';
+
+  return `<svg viewBox="0 0 ${width} ${height}" width="100%" style="max-width:${width}px; display:block;" xmlns="http://www.w3.org/2000/svg">
+    ${grid}${axes}${paths}${extras.join('')}${pts}${legend}${titleEl}
+  </svg>`;
+}
+
+// ---------- Lessons Data ----------
+const MODULES = [
+  { id: 'M1', name: '预备知识', desc: '函数与初等运算' },
+  { id: 'M2', name: '极限与连续', desc: '微积分的基石' },
+  { id: 'M3', name: '导数', desc: '变化率与切线 · 部分上线' },
+  { id: 'M4', name: '导数的应用', desc: '即将开放…' },
+  { id: 'M5', name: '积分', desc: '即将开放…' },
+  { id: 'M6', name: '积分的应用', desc: '即将开放…' },
+];
+
+const LESSONS = [
+  // ============== M1 预备知识 ==============
+  {
+    id: 1, module: 'M1', title: '函数与图像',
+    hook: '函数是把"输入"映射到"输出"的规则。给它一个数，它还你另一个数。',
+    sections: [
+      { type: 'text', html: `
+        <p><strong>定义</strong>。函数 $f: A \\to B$ 是一个规则：对集合 $A$ 中的每个 $x$，唯一对应集合 $B$ 中的一个值 $f(x)$。$A$ 称为<strong>定义域</strong>，所有 $f(x)$ 的集合称为<strong>值域</strong>。</p>
+        <p><strong>图像</strong>。在坐标系中描出所有形如 $(x, f(x))$ 的点，连成的轨迹就是函数的图像。"竖线检验"：任何一条竖线和图像至多交于一点。</p>
+        <p>三类常见的初等函数：</p>
+        <ul>
+          <li>线性：$f(x) = ax + b$，图像是直线</li>
+          <li>二次：$f(x) = ax^2 + bx + c$，图像是抛物线</li>
+          <li>幂函数：$f(x) = x^n$（如 $x^3$、$\\sqrt{x} = x^{1/2}$）</li>
+        </ul>
+        <p><strong>定义域</strong>由两类限制决定：① 分母不能为零；② 偶次根号下要非负。例如 $f(x) = \\dfrac{1}{\\sqrt{x-1}}$ 要求 $x > 1$。</p>
+      `},
+      { type: 'viz', id: 'viz-l1', label: '可切换不同函数观察图像' },
+    ],
+    exercises: [
+      {
+        type: 'mc',
+        q: '函数 $f(x) = \\sqrt{x - 3}$ 的定义域是？',
+        options: ['$x > 0$', '$x \\geq 3$', '$x \\neq 3$', '$\\mathbb{R}$'],
+        answer: 1,
+        solution: '根号下要非负：$x - 3 \\geq 0 \\Rightarrow x \\geq 3$。',
+      },
+      {
+        type: 'fill',
+        q: '若 $f(x) = x^2 + 1$，则 $f(-2) = $',
+        answer: '5',
+        solution: '$f(-2) = (-2)^2 + 1 = 4 + 1 = 5$。',
+      },
+      {
+        type: 'mc',
+        q: '下列哪条曲线<strong>不是</strong>函数？',
+        options: ['$y = x^2$', '$y = \\pm\\sqrt{x}$（圆的右半）', '$y = \\sin x$', '$y = e^x$'],
+        answer: 1,
+        solution: '$y = \\pm\\sqrt{x}$ 对同一 $x$ 给出两个 $y$ 值，违反"唯一对应"。竖线检验也通不过。',
+      },
+    ],
+  },
+
+  {
+    id: 2, module: 'M1', title: '复合与反函数',
+    hook: '函数可以"套娃"，也可以"反过来用"。',
+    sections: [
+      { type: 'text', html: `
+        <p><strong>复合函数</strong>。先用 $g$ 再用 $f$，记作 $(f \\circ g)(x) = f(g(x))$。注意顺序——外层函数在左边。</p>
+        <p>例：$f(x) = 2x + 1$，$g(x) = x^2$，则 $(f \\circ g)(x) = 2x^2 + 1$，而 $(g \\circ f)(x) = (2x+1)^2$。两者通常不相等。</p>
+        <p><strong>反函数</strong>。若 $f$ 是一一对应（每个 $y$ 只对应一个 $x$），则存在 $f^{-1}$ 满足</p>
+        <p>$$f(f^{-1}(x)) = x, \\quad f^{-1}(f(x)) = x.$$</p>
+        <p><strong>求反函数三步</strong>：① 写 $y = f(x)$；② 解出 $x$ 用 $y$ 表示；③ 交换 $x, y$。</p>
+        <p>例：$f(x) = 2x + 1 \\Rightarrow y = 2x+1 \\Rightarrow x = \\dfrac{y-1}{2} \\Rightarrow f^{-1}(x) = \\dfrac{x-1}{2}$。</p>
+        <p><strong>几何性质</strong>：$f$ 与 $f^{-1}$ 的图像关于直线 $y = x$ 对称。</p>
+      `},
+      { type: 'viz', id: 'viz-l2', label: '观察 $f$ 与 $f^{-1}$ 关于 $y=x$ 对称' },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '若 $f(x) = x + 1$，$g(x) = x^2$，则 $f(g(2)) = $',
+        answer: '5',
+        solution: '$g(2) = 4$，$f(4) = 4 + 1 = 5$。',
+      },
+      {
+        type: 'fill',
+        q: '若 $f(x) = x^3$，则 $f^{-1}(8) = $',
+        answer: '2',
+        solution: '$f^{-1}(x) = \\sqrt[3]{x}$，所以 $f^{-1}(8) = 2$。',
+      },
+      {
+        type: 'mc',
+        q: '函数 $f(x) = 3x - 2$ 的反函数是？',
+        options: ['$\\dfrac{x+2}{3}$', '$\\dfrac{x-2}{3}$', '$3x + 2$', '$\\dfrac{1}{3x-2}$'],
+        answer: 0,
+        solution: '设 $y = 3x - 2$，解得 $x = \\dfrac{y+2}{3}$，故 $f^{-1}(x) = \\dfrac{x+2}{3}$。',
+      },
+    ],
+  },
+
+  {
+    id: 3, module: 'M1', title: '三角函数',
+    hook: '三角函数源于直角三角形的边长比，扩展到所有实数后变成"振荡"的函数。',
+    sections: [
+      { type: 'text', html: `
+        <p><strong>弧度制</strong>。一周 $= 2\\pi$ 弧度 $= 360°$。常用换算：$30° = \\dfrac{\\pi}{6}$，$45° = \\dfrac{\\pi}{4}$，$60° = \\dfrac{\\pi}{3}$，$90° = \\dfrac{\\pi}{2}$。</p>
+        <p><strong>单位圆定义</strong>。在单位圆上，从 $x$ 轴正向逆时针转角度 $\\theta$ 到达点 $(\\cos\\theta, \\sin\\theta)$。这把三角函数从直角三角形扩展到了任意实数。</p>
+        <p><strong>核心恒等式</strong>：</p>
+        <p>$$\\sin^2\\theta + \\cos^2\\theta = 1, \\quad \\tan\\theta = \\dfrac{\\sin\\theta}{\\cos\\theta}.$$</p>
+        <p><strong>必背特殊值</strong>：</p>
+        <ul>
+          <li>$\\sin 0 = 0$，$\\sin\\dfrac{\\pi}{6} = \\dfrac{1}{2}$，$\\sin\\dfrac{\\pi}{4} = \\dfrac{\\sqrt{2}}{2}$，$\\sin\\dfrac{\\pi}{3} = \\dfrac{\\sqrt{3}}{2}$，$\\sin\\dfrac{\\pi}{2} = 1$</li>
+          <li>$\\cos$ 在这些角的值反着排：$1, \\dfrac{\\sqrt{3}}{2}, \\dfrac{\\sqrt{2}}{2}, \\dfrac{1}{2}, 0$</li>
+        </ul>
+        <p><strong>周期性</strong>：$\\sin, \\cos$ 周期为 $2\\pi$；$\\tan$ 周期为 $\\pi$。</p>
+      `},
+      { type: 'viz', id: 'viz-l3', label: '拖动滑块：单位圆角度对应正弦曲线' },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$\\sin\\left(\\dfrac{\\pi}{6}\\right) = $（用小数或分数）',
+        answer: '1/2',
+        accept: ['0.5', '1/2'],
+        solution: '$30°$ 的正弦值是 $\\dfrac{1}{2}$。',
+      },
+      {
+        type: 'fill',
+        q: '$\\tan\\left(\\dfrac{\\pi}{4}\\right) = $',
+        answer: '1',
+        solution: '$\\tan\\dfrac{\\pi}{4} = \\dfrac{\\sin(\\pi/4)}{\\cos(\\pi/4)} = 1$。',
+      },
+      {
+        type: 'mc',
+        q: '$\\cos^2 x + \\sin^2 x$ 等于？',
+        options: ['$x^2$', '$1$', '$2x$', '取决于 $x$'],
+        answer: 1,
+        solution: '基本恒等式：单位圆上的点 $(\\cos x, \\sin x)$ 到原点距离为 1。',
+      },
+    ],
+  },
+
+  {
+    id: 4, module: 'M1', title: '指数与对数',
+    hook: '指数描述爆炸式增长，对数是它的"反操作"——问"增长了多少次"。',
+    sections: [
+      { type: 'text', html: `
+        <p><strong>指数</strong>。$a^x$ 其中 $a > 0, a \\neq 1$。运算性质：</p>
+        <p>$$a^{x+y} = a^x \\cdot a^y, \\quad (a^x)^y = a^{xy}, \\quad a^0 = 1.$$</p>
+        <p><strong>自然底数 $e$</strong>。$e \\approx 2.71828\\ldots$，是微积分中"最自然"的指数底。后面会看到，$\\dfrac{d}{dx}e^x = e^x$，自身就是自身的导数。</p>
+        <p><strong>对数</strong>。$\\log_a x = y \\iff a^y = x$。理解为"$a$ 要乘以自己多少次才得到 $x$"。</p>
+        <p>$\\ln x = \\log_e x$ 称为<strong>自然对数</strong>。</p>
+        <p><strong>对数运算性质</strong>（把乘法变加法）：</p>
+        <p>$$\\ln(xy) = \\ln x + \\ln y, \\quad \\ln\\dfrac{x}{y} = \\ln x - \\ln y, \\quad \\ln(x^n) = n\\ln x.$$</p>
+        <p><strong>关键关系</strong>：$e^x$ 与 $\\ln x$ 互为反函数，它们的图像关于 $y = x$ 对称。</p>
+      `},
+      { type: 'viz', id: 'viz-l4', label: '$e^x$ 与 $\\ln x$ 关于 $y=x$ 对称' },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$\\ln(e^3) = $',
+        answer: '3',
+        solution: '$\\ln(e^x) = x$（自然对数和指数是反函数），所以 $\\ln(e^3) = 3$。',
+      },
+      {
+        type: 'fill',
+        q: '$\\log_2 8 = $',
+        answer: '3',
+        solution: '$2^3 = 8$，所以 $\\log_2 8 = 3$。',
+      },
+      {
+        type: 'mc',
+        q: '$\\ln(2e^5)$ 等于？',
+        options: ['$\\ln 2 + 5$', '$5\\ln 2$', '$\\ln 2 \\cdot 5$', '$\\ln 10$'],
+        answer: 0,
+        solution: '$\\ln(2 e^5) = \\ln 2 + \\ln(e^5) = \\ln 2 + 5$。',
+      },
+    ],
+  },
+
+  // ============== M2 极限与连续 ==============
+  {
+    id: 5, module: 'M2', title: '极限的直观',
+    hook: '想象你开车，仪表盘显示 60 km/h。可时间一直在连续流逝——"此时此刻"的速度，到底是什么意思？这一节我们就来理解：怎么用数学语言谈论"瞬间"。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">一个看似简单的问题</h3>
+        <p>假设你从家出发，10 秒钟跑了 50 米。平均速度好算：</p>
+        <p>$$\\text{平均速度} = \\frac{50\\,\\text{米}}{10\\,\\text{秒}} = 5\\,\\text{米/秒}.$$</p>
+        <p>可如果我问："你在<strong>第 5 秒那一瞬间</strong>跑多快？"——按平均速度的公式直接套，会得到：</p>
+        <p>$$\\frac{0\\,\\text{米}}{0\\,\\text{秒}} = \\,?$$</p>
+        <p>瞬间没有时间，自然也没有距离。$\\dfrac{0}{0}$ 不知所云。<strong>微积分要解决的，就是这个"瞬间"的问题</strong>。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">"越靠越近"的窍门</h3>
+        <p>办法很朴素：不算"那一瞬间"，而是看一个<strong>越缩越小</strong>的时间窗口。</p>
+        <ul>
+          <li>第 5 秒 → 第 6 秒：算这 <strong>1 秒</strong>的平均速度</li>
+          <li>第 5 秒 → 第 5.1 秒：算这 <strong>0.1 秒</strong>的</li>
+          <li>第 5 秒 → 第 5.01 秒：算这 <strong>0.01 秒</strong>的……</li>
+        </ul>
+        <p>窗口越缩越短，算出来的平均速度会越来越靠近一个固定的数。<strong>那个数，就是第 5 秒的瞬时速度</strong>——窗口虽然永远缩不到 0，我们却能"看出"它要奔向哪里。</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          <strong>这就是极限</strong>：不是"<em>达到</em>"某个数，而是"<em>任意靠近</em>"某个数。重要的不是终点，而是奔赴的方向。
+        </div>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">用图像看极限</h3>
+        <p>下图画的是函数 $f(x) = \\dfrac{x^2 - 1}{x - 1}$。在 $x = 1$ 这一点，分母为 0，函数<strong>没有定义</strong>——图上那一处是个空心圆。</p>
+      ` },
+      { type: 'viz', id: 'viz-l5', label: '空心圆代表 $x=1$ 处无定义；但极限存在' },
+      { type: 'text', html: `
+        <p>但是看 $x = 1$ 的<strong>左右两侧</strong>：</p>
+        <ul>
+          <li>从左边：$x = 0.9 \\Rightarrow f = 1.9$；$x = 0.99 \\Rightarrow f = 1.99$；$x = 0.999 \\Rightarrow f = 1.999$……</li>
+          <li>从右边：$x = 1.1 \\Rightarrow f = 2.1$；$x = 1.01 \\Rightarrow f = 2.01$；$x = 1.001 \\Rightarrow f = 2.001$……</li>
+        </ul>
+        <p>两边都在"扑向"<strong> 2</strong>。这件事，数学语言写作：</p>
+        <p>$$\\lim_{x \\to 1}\\frac{x^2 - 1}{x - 1} = 2.$$</p>
+        <p>读法："当 $x$ 趋向 1 时，$f(x)$ 的极限等于 2。" 符号 $x \\to 1$ 念作"$x$ 趋于 1"，表示 $x$ 在不断靠近 1。</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          <strong>关键认识</strong>：极限和函数<strong>在那一点的值</strong>是两回事。这里 $f(1)$ 根本不存在，可极限依然是 2——极限只关心 $x$ 在 $a$ <strong>附近</strong>（但不等于 $a$）时的行为。
+        </div>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做一道</h3>
+        <p>来求 $\\lim\\limits_{x \\to 2}(3x + 1)$。</p>
+        <p><strong>怎么想</strong>：$3x + 1$ 是一条没有任何"洞"或"跳跃"的直线。当 $x$ 越来越靠近 2 时，$3x + 1$ 自然越来越靠近 $3 \\cdot 2 + 1 = 7$。</p>
+        <p><strong>结果</strong>：$\\lim\\limits_{x \\to 2}(3x + 1) = 7$。</p>
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：你熟悉的"光滑"函数——多项式、$\\sin, \\cos, e^x, \\ln$ 等——求极限时<strong>直接代入</strong>就行，因为它们没有间断、没有空洞。真正"值得用极限思考"的，往往是那些"代入后会出 $\\dfrac{0}{0}$ 或其他怪状"的情形。这种情形下一节会专门处理。
+        </div>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">从左边、从右边</h3>
+        <p>有些函数，从左边逼近和从右边逼近的结果<strong>不一样</strong>。看这个分段函数：</p>
+        <p>$$f(x) = \\begin{cases} 3, & x < 2 \\\\ 5, & x \\geq 2 \\end{cases}$$</p>
+        <p>它在 $x = 2$ 处"往上跳了一下"。两种逼近方式：</p>
+        <ul>
+          <li><strong>左极限</strong>：$x = 1.9, 1.99, 1.999, \\ldots$（从小于 2 的一侧），$f(x)$ 始终是 3。<br/>记作 $\\lim\\limits_{x \\to 2^-} f(x) = 3$，那个小 "$-$" 表示从左边。</li>
+          <li><strong>右极限</strong>：$x = 2.1, 2.01, 2.001, \\ldots$（从大于 2 的一侧），$f(x)$ 始终是 5。<br/>记作 $\\lim\\limits_{x \\to 2^+} f(x) = 5$。</li>
+        </ul>
+        <p>两边逼近到不同的数。这种情况下，我们说完整的极限 $\\lim\\limits_{x \\to 2} f(x)$ <strong>不存在</strong>。</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          <strong>判断原则</strong>：$\\lim\\limits_{x \\to a} f(x)$ 存在 $\\iff$ 左极限和右极限<strong>都存在且相等</strong>。少一个条件都不行。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$\\lim\\limits_{x \\to 3}(2x + 1) = $',
+        answer: '7',
+        hint: '这是个一次函数（直线），在 $\\mathbb{R}$ 上处处连续——直接代入 $x = 3$ 试试。',
+        solution: '线性函数处处连续，直接代入：$2 \\cdot 3 + 1 = 7$。',
+      },
+      {
+        type: 'fill',
+        q: '$\\lim\\limits_{x \\to 1}\\dfrac{x^2 - 1}{x - 1} = $',
+        answer: '2',
+        hint: '代入 $x = 1$ 会出 $\\dfrac{0}{0}$。分子 $x^2 - 1$ 怎么因式分解？里面藏着 $(x - 1)$ 吗？',
+        solution: '因式分解：$\\dfrac{(x-1)(x+1)}{x-1} = x+1$，代入 $x=1$ 得 $2$。',
+      },
+      {
+        type: 'mc',
+        q: '若 $\\lim\\limits_{x \\to a^-} f(x) = 3$ 而 $\\lim\\limits_{x \\to a^+} f(x) = 5$，则 $\\lim\\limits_{x \\to a} f(x)$？',
+        options: ['等于 $4$（取平均）', '等于 $3$', '等于 $5$', '不存在'],
+        answer: 3,
+        hint: '完整的极限存在 $\\iff$ <strong>左极限 = 右极限</strong>。这里满足这个条件吗？',
+        solution: '极限存在的充要条件是左右极限<strong>相等</strong>。这里左右极限不等，故极限不存在。',
+      },
+    ],
+  },
+
+  {
+    id: 6, module: 'M2', title: '极限的运算法则',
+    hook: '上一节我们看图、看趋势来感受极限。但每次都画图太累——其实极限对加减乘除都"守规矩"，多数情况可以像普通算术一样直接算出来。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">极限"懂规矩"</h3>
+        <p>设两个函数 $f(x), g(x)$ 在 $x \\to a$ 时分别趋于 $L$ 和 $M$。直觉上："把它们加起来"的趋势就该是 $L + M$；"把它们乘起来"的趋势就该是 $L \\cdot M$。极限就是这么"听话"：</p>
+        <p>$$\\lim_{x \\to a}\\bigl[f(x) \\pm g(x)\\bigr] = L \\pm M$$</p>
+        <p>$$\\lim_{x \\to a}\\bigl[f(x) \\cdot g(x)\\bigr] = L \\cdot M$$</p>
+        <p>$$\\lim_{x \\to a}\\frac{f(x)}{g(x)} = \\frac{L}{M} \\quad (\\text{要求 } M \\neq 0)$$</p>
+        <p>$$\\lim_{x \\to a}\\bigl[c \\cdot f(x)\\bigr] = c \\cdot L \\quad (c \\text{ 是常数})$$</p>
+        <p>这四条就是<strong>极限的运算法则</strong>。可以放心用。<strong>唯一的坑是除法那条要求 $M \\neq 0$</strong>——这正是 $\\dfrac{0}{0}$ 麻烦的根源。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">代入大法</h3>
+        <p>上面四条规则一个直接的推论：<strong>多项式可以直接代入求极限</strong>。举例：</p>
+        <p>$$\\lim_{x \\to 2}(x^3 - 3x + 1).$$</p>
+        <p>用法则拆开成 $\\lim x^3 - \\lim 3x + \\lim 1$，每一项都直接代入 $x = 2$：$8 - 6 + 1 = 3$。所以极限是 <strong>3</strong>。</p>
+        <p>同理，有理函数 $\\dfrac{P(x)}{Q(x)}$（多项式之比）当 $Q(a) \\neq 0$ 时也可以直接代入。例如 $\\lim\\limits_{x \\to 1}\\dfrac{x^2 + 2}{x + 3} = \\dfrac{1 + 2}{1 + 3} = \\dfrac{3}{4}$。</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          <strong>一句话口诀</strong>：能直接代入就直接代入。代入后只要不出问题（不是 $\\dfrac{0}{0}$、不是 $\\infty - \\infty$ 等"未定式"），那就是答案。
+        </div>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">遇到 $\\dfrac{0}{0}$ 怎么办？</h3>
+        <p>代入后得到 $\\dfrac{0}{0}$，意思是"分子分母同时趋于 0"。这种"双零打架"叫<strong>未定式</strong>——它不是答案，而是一个信号：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          <strong>分子和分母里藏着同一个"小因子"，可以约掉。</strong>
+        </div>
+        <p>三种常用招数把那个"小因子"挖出来：</p>
+        <ul>
+          <li><strong>因式分解</strong>：把分子分母拆成乘积形式，找到公共因子约掉。</li>
+          <li><strong>有理化</strong>：分子或分母含根号时，乘以共轭式（$\\sqrt{a} - \\sqrt{b}$ 配 $\\sqrt{a} + \\sqrt{b}$），把根号"拆开"。</li>
+          <li><strong>等价无穷小替换</strong>：把 $\\sin x, \\ln(1+x)$ 等替换成简单的 $x$（下一节专讲）。</li>
+        </ul>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做两道</h3>
+        <p><strong>例 1（因式分解）</strong>：求 $\\lim\\limits_{x \\to 3}\\dfrac{x^2 - 9}{x - 3}$。</p>
+        <p>第一步，先代入试一下：分子 $9 - 9 = 0$，分母 $3 - 3 = 0$——$\\dfrac{0}{0}$ 信号亮起。</p>
+        <p>第二步，挖公共因子。注意 $x^2 - 9 = (x-3)(x+3)$，正好含 $(x-3)$：</p>
+        <p>$$\\frac{(x-3)(x+3)}{x - 3} = x + 3 \\quad (\\text{当 } x \\neq 3).$$</p>
+        <p>第三步，现在代入就安全了：$\\lim\\limits_{x \\to 3}(x + 3) = 6$。<strong>答：6。</strong></p>
+        <p style="margin-top:1.4em;"><strong>例 2（有理化）</strong>：求 $\\lim\\limits_{x \\to 0}\\dfrac{\\sqrt{x + 4} - 2}{x}$。</p>
+        <p>第一步，代入：分子 $\\sqrt{4} - 2 = 0$，分母 $= 0$——又是 $\\dfrac{0}{0}$。</p>
+        <p>第二步，分子有根号，用共轭式 $\\sqrt{x+4} + 2$ 同乘分子分母：</p>
+        <p>$$\\frac{(\\sqrt{x+4} - 2)(\\sqrt{x+4} + 2)}{x(\\sqrt{x+4} + 2)} = \\frac{(x+4) - 4}{x(\\sqrt{x+4} + 2)} = \\frac{x}{x(\\sqrt{x+4} + 2)}.$$</p>
+        <p>（用了平方差公式 $(a-b)(a+b) = a^2 - b^2$。）</p>
+        <p>第三步，分子分母都有 $x$，约掉：$\\dfrac{1}{\\sqrt{x+4} + 2}$。代入 $x = 0$：$\\dfrac{1}{\\sqrt{4} + 2} = \\dfrac{1}{4}$。<strong>答：$\\dfrac{1}{4}$。</strong></p>
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：看到 $\\dfrac{0}{0}$ 不要慌。它在告诉你"分子分母里有同一个东西，约掉它就豁然开朗"。先找那个"东西"——可能是 $(x-a)$ 的多项式因子，可能藏在根号里需要有理化，也可能是 $\\sin x \\approx x$ 这种"等价"关系（下一节细讲）。
+        </div>
+      `},
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$\\lim\\limits_{x \\to 2}(x^3 - 3x) = $',
+        answer: '2',
+        hint: '这是多项式，没有任何"洞"或"跳"。代入大法即可。',
+        solution: '多项式直接代入：$2^3 - 3 \\cdot 2 = 8 - 6 = 2$。',
+      },
+      {
+        type: 'fill',
+        q: '$\\lim\\limits_{x \\to 3}\\dfrac{x^2 - 9}{x - 3} = $',
+        answer: '6',
+        hint: '代入 $x = 3$ 出 $\\dfrac{0}{0}$。$x^2 - 9$ 是平方差，能拆成 $(x - 3)(\\,?\\,)$ 的样子吗？',
+        solution: '$\\dfrac{(x-3)(x+3)}{x-3} = x + 3$，代入 $x=3$ 得 $6$。',
+      },
+      {
+        type: 'mc',
+        q: '$\\lim\\limits_{x \\to 0}\\dfrac{\\sqrt{x+4} - 2}{x}$ 等于？',
+        options: ['$0$', '$\\dfrac{1}{4}$', '$\\dfrac{1}{2}$', '不存在'],
+        answer: 1,
+        hint: '分子有根号——用<strong>有理化</strong>：分子分母同乘共轭式 $\\sqrt{x+4} + 2$。利用 $(a-b)(a+b) = a^2 - b^2$ 把根号"拆开"。',
+        solution: '分子有理化：$\\dfrac{(\\sqrt{x+4}-2)(\\sqrt{x+4}+2)}{x(\\sqrt{x+4}+2)} = \\dfrac{x}{x(\\sqrt{x+4}+2)} = \\dfrac{1}{\\sqrt{x+4}+2}$。代入 $x=0$ 得 $\\dfrac{1}{4}$。',
+      },
+    ],
+  },
+
+  {
+    id: 7, module: 'M2', title: '两个重要极限',
+    hook: '微积分有两个"基石极限"，必须烂熟于心。一个关于三角函数（"弧长 ≈ 弦长"的精确版），一个关于复利增长（自然底数 $e$ 的来源）。掌握它们后，大量看起来无从下手的极限都迎刃而解。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">第一极限：$\\sin x$ 和 $x$ 一样快</h3>
+        <p>$$\\lim_{x \\to 0}\\frac{\\sin x}{x} = 1.$$</p>
+        <p><strong>为什么是 1？</strong> 在单位圆上，角度 $x$（弧度）对应的弧长就是 $x$；而 $\\sin x$ 是从圆上那一点到 $x$ 轴的<strong>垂线长</strong>。当 $x$ 很小时，那一小段弧几乎就是直的，垂线和弧"几乎一样长"。所以比值越来越靠近 1。</p>
+      ` },
+      { type: 'viz', id: 'viz-l7', label: '观察 $\\sin x / x$ 在 $x=0$ 附近趋于 $1$' },
+      { type: 'text', html: `
+        <p>图上你能直接看到：函数在 $x = 0$ 处虽然 $\\dfrac{0}{0}$ 无定义（空心圆），但两侧都"扑向 1"。</p>
+        <p><strong>常用变形</strong>（背一下，但理解了上面，自己都能推出来）：</p>
+        <p>$$\\lim_{x \\to 0}\\frac{\\sin(kx)}{x} = k, \\quad \\lim_{x \\to 0}\\frac{\\tan x}{x} = 1, \\quad \\lim_{x \\to 0}\\frac{1 - \\cos x}{x^2} = \\frac{1}{2}.$$</p>
+
+        <p style="margin-top:1.2em;"><strong>一起做一道</strong>：求 $\\lim\\limits_{x \\to 0}\\dfrac{\\sin(5x)}{x}$。</p>
+        <p>核心想法：要凑出"$\\dfrac{\\sin \\square}{\\square}$"这个标准形式。分子是 $\\sin(5x)$，那"$\\square$"应该是 $5x$。所以：</p>
+        <p>$$\\frac{\\sin(5x)}{x} = \\frac{\\sin(5x)}{5x} \\cdot 5.$$</p>
+        <p>当 $x \\to 0$，$5x \\to 0$，括号里这部分 $\\to 1$。所以极限是 $1 \\cdot 5 = \\mathbf{5}$。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">第二极限：复利的极致就是 $e$</h3>
+        <p>$$\\lim_{x \\to \\infty}\\left(1 + \\frac{1}{x}\\right)^x = e \\approx 2.71828\\ldots$$</p>
+        <p><strong>这个 $e$ 是哪来的？</strong> 想象 100% 年利率，本金 1 块钱。</p>
+        <ul>
+          <li>一年算 1 次复利：年末 $\\left(1 + 1\\right)^1 = 2$ 块</li>
+          <li>一年算 2 次（半年滚一次）：$\\left(1 + \\tfrac{1}{2}\\right)^2 = 2.25$ 块</li>
+          <li>一年算 12 次（每月滚）：$\\left(1 + \\tfrac{1}{12}\\right)^{12} \\approx 2.613$ 块</li>
+          <li>一年算 365 次：$\\approx 2.7146$</li>
+          <li>一年算无穷多次（每一瞬间都滚）：极限 $= e \\approx 2.71828$ 块</li>
+        </ul>
+        <p>这就是<strong>连续复利</strong>的极致结果——$e$ 不是数学家凭空发明的，是这种自然过程算出来的。</p>
+        <p><strong>常用变形</strong>：</p>
+        <p>$$\\lim_{x \\to \\infty}\\left(1 + \\frac{k}{x}\\right)^x = e^k, \\quad \\lim_{x \\to 0}(1 + x)^{1/x} = e.$$</p>
+        <p>第二条只是把变量"翻个个儿"：让 $t = 1/x$，$x \\to \\infty \\Leftrightarrow t \\to 0$。</p>
+
+        <p style="margin-top:1.2em;"><strong>一起做一道</strong>：求 $\\lim\\limits_{x \\to \\infty}\\left(1 + \\dfrac{2}{x}\\right)^x$。</p>
+        <p>直接套上面 $k = 2$ 的变形，答案是 $e^2$。</p>
+        <p>不会套？自己推一遍：把括号写成 $\\left(1 + \\tfrac{2}{x}\\right)^x = \\left[\\left(1 + \\tfrac{2}{x}\\right)^{x/2}\\right]^2$。内层正好是 $(1 + \\tfrac{1}{x/2})^{x/2}$，当 $x \\to \\infty$ 时 $x/2 \\to \\infty$，内层 $\\to e$。所以总极限 $= e^2$。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>策略口诀</strong>：
+          <ul style="margin-top:0.5em;margin-bottom:0;">
+            <li>看到 $\\dfrac{\\sin \\square}{\\square}$、$\\dfrac{\\tan \\square}{\\square}$ —— 想<strong>第一极限</strong>，凑出"分子的 $\\square$ 和分母完全一样"。</li>
+            <li>看到 $(1 + \\text{小量})^{\\text{大量}}$，且小量 × 大量 $= k$ —— 想<strong>第二极限</strong>，答案是 $e^k$。</li>
+          </ul>
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$\\lim\\limits_{x \\to 0}\\dfrac{\\sin(5x)}{x} = $',
+        answer: '5',
+        hint: '凑成标准形式 $\\dfrac{\\sin \\square}{\\square}$。分子的 $\\square = 5x$，所以分母也凑成 $5x$：$\\dfrac{\\sin(5x)}{x} = \\dfrac{\\sin(5x)}{5x} \\cdot 5$。',
+        solution: '$\\dfrac{\\sin(5x)}{x} = 5 \\cdot \\dfrac{\\sin(5x)}{5x}$，括号内当 $x \\to 0$ 时 $5x \\to 0$，故极限为 $5 \\cdot 1 = 5$。',
+      },
+      {
+        type: 'fill',
+        q: '$\\lim\\limits_{x \\to 0}\\dfrac{\\sin(2x)}{\\sin(3x)} = $（用分数）',
+        answer: '2/3',
+        hint: '当 $x$ 很小时，$\\sin(2x) \\approx 2x$，$\\sin(3x) \\approx 3x$。直接替换试试。',
+        solution: '$\\dfrac{\\sin(2x)}{\\sin(3x)} = \\dfrac{\\sin(2x)/2x \\cdot 2x}{\\sin(3x)/3x \\cdot 3x} \\to \\dfrac{1 \\cdot 2}{1 \\cdot 3} = \\dfrac{2}{3}$。',
+      },
+      {
+        type: 'mc',
+        q: '$\\lim\\limits_{x \\to \\infty}\\left(1 + \\dfrac{2}{x}\\right)^x$ 等于？',
+        options: ['$1$', '$e$', '$e^2$', '$2e$'],
+        answer: 2,
+        hint: '这是第二极限的变形：$\\lim\\limits_{x \\to \\infty}\\left(1 + \\dfrac{k}{x}\\right)^x = e^k$。这里 $k$ 是几？',
+        solution: '用变形 $\\lim(1 + k/x)^x = e^k$，这里 $k = 2$，故为 $e^2$。',
+      },
+    ],
+  },
+
+  {
+    id: 8, module: 'M2', title: '无穷小与无穷大',
+    hook: '"接近 0" 不是只有一种速度——$x$ 和 $x^2$ 当 $x \\to 0$ 都趋于 0，但 $x^2$ 跑得快得多。学会比较"奔向 0 的速度"，能让一类原本要费一通因式分解的极限，一行就算出来。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">什么叫"无穷小"</h3>
+        <p>名字听起来很玄，定义其实平淡：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          <strong>无穷小</strong>：在某种"逼近过程"下极限为 $0$ 的变量。
+        </div>
+        <p>例如当 $x \\to 0$ 时，$x, \\sin x, 1 - \\cos x, e^x - 1, \\ln(1 + x)$ 都趋于 0——它们都是"$x \\to 0$ 时的无穷小"。</p>
+        <p>关键是：<strong>无穷小不是某个固定的小数</strong>，而是一个"正在变小"的变量。所以同样是无穷小，跑得有快有慢。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">比较"奔向 0"的速度</h3>
+        <p>把 $x, x^2, x^3$ 在 $x \\to 0$ 时的值列出来感受一下：</p>
+        <pre style="font-family:ui-monospace,monospace;font-size:0.88em;background:#f6f3ee;padding:0.8em 1em;border-radius:6px;line-height:1.6;overflow-x:auto;">x = 0.1  →  x = 0.1     x² = 0.01     x³ = 0.001
+x = 0.01 →  x = 0.01    x² = 0.0001   x³ = 0.000001</pre>
+        <p>显然 $x^2$ 比 $x$ 跑得快得多，$x^3$ 又比 $x^2$ 快。我们把这个"快慢关系"形式化。</p>
+        <p>设 $\\alpha, \\beta$ 都是 $x \\to a$ 时的无穷小，看比值 $\\dfrac{\\alpha}{\\beta}$ 的极限：</p>
+        <ul>
+          <li><strong>比值的极限 $= 0$</strong>：$\\alpha$ 跑得更快（更早消失）。称 <strong>$\\alpha$ 是 $\\beta$ 的高阶无穷小</strong>，记 $\\alpha = o(\\beta)$。例：$x^2 = o(x)$，因为 $\\dfrac{x^2}{x} = x \\to 0$。</li>
+          <li><strong>比值的极限 $=$ 非零常数</strong>：跑得一样快（差一个倍数）。叫<strong>同阶无穷小</strong>。</li>
+          <li><strong>比值的极限 $= 1$</strong>：跑得几乎一模一样。叫<strong>等价无穷小</strong>，记作 $\\alpha \\sim \\beta$。</li>
+        </ul>
+        <p>等价无穷小最有用——它告诉你"这两个东西在 $x \\to a$ 附近可以互换"。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">你的"等价工具箱"（$x \\to 0$ 时）</h3>
+        <p>下面这些等价关系会反复用到，建议熟记。它们都在说同一件事：<strong>当 $x$ 很小时，这些复杂函数"几乎等于"$x$（或简单的 $x^2/2$）</strong>。</p>
+        <p>$$\\sin x \\sim x, \\quad \\tan x \\sim x, \\quad \\arcsin x \\sim x, \\quad \\arctan x \\sim x,$$</p>
+        <p>$$\\ln(1+x) \\sim x, \\quad e^x - 1 \\sim x, \\quad 1 - \\cos x \\sim \\frac{x^2}{2}.$$</p>
+        <p>记忆诀窍：除了最后一个 $1 - \\cos x \\sim \\dfrac{x^2}{2}$（带平方和 $1/2$），其余的小函数都"等价于 $x$ 本身"。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">替换大法（和它的陷阱）</h3>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          <strong>规则</strong>：求极限时，等价无穷小可以在<strong>乘除式</strong>里自由替换。但<strong>加减式里不能直接换</strong>。
+        </div>
+        <p>为什么？乘除关注的是"比值"，等价无穷小的比值本来就是 1，替换前后比值不变。但加减关注的是"差值"，两个"接近 $x$"的东西相减，差异部分会被放大——替换会丢掉关键信息。这条规则违反了会算错。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做一道</h3>
+        <p>求 $\\lim\\limits_{x \\to 0}\\dfrac{\\sin(2x) \\cdot \\ln(1 + 3x)}{x^2}$。</p>
+        <p>第一步，<strong>判断能不能用替换大法</strong>。分子是两个东西相<strong>乘</strong>，分母是 $x^2$，整体是纯乘除——能用。</p>
+        <p>第二步，按工具箱换上去：$\\sin(2x) \\sim 2x$，$\\ln(1+3x) \\sim 3x$。</p>
+        <p>$$\\frac{2x \\cdot 3x}{x^2} = \\frac{6x^2}{x^2} = 6.$$</p>
+        <p><strong>答：6</strong>。一行解决，不需要因式分解或有理化。</p>
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：等价无穷小是处理 $\\dfrac{0}{0}$ 的<strong>最快武器</strong>，尤其当式子里有 $\\sin, \\ln, e^x - 1$ 这些函数时。先看式子是不是<strong>纯乘除</strong>——是就放心换；含加减项就小心一点（或者干脆退回因式分解 / 有理化）。
+        </div>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">顺便说一句无穷大</h3>
+        <p><strong>无穷大</strong>：极限为 $+\\infty$ 或 $-\\infty$ 的变量。如 $x \\to 0$ 时 $\\dfrac{1}{x}$，$x \\to \\infty$ 时 $x^2$。</p>
+        <p>无穷大和无穷小是<strong>倒数关系</strong>：若 $\\alpha$ 是无穷小（且非 0），则 $\\dfrac{1}{\\alpha}$ 是无穷大；反过来也成立。这一点在化简极限时常用——遇到 $\\dfrac{\\infty}{\\infty}$ 这种未定式，可以试着上下同除以最高次项，把它转成 $\\dfrac{0}{0}$ 或直接的数。</p>
+      `},
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$\\lim\\limits_{x \\to 0}\\dfrac{e^x - 1}{x} = $',
+        answer: '1',
+        hint: '查工具箱：$e^x - 1 \\sim x$（当 $x \\to 0$）。直接替换。',
+        solution: '由等价无穷小 $e^x - 1 \\sim x$，比值趋于 $1$。',
+      },
+      {
+        type: 'fill',
+        q: '$\\lim\\limits_{x \\to 0}\\dfrac{\\ln(1 + 3x)}{x} = $',
+        answer: '3',
+        hint: '工具箱里 $\\ln(1 + \\square) \\sim \\square$（当 $\\square \\to 0$）。这里 $\\square = 3x$。',
+        solution: '$\\ln(1+3x) \\sim 3x$，所以 $\\dfrac{\\ln(1+3x)}{x} \\to \\dfrac{3x}{x} = 3$。',
+      },
+      {
+        type: 'fill',
+        q: '$\\lim\\limits_{x \\to 0}\\dfrac{1 - \\cos x}{x \\sin x} = $（用分数）',
+        answer: '1/2',
+        hint: '式子是纯乘除——可以放心替换。$1 - \\cos x \\sim \\dfrac{x^2}{2}$，$\\sin x \\sim x$。',
+        solution: '$1 - \\cos x \\sim \\dfrac{x^2}{2}$，$\\sin x \\sim x$，原式 $\\to \\dfrac{x^2/2}{x \\cdot x} = \\dfrac{1}{2}$。',
+      },
+    ],
+  },
+
+  {
+    id: 9, module: 'M2', title: '连续性',
+    hook: '一句话定义：连续函数就是"画图时铅笔可以不抬起来"。简单得近乎乏味——但这正是它强大的地方，自然界绝大多数过程（运动、温度、流体）都是连续的。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">直觉先行</h3>
+        <p>看下图两个函数：</p>
+      ` },
+      { type: 'viz', id: 'viz-l9', label: '左：连续；右：在 $x=1$ 处跳跃' },
+      { type: 'text', html: `
+        <p>左边的抛物线，铅笔从左画到右，可以一笔到底，不需要离开纸面。右边的不行——画到 $x = 1$ 必须抬笔跳过去。这就是<strong>连续 vs 不连续</strong>的视觉区分。</p>
+        <p>三种"必须抬笔"的情形：</p>
+        <ul>
+          <li><strong>洞</strong>（hole）：图像在某一点缺一小块（如 $\\dfrac{\\sin x}{x}$ 在 $x = 0$）</li>
+          <li><strong>跳</strong>（jump）：图像从一个值瞬间跳到另一个值（如分段函数拼接处）</li>
+          <li><strong>炸</strong>（infinity）：函数飞到 $\\pm\\infty$（如 $\\dfrac{1}{x}$ 在 $x = 0$）</li>
+        </ul>
+        <p>除了这三种"事故"，其它地方函数都是连续的。下一节会专门给这三种事故分类命名。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">用数学语言写定义</h3>
+        <p>函数 $f$ 在点 $x = a$ <strong>连续</strong>，意思是：</p>
+        <p>$$\\lim_{x \\to a} f(x) = f(a).$$</p>
+        <p>这个一行等式背后藏着<strong>三个条件</strong>，缺一不可：</p>
+        <ul>
+          <li>① <strong>$f(a)$ 有定义</strong>——不能是"洞"</li>
+          <li>② <strong>$\\lim\\limits_{x \\to a} f(x)$ 存在</strong>（左右极限相等）——不能是"跳"或"炸"</li>
+          <li>③ <strong>两者相等</strong>——极限指向的那个值必须就是 $f(a)$</li>
+        </ul>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          <strong>记忆窍门</strong>：连续 = "极限值 = 函数值"。$x$ 越靠近 $a$，$f(x)$ 老老实实奔向 $f(a)$，没有任何意外。
+        </div>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">哪些函数一定连续</h3>
+        <p>好消息：你能用初等手段写出来的函数，几乎都是<strong>在自己的定义域内处处连续</strong>的。</p>
+        <ul>
+          <li>多项式（如 $x^3 - 2x + 1$）—— 处处连续</li>
+          <li>$\\sin x, \\cos x$ —— 处处连续</li>
+          <li>$e^x, a^x$ —— 处处连续；$\\ln x$ 在 $x > 0$ 处处连续</li>
+          <li>$\\tan x$ —— 在 $\\cos x \\neq 0$ 时连续</li>
+          <li>$\\sqrt{x}$ —— 在 $x \\geq 0$ 时连续</li>
+        </ul>
+        <p>而且<strong>连续函数的加减乘除（分母非零）和复合，结果还是连续的</strong>。所以像 $\\sin(x^2 + 1)$、$e^{\\cos x}$、$\\dfrac{x^2 + 1}{x^2 + 2}$ 都是处处连续。</p>
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>实用建议</strong>：找不连续点时，只盯四类"嫌疑点"：分母为 $0$、根号下变负、对数自变量 $\\leq 0$，以及<strong>分段函数的拼接处</strong>。其它地方默认连续，不必逐个验证。
+        </div>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做一道</h3>
+        <p>问题：若分段函数 $f(x) = \\begin{cases} x^2 + 1, & x \\leq 1 \\\\ ax - 1, & x > 1 \\end{cases}$ 在 $x = 1$ 处连续，求常数 $a$。</p>
+        <p>嫌疑点是拼接处 $x = 1$。按上面三条件逐一检查：</p>
+        <ul>
+          <li>① $f(1) = 1^2 + 1 = 2$（由上半段定义）—— ✓ 有定义</li>
+          <li>② <strong>左极限</strong>：$x$ 从小于 1 那侧逼近，用上半段公式，$\\lim\\limits_{x \\to 1^-}(x^2 + 1) = 2$。<br/><strong>右极限</strong>：$x$ 从大于 1 那侧逼近，用下半段公式，$\\lim\\limits_{x \\to 1^+}(ax - 1) = a - 1$。<br/>要让极限存在，必须<strong>左 = 右</strong>：$2 = a - 1 \\Rightarrow a = 3$。</li>
+          <li>③ 此时极限 $= 2$，正好等于 $f(1) = 2$ —— ✓</li>
+        </ul>
+        <p><strong>答：$a = 3$</strong>。</p>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'mc',
+        q: '$f(x) = \\dfrac{x^2 - 4}{x - 2}$ 在 $x = 2$ 处？',
+        options: ['连续', '不连续（无定义）', '连续，但极限不存在', '极限不存在'],
+        answer: 1,
+        hint: '$x = 2$ 时分母为 0——$f(2)$ 有定义吗？没定义就违反连续的<strong>第①条</strong>。（极限存在不存在，是另一个问题。）',
+        solution: '$x = 2$ 处分母为 $0$，$f(2)$ 无定义，故不连续。但 $\\lim\\limits_{x\\to 2} f(x) = \\lim(x+2) = 4$ 存在——这是"可去间断"。',
+      },
+      {
+        type: 'fill',
+        q: '若分段函数 $f(x) = \\begin{cases} x^2 + 1, & x \\leq 1 \\\\ ax - 1, & x > 1 \\end{cases}$ 在 $x = 1$ 处连续，则 $a = $',
+        answer: '3',
+        hint: '连续 = "<strong>左极限 = 右极限 = $f(1)$</strong>"。先算 $f(1)$（用上半段），再算左极限（也用上半段）和右极限（用下半段含 $a$），让三者相等。',
+        solution: '左极限 $= f(1) = 1^2+1 = 2$；右极限 $= \\lim\\limits_{x \\to 1^+}(ax-1) = a-1$。连续要求两者相等：$a - 1 = 2 \\Rightarrow a = 3$。',
+      },
+      {
+        type: 'mc',
+        q: '下列哪个函数在 $\\mathbb{R}$ 上<strong>处处</strong>连续？',
+        options: ['$\\tan x$', '$\\ln x$', '$e^x$', '$1/x$'],
+        answer: 2,
+        hint: '处处连续 = 整个 $\\mathbb{R}$ 都连续，<strong>不能有任何嫌疑点</strong>。挨个看：哪个在某些地方分母为 0？定义域不全？',
+        solution: '$\\tan x$ 在 $x = \\pi/2 + k\\pi$ 不连续；$\\ln x$ 仅在 $x > 0$ 有定义；$1/x$ 在 $x = 0$ 不连续。只有 $e^x$ 定义域是 $\\mathbb{R}$ 且处处连续。',
+      },
+    ],
+  },
+
+  {
+    id: 10, module: 'M2', title: '间断点的分类',
+    hook: '上一节我们看到三种"必须抬笔"的情形——洞、跳、炸。它们对应三种间断点：可去、跳跃、无穷。会分类，才能知道"这个不连续到底有多严重，能不能修"。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">三种症状，三种诊断</h3>
+        <p>判断方法很机械：算 $x = a$ 处的<strong>左极限和右极限</strong>，根据结果对号入座。</p>
+
+        <p style="margin-top:1.4em;"><strong>① 可去间断点</strong> —— "差一点就好了"</p>
+        <p>左极限和右极限<strong>都存在且相等</strong>（即 $\\lim\\limits_{x \\to a} f(x) = L$ 存在），但 $f(a)$ 没定义，或者 $f(a) \\neq L$。</p>
+        <p>这种间断点最"友好"：只要重新规定 $f(a) = L$，函数就连续了——所以叫"可去"。图像上是一个<strong>空心洞</strong>，补一个点就好。</p>
+        <p><em>经典例</em>：$f(x) = \\dfrac{\\sin x}{x}$ 在 $x = 0$。极限 $= 1$（第一重要极限），但 $f(0)$ 无定义。是可去间断。</p>
+
+        <p style="margin-top:1.4em;"><strong>② 跳跃间断点</strong> —— "两边接不上"</p>
+        <p>左极限和右极限<strong>都存在，但不相等</strong>。图像在该点"跳"了一下。</p>
+        <p>这种间断点没法"补一个点"修好——必须从两个值里挑一个，另一边永远对不上。</p>
+        <p><em>经典例</em>：$f(x) = \\dfrac{|x|}{x}$ 在 $x = 0$。$x > 0$ 时 $f = 1$，$x < 0$ 时 $f = -1$。左极限 $-1$，右极限 $1$，是跳跃间断。</p>
+
+        <p style="margin-top:1.4em;"><strong>③ 无穷间断点</strong> —— "函数爆掉了"</p>
+        <p>至少一侧的极限是 $+\\infty$ 或 $-\\infty$。函数在该点附近无限拉伸。</p>
+        <p><em>经典例</em>：$f(x) = \\dfrac{1}{x}$ 在 $x = 0$。右极限 $+\\infty$，左极限 $-\\infty$，是无穷间断。$\\tan x$ 在 $x = \\dfrac{\\pi}{2}$ 同理。</p>
+      ` },
+      { type: 'viz', id: 'viz-l10', label: '三种间断点的对照图' },
+      { type: 'text', html: `
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          <strong>判断流程</strong>（三步走）：
+          <ol style="list-style:decimal;padding-left:1.5em;margin-top:0.5em;margin-bottom:0;">
+            <li>算 $\\lim\\limits_{x \\to a^-} f(x)$ 和 $\\lim\\limits_{x \\to a^+} f(x)$。</li>
+            <li>任一侧 $= \\pm\\infty$ → <strong>无穷间断</strong>。</li>
+            <li>两侧都有限但不等 → <strong>跳跃间断</strong>；两侧都有限且相等 → <strong>可去间断</strong>（前提是 $f(a)$ 没定义或不等于这个值；否则函数其实是连续的，根本不算间断）。</li>
+          </ol>
+        </div>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做一道</h3>
+        <p>判断 $f(x) = \\dfrac{1}{x - 2}$ 在 $x = 2$ 是哪种间断。</p>
+        <p>第一步，算左右极限。</p>
+        <ul>
+          <li>$x \\to 2^+$：$x - 2$ 是个"很小的正数"，倒数 $\\dfrac{1}{\\text{很小正数}} \\to +\\infty$。</li>
+          <li>$x \\to 2^-$：$x - 2$ 是个"很小的负数"，倒数 $\\dfrac{1}{\\text{很小负数}} \\to -\\infty$。</li>
+        </ul>
+        <p>第二步，套流程：两侧都是 $\\pm\\infty$ → <strong>无穷间断点</strong>。</p>
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：判断间断点类型，<strong>始终从左右极限算起</strong>。三种间断点各自的"老巢"：
+          <ul style="margin-top:0.4em;margin-bottom:0;">
+            <li><strong>可去</strong>常出现在"约分后能化简"的地方（如 $\\dfrac{x^2-1}{x-1}$）</li>
+            <li><strong>无穷</strong>几乎总是"分母为 0 但分子非 0"的地方</li>
+            <li><strong>跳跃</strong>最常见于分段函数的拼接处</li>
+          </ul>
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'mc',
+        q: '$f(x) = \\dfrac{\\sin x}{x}$ 在 $x = 0$ 是？',
+        options: ['可去间断点', '跳跃间断点', '无穷间断点', '连续点'],
+        answer: 0,
+        hint: '算 $\\lim\\limits_{x \\to 0}\\dfrac{\\sin x}{x}$——这正是第一重要极限，等于 1。极限<strong>存在且有限</strong>，但 $f(0)$ 有定义吗？',
+        solution: '$\\lim\\limits_{x \\to 0}\\dfrac{\\sin x}{x} = 1$（第一重要极限），但 $f(0)$ 无定义。若补 $f(0) = 1$ 即可连续，故为可去间断点。',
+      },
+      {
+        type: 'mc',
+        q: '$f(x) = \\dfrac{1}{x - 2}$ 在 $x = 2$ 是？',
+        options: ['可去', '跳跃', '无穷', '连续'],
+        answer: 2,
+        hint: '$x \\to 2$ 时分母 $\\to 0$ 而分子是 1（非零）——分母趋于 0 但分子不消失，那比值会趋于什么？',
+        solution: '$\\lim\\limits_{x \\to 2^+}\\dfrac{1}{x-2} = +\\infty$，$\\lim\\limits_{x \\to 2^-} = -\\infty$，是无穷间断。',
+      },
+      {
+        type: 'mc',
+        q: '$f(x) = \\dfrac{|x|}{x}$ 在 $x = 0$ 是？',
+        options: ['可去', '跳跃', '无穷', '连续'],
+        answer: 1,
+        hint: '分两侧看：当 $x > 0$，$|x| = x$，所以 $f(x) = ?$；当 $x < 0$，$|x| = -x$，所以 $f(x) = ?$。左右极限相等吗？',
+        solution: '$x > 0$ 时 $f = 1$，$x < 0$ 时 $f = -1$。左右极限分别为 $-1$ 和 $1$，都存在但不等，是跳跃间断。',
+      },
+    ],
+  },
+
+  // ============== M3 导数 ==============
+  {
+    id: 11, module: 'M3', title: '瞬时变化率：什么是导数',
+    hook: '回到 L5 那辆车——我们用"越缩越小的时间窗口"理解了瞬时速度。今天给这件事一个正式的名字：<strong>导数</strong>。它不只是速度，而是"任何变化的快慢"。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">从开车问题回顾</h3>
+        <p>设你的位移随时间变化的规律是 $s(t) = t^2$（米）。算从 $t = 1$ 秒到 $t = 1 + h$ 秒这段时间的平均速度：</p>
+        <p>$$\\text{平均速度} = \\frac{s(1+h) - s(1)}{h} = \\frac{(1+h)^2 - 1}{h} = \\frac{2h + h^2}{h} = 2 + h.$$</p>
+        <p>当窗口 $h$ 越缩越小：</p>
+        <ul>
+          <li>$h = 1$（1 秒窗口）→ 平均速度 = 3 米/秒</li>
+          <li>$h = 0.1$（0.1 秒窗口）→ 2.1 米/秒</li>
+          <li>$h = 0.01$ → 2.01 米/秒</li>
+          <li>$h \\to 0$ → <strong>2 米/秒</strong></li>
+        </ul>
+        <p>这个 <strong>2 米/秒</strong> 就是 $t = 1$ 时的<strong>瞬时速度</strong>。注意：我们从来没真的让 $h = 0$（那样会出 $\\dfrac{0}{0}$），只是看它"奔向哪里"——典型的极限思维。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">把它写成定义</h3>
+        <p>把"位移和时间"换成任意的 $f$ 和 $x$，把"瞬时速度"换成"瞬时变化率"，就是<strong>导数</strong>：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          <strong>导数的定义</strong>：函数 $f(x)$ 在点 $x = a$ 的导数是
+          $$f'(a) = \\lim_{h \\to 0} \\frac{f(a + h) - f(a)}{h}.$$
+          如果这个极限存在，就说 $f$ 在 $a$ 点<strong>可导</strong>。
+        </div>
+        <p>逐项理解：</p>
+        <ul>
+          <li>分子 $f(a + h) - f(a)$ —— <strong>函数值的变化</strong></li>
+          <li>分母 $h$ —— <strong>自变量的变化</strong></li>
+          <li>比值 —— <strong>平均变化率</strong>（也叫"差商"：差指减法，商指除法）</li>
+          <li>取 $h \\to 0$ 的极限 —— <strong>瞬时变化率</strong>，即导数</li>
+        </ul>
+      ` },
+      { type: 'viz', id: 'viz-l11', label: '拖动滑块缩小 h，红色割线逐渐变成切线' },
+      { type: 'text', html: `
+        <p>图上的红色直线连接 $(1, 1)$ 和 $(1 + h, (1+h)^2)$，它的斜率正是平均变化率 $2 + h$。把 $h$ 拖到很小，红线越来越像"擦在曲线上"的那条切线——这就是导数的几何意义（下一节细讲）。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做一道</h3>
+        <p>用定义求 $f(x) = x^2$ 在 $x = 2$ 处的导数 $f'(2)$。</p>
+        <p>第一步，套公式：</p>
+        <p>$$f'(2) = \\lim_{h \\to 0} \\frac{f(2 + h) - f(2)}{h} = \\lim_{h \\to 0} \\frac{(2 + h)^2 - 4}{h}.$$</p>
+        <p>第二步，展开分子：$(2 + h)^2 = 4 + 4h + h^2$，所以分子 $= 4h + h^2$。</p>
+        <p>第三步，约 $h$：</p>
+        <p>$$\\frac{4h + h^2}{h} = 4 + h.$$</p>
+        <p>第四步，取极限：$\\lim\\limits_{h \\to 0}(4 + h) = 4$。</p>
+        <p><strong>答：$f'(2) = 4$</strong>。</p>
+        <p>顺便注意：刚才我们对 $x = 1$ 也算过，得 $f'(1) = 2$。模式很明显——对 $f(x) = x^2$，导数似乎总是 $2x$。这正是 L13 会用一行公式覆盖的"幂函数求导规则"。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">三种等价记号</h3>
+        <p>导数有几种写法，都表示同一件事：</p>
+        <p>$$f'(x), \\quad \\frac{df}{dx}, \\quad \\frac{dy}{dx} \\,(\\text{当 } y = f(x) \\text{ 时}).$$</p>
+        <ul>
+          <li>$f'(x)$ —— Lagrange 记号，最简洁，强调"$f$ 的导数也是一个函数"</li>
+          <li>$\\dfrac{df}{dx}$ —— Leibniz 记号，看起来像分数（其实不是），强调"$f$ 对 $x$ 的变化率"。物理和应用题里最常用。</li>
+        </ul>
+        <p>同一个东西，三种写法。看到任何一种都要认得。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：用定义算导数<strong>是为了理解</strong>——它告诉你"导数就是极限"。实际计算中很少这样做（太累）。下一节看导数的几何意义，再下一节直接给基本公式表，背熟后 90% 的题不用碰定义。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '用定义算 $f(x) = x^2$ 在 $x = 3$ 处的导数 $f\'(3) = $',
+        answer: '6',
+        hint: '套定义：$f\'(3) = \\lim\\limits_{h \\to 0}\\dfrac{(3+h)^2 - 9}{h}$。展开 $(3+h)^2 = 9 + 6h + h^2$，分子约出 $h$ 后再取极限。',
+        solution: '分子 $(3+h)^2 - 9 = 9 + 6h + h^2 - 9 = 6h + h^2$。除以 $h$ 得 $6 + h$。取极限 $h \\to 0$：$f\'(3) = 6$。',
+      },
+      {
+        type: 'fill',
+        q: '$f(x) = 3x + 5$ 在任意点的导数 $f\'(x) = $',
+        answer: '3',
+        hint: '直线 $y = 3x + 5$ 的"瞬时变化率"应该就是它的斜率——画图想想。或者用定义算：$\\dfrac{[3(x+h)+5] - [3x+5]}{h} = ?$',
+        solution: '$\\dfrac{[3(x+h)+5] - [3x+5]}{h} = \\dfrac{3h}{h} = 3$。取极限仍是 3。线性函数的导数就是它的斜率，且在每一点都相同。',
+      },
+      {
+        type: 'mc',
+        q: '下列关于导数的说法<strong>正确</strong>的是？',
+        options: [
+          '平均变化率和瞬时变化率总是相等',
+          '导数描述函数在一点附近的"瞬时变化快慢"',
+          '所有函数在每一点都可导',
+          '导数总是正数',
+        ],
+        answer: 1,
+        hint: 'A 错——平均是"一段区间"的概念，瞬时是"一点"的概念。C 错——比如 $|x|$ 在 $x = 0$ 不可导（图像有尖点）。D 错——下降的函数导数为负。',
+        solution: 'B 正确：导数 $= \\lim\\limits_{h \\to 0}\\dfrac{f(a+h) - f(a)}{h}$ 正好描述 $f$ 在 $a$ 附近"每单位 $x$ 变化对应多少 $f$ 变化"的瞬时比率。',
+      },
+    ],
+  },
+
+  {
+    id: 12, module: 'M3', title: '切线：导数的几何意义',
+    hook: '导数有两副面孔。第一副是"瞬时变化率"（上一节）；第二副是几何上——曲线在某点的<strong>切线斜率</strong>。两件事其实是同一件——这是微积分最美的对应之一。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">从割线说起</h3>
+        <p>曲线上取两点，连一条直线，叫<strong>割线</strong>（secant）。它的斜率，正是上一节我们算的"平均变化率"：</p>
+        <p>$$\\text{割线斜率} = \\frac{f(a + h) - f(a)}{h}.$$</p>
+        <p>现在做一个想象实验：固定 $a$，让另一个点 $a + h$ 慢慢滑向 $a$。割线会怎样？</p>
+        <p>它在<strong>旋转</strong>。当 $h \\to 0$，第二个点重合到第一个点，割线变成了"擦着曲线"的那条<strong>切线</strong>（tangent）。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">关键对应</h3>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          <strong>$f$ 在 $a$ 点的导数 $f'(a)$，等于曲线 $y = f(x)$ 在点 $(a, f(a))$ 处切线的斜率。</strong>
+        </div>
+        <p>证明就是上一节的<strong>极限过程</strong>——割线斜率 $\\dfrac{f(a+h) - f(a)}{h}$ 取 $h \\to 0$ 极限就是导数，几何上对应的就是"割线变切线"。</p>
+        <p>所以从此以后，"求导数"和"求切线斜率"就是同一件事——按方便程度选名字。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">交互演示</h3>
+        <p>下面这张图可以拖动 $x_0$ 看切线如何随之变化；切换上方按钮可以换不同函数。</p>
+      ` },
+      { type: 'viz', id: 'viz-l12', label: '拖动 x₀ 看切线变化；按钮切换不同函数' },
+      { type: 'text', html: `
+        <p>玩一会儿，留意几件事：</p>
+        <ul>
+          <li>切线总是"擦"在曲线上，不切入</li>
+          <li>函数<strong>上升</strong>的地方，切线<strong>向上倾斜</strong>，$f'(x) > 0$</li>
+          <li>函数<strong>下降</strong>的地方，切线<strong>向下倾斜</strong>，$f'(x) < 0$</li>
+          <li>函数的<strong>顶或谷</strong>（极值点），切线<strong>水平</strong>，$f'(x) = 0$</li>
+        </ul>
+        <p>最后这条很重要——M4 找极值就靠它。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">切线方程</h3>
+        <p>知道了斜率，写直线方程就是高中知识：<strong>点斜式</strong>。</p>
+        <p>过点 $(a, f(a))$、斜率为 $f'(a)$ 的直线：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          $$y - f(a) = f'(a) \\cdot (x - a).$$
+        </div>
+        <p>这就是曲线 $y = f(x)$ 在 $x = a$ 处的<strong>切线方程</strong>。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做一道</h3>
+        <p>求 $f(x) = x^2$ 在 $x = 2$ 处的切线方程。</p>
+        <p>第一步，算两个东西：函数值 $f(2)$ 和导数 $f'(2)$。</p>
+        <ul>
+          <li>$f(2) = 2^2 = 4$，切点是 $(2, 4)$</li>
+          <li>$f'(2) = 4$（上一节算过——或用 L13 的公式 $(x^2)' = 2x$ 套出 $2 \\cdot 2 = 4$）</li>
+        </ul>
+        <p>第二步，套点斜式：</p>
+        <p>$$y - 4 = 4(x - 2).$$</p>
+        <p>第三步，化简：$y = 4x - 8 + 4 = 4x - 4$。</p>
+        <p><strong>切线方程：$y = 4x - 4$</strong>。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：求切线方程的固定套路——<strong>"代两值，套点斜"</strong>：算 $f(a)$ 和 $f'(a)$，写 $y - f(a) = f'(a)(x - a)$。后面所有切线题都是这个模板，记住后机械操作即可。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$f(x) = x^2$ 在 $x = 3$ 处切线的斜率 = ',
+        answer: '6',
+        hint: '切线斜率 = $f\'(3)$。用幂函数公式 $(x^2)\' = 2x$（或用 L11 的定义）算 $f\'(3)$。',
+        solution: '$f\'(x) = 2x$，所以 $f\'(3) = 6$。切线斜率是 6。',
+      },
+      {
+        type: 'mc',
+        q: '若 $f\'(a) = 0$，则曲线 $y = f(x)$ 在 $x = a$ 处的切线是什么样的？',
+        options: ['垂直于 $x$ 轴', '水平（平行 $x$ 轴）', '不存在', '与曲线相交于两点'],
+        answer: 1,
+        hint: '切线斜率 $= f\'(a) = 0$。斜率为 0 的直线是什么形状？',
+        solution: '斜率为 0 的直线是水平线，所以切线水平。这种点通常是函数的极大或极小值（M4 会专讲）。',
+      },
+      {
+        type: 'fill',
+        q: '$f(x) = x^2$ 在 $x = 1$ 处的切线方程化为 $y = ax + b$ 的形式，则 $a + b = $',
+        answer: '1',
+        hint: '切点 $(1, 1)$，斜率 $f\'(1) = 2$。点斜式：$y - 1 = 2(x - 1) \\Rightarrow y = 2x - 1$。所以 $a, b$ 是几？',
+        solution: '$f(1) = 1$，$f\'(1) = 2$。切线 $y - 1 = 2(x - 1)$，即 $y = 2x - 1$。所以 $a = 2, b = -1$，$a + b = 1$。',
+      },
+    ],
+  },
+
+  {
+    id: 13, module: 'M3', title: '基本求导公式',
+    hook: '用极限定义一个个算导数太累——好在前人已经把所有基本函数的导数都算好了。今天的任务很简单：背熟这张表。后面 90% 的导数题不用动脑，套表就行。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">基本求导公式表</h3>
+        <p>这是微积分里<strong>最该熟练记忆</strong>的一张表。请反复看，直到不假思索。</p>
+        <div class="rounded-md p-4 my-3" style="background:var(--paper);border:1px solid var(--line);">
+          <p style="margin:0.35em 0;">$\\bigl(c\\bigr)' = 0$ <span style="color:var(--muted);font-size:0.85em;margin-left:0.5em;">— 常数的导数永远是 0</span></p>
+          <p style="margin:0.35em 0;">$\\bigl(x^n\\bigr)' = n \\cdot x^{n-1}$ <span style="color:var(--muted);font-size:0.85em;margin-left:0.5em;">— 幂函数：指数搬下来当系数，新指数减 1</span></p>
+          <p style="margin:0.35em 0;">$\\bigl(\\sin x\\bigr)' = \\cos x$</p>
+          <p style="margin:0.35em 0;">$\\bigl(\\cos x\\bigr)' = -\\sin x$ <span style="color:var(--muted);font-size:0.85em;margin-left:0.5em;">— 注意有负号</span></p>
+          <p style="margin:0.35em 0;">$\\bigl(\\tan x\\bigr)' = \\sec^2 x = \\dfrac{1}{\\cos^2 x}$</p>
+          <p style="margin:0.35em 0;">$\\bigl(e^x\\bigr)' = e^x$ <span style="color:var(--muted);font-size:0.85em;margin-left:0.5em;">— 唯一一个"导自己等于自己"的函数</span></p>
+          <p style="margin:0.35em 0;">$\\bigl(a^x\\bigr)' = a^x \\cdot \\ln a$ <span style="color:var(--muted);font-size:0.85em;margin-left:0.5em;">— 一般底数</span></p>
+          <p style="margin:0.35em 0;">$\\bigl(\\ln x\\bigr)' = \\dfrac{1}{x}$ <span style="color:var(--muted);font-size:0.85em;margin-left:0.5em;">— 仅在 $x > 0$</span></p>
+          <p style="margin:0.35em 0;">$\\bigl(\\log_a x\\bigr)' = \\dfrac{1}{x \\cdot \\ln a}$</p>
+        </div>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">幂函数公式的几个特殊情况</h3>
+        <p>$(x^n)' = nx^{n-1}$ 非常普适——$n$ 可以是任何实数。几个常见的：</p>
+        <ul>
+          <li>$n = 1$：$(x)' = 1 \\cdot x^0 = 1$（$x$ 的导数是 1）</li>
+          <li>$n = 2$：$(x^2)' = 2x$</li>
+          <li>$n = 3$：$(x^3)' = 3x^2$</li>
+          <li>$n = -1$：$\\left(\\dfrac{1}{x}\\right)' = (x^{-1})' = -x^{-2} = -\\dfrac{1}{x^2}$</li>
+          <li>$n = \\tfrac{1}{2}$：$(\\sqrt{x})' = (x^{1/2})' = \\dfrac{1}{2}x^{-1/2} = \\dfrac{1}{2\\sqrt{x}}$</li>
+        </ul>
+        <p>$\\dfrac{1}{x}$ 和 $\\sqrt{x}$ 用得多，建议把它们的导数直接记下来，省得每次现推。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做几道</h3>
+        <p><strong>例 1</strong>：求 $f(x) = x^5$ 的导数。</p>
+        <p>套幂函数公式 $n = 5$：$f'(x) = 5x^4$。一步完事。</p>
+
+        <p style="margin-top:1.2em;"><strong>例 2</strong>：求 $f(x) = \\ln x$ 在 $x = 2$ 处的导数值。</p>
+        <p>套表 $(\\ln x)' = \\dfrac{1}{x}$。代入 $x = 2$：$f'(2) = \\dfrac{1}{2}$。</p>
+
+        <p style="margin-top:1.2em;"><strong>例 3</strong>：求 $f(x) = e^x$ 在 $x = 0$ 处切线的斜率。</p>
+        <p>$f'(x) = e^x$，斜率 $= f'(0) = e^0 = 1$。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">为什么 $e$ 是"自然底"？</h3>
+        <p>看一眼公式 $(e^x)' = e^x$。这是<strong>独一无二</strong>的——任何其他底数 $(a^x)' = a^x \\cdot \\ln a$ 都带个多余的 $\\ln a$ 因子。唯独 $e$ 让 $\\ln e = 1$，公式最干净。</p>
+        <p>这就是 $e$ 在微积分里"自然"的来源：它让指数函数和它的导数完全一致。所有涉及连续增长的模型（细菌繁殖、银行复利、放射衰变），用 $e^x$ 写出来最简单。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：这张表必须像九九乘法表一样熟。建议拿张白纸默写一遍，错的地方画圈，反复几次。后面的<strong>所有</strong>导数题都建立在这张表上——四则法则（下节）、链式法则（再下节）、隐函数（再下节），全是"把复杂函数拆成基本函数，套表 + 套法则"的组合拳。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$(x^7)\' = $（在 $x$ 处）',
+        answer: '7x^6',
+        accept: ['7x^6', '7*x^6', '7x⁶'],
+        hint: '幂函数公式：$(x^n)\' = n \\cdot x^{n-1}$。这里 $n = 7$。',
+        solution: '$(x^7)\' = 7 \\cdot x^{7-1} = 7x^6$。',
+      },
+      {
+        type: 'fill',
+        q: '$f(x) = e^x$ 在 $x = 0$ 处的导数值 $f\'(0) = $',
+        answer: '1',
+        hint: '$(e^x)\' = e^x$。代入 $x = 0$，得 $e^0 = ?$',
+        solution: '$f\'(x) = e^x$，所以 $f\'(0) = e^0 = 1$。',
+      },
+      {
+        type: 'mc',
+        q: '下列求导<strong>错误</strong>的是？',
+        options: [
+          '$(x^4)\' = 4x^3$',
+          '$(\\sin x)\' = \\cos x$',
+          '$(\\cos x)\' = \\sin x$',
+          '$(e^x)\' = e^x$',
+        ],
+        answer: 2,
+        hint: '$\\cos x$ 的导数<strong>带负号</strong>——这是最常错的地方。',
+        solution: '$(\\cos x)\' = -\\sin x$（带负号）。其他三个都对。',
+      },
+    ],
+  },
+];
+
+// ---------- Visualizations ----------
+function renderViz(id, container) {
+  const renderers = {
+    'viz-l1': () => {
+      const fns = {
+        '线性 $y=2x+1$': x => 2*x + 1,
+        '二次 $y=x^2$': x => x*x,
+        '立方 $y=x^3$': x => x*x*x,
+        '反比 $y=1/x$': x => Math.abs(x) < 0.05 ? NaN : 1/x,
+        '根号 $y=\\sqrt{x}$': x => x < 0 ? NaN : Math.sqrt(x),
+      };
+      const keys = Object.keys(fns);
+      let current = keys[0];
+      const draw = () => {
+        const svg = svgPlot({
+          fn: fns[current],
+          xMin: -5, xMax: 5, yMin: -5, yMax: 6,
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+      };
+      const btns = keys.map(k => `<button data-k="${k}">${k}</button>`).join('');
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">${btns}</div>`;
+      draw();
+      container.querySelectorAll('button').forEach(b => {
+        b.classList.toggle('active', b.dataset.k === current);
+        b.onclick = () => {
+          current = b.dataset.k;
+          container.querySelectorAll('button').forEach(x => x.classList.toggle('active', x.dataset.k === current));
+          draw();
+          renderAllMath(container);
+        };
+      });
+      renderAllMath(container);
+    },
+    'viz-l2': () => {
+      const svg = svgPlot({
+        fn: [
+          {fn: x => 2*x + 1, color: '#2c4a7a', label: 'f(x) = 2x+1'},
+          {fn: x => (x - 1) / 2, color: '#b04030', label: 'f⁻¹(x) = (x-1)/2'},
+          {fn: x => x, color: '#888', dashed: true, label: 'y = x'},
+        ],
+        xMin: -4, xMax: 4, yMin: -4, yMax: 5,
+      });
+      container.innerHTML = `<div class="viz-svg">${svg}</div>`;
+    },
+    'viz-l3': () => {
+      // unit circle + sine wave with slider
+      let theta = Math.PI / 4;
+      const draw = () => {
+        const cx = 110, cy = 130, r = 80;
+        const px = cx + r * Math.cos(theta);
+        const py = cy - r * Math.sin(theta);
+        const circle = `
+          <svg viewBox="0 0 580 280" width="100%" style="max-width:580px;display:block;">
+            <!-- unit circle -->
+            <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#ccc"/>
+            <line x1="${cx-r-8}" y1="${cy}" x2="${cx+r+8}" y2="${cy}" stroke="#666"/>
+            <line x1="${cx}" y1="${cy-r-8}" x2="${cx}" y2="${cy+r+8}" stroke="#666"/>
+            <line x1="${cx}" y1="${cy}" x2="${px}" y2="${py}" stroke="#2c4a7a" stroke-width="2"/>
+            <line x1="${px}" y1="${py}" x2="${px}" y2="${cy}" stroke="#b04030" stroke-width="2" stroke-dasharray="3 2"/>
+            <circle cx="${px}" cy="${py}" r="4" fill="#2c4a7a"/>
+            <text x="${cx + r/2 * Math.cos(theta/2) - 5}" y="${cy - r/2 * Math.sin(theta/2)}" font-size="10" fill="#2c4a7a">θ</text>
+
+            <!-- sine wave -->
+            ${(() => {
+              const ox = 230, oy = 130, scale = 30;
+              let path = `<path d="`;
+              for (let i = 0; i <= 200; i++) {
+                const t = (i / 200) * 4 * Math.PI;
+                const x = ox + t * scale * 0.4;
+                const y = oy - Math.sin(t) * 60;
+                path += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
+              }
+              path += `" fill="none" stroke="#2c4a7a" stroke-width="2"/>`;
+              const dot = `<circle cx="${ox + theta * scale * 0.4}" cy="${oy - Math.sin(theta) * 60}" r="4" fill="#b04030"/>`;
+              const axis = `<line x1="${ox - 10}" y1="${oy}" x2="${ox + 4*Math.PI*scale*0.4 + 10}" y2="${oy}" stroke="#666"/>`;
+              const axisY = `<line x1="${ox}" y1="${oy - 70}" x2="${ox}" y2="${oy + 70}" stroke="#666"/>`;
+              return axis + axisY + path + dot;
+            })()}
+            <text x="${cx}" y="270" font-size="11" fill="#666" text-anchor="middle">单位圆</text>
+            <text x="430" y="270" font-size="11" fill="#666" text-anchor="middle">y = sin θ</text>
+          </svg>`;
+        container.querySelector('.viz-svg').innerHTML = circle;
+        container.querySelector('.viz-readout').innerHTML =
+          `θ = ${(theta).toFixed(2)} rad ≈ ${(theta * 180/Math.PI).toFixed(0)}° &nbsp;|&nbsp; sin θ = ${Math.sin(theta).toFixed(3)} &nbsp;|&nbsp; cos θ = ${Math.cos(theta).toFixed(3)}`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">角度 θ:</span>
+          <input type="range" min="0" max="6.28" step="0.05" value="${theta}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>`;
+      const slider = container.querySelector('input');
+      slider.oninput = e => { theta = parseFloat(e.target.value); draw(); };
+      draw();
+    },
+    'viz-l4': () => {
+      const svg = svgPlot({
+        fn: [
+          {fn: x => Math.exp(x), color: '#2c4a7a', label: 'y = e^x'},
+          {fn: x => x > 0 ? Math.log(x) : NaN, color: '#b04030', label: 'y = ln x'},
+          {fn: x => x, color: '#888', dashed: true, label: 'y = x'},
+        ],
+        xMin: -4, xMax: 5, yMin: -4, yMax: 6,
+      });
+      container.innerHTML = `<div class="viz-svg">${svg}</div>`;
+    },
+    'viz-l5': () => {
+      const svg = svgPlot({
+        fn: [{fn: x => Math.abs(x - 1) < 0.001 ? NaN : (x*x - 1)/(x - 1), color: '#2c4a7a', label: '(x²-1)/(x-1)'}],
+        xMin: -3, xMax: 4, yMin: -2, yMax: 6,
+        points: [{x: 1, y: 2, hollow: true, color: '#b04030', label: '空心 (1, 2)'}],
+      });
+      container.innerHTML = `<div class="viz-svg">${svg}</div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">虽然函数在 $x=1$ 处无定义（空心圆），但当 $x$ 从两侧趋近 $1$ 时，$f(x)$ 都趋近 $2$。这就是极限。</p>`;
+      renderAllMath(container);
+    },
+    'viz-l7': () => {
+      const svg = svgPlot({
+        fn: [{fn: x => Math.abs(x) < 0.001 ? 1 : Math.sin(x)/x, color: '#2c4a7a', label: 'sin(x)/x'}],
+        xMin: -10, xMax: 10, yMin: -0.3, yMax: 1.2,
+        points: [{x: 0, y: 1, hollow: true, color: '#b04030', label: '极限 = 1'}],
+      });
+      container.innerHTML = `<div class="viz-svg">${svg}</div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">$\\dfrac{\\sin x}{x}$ 在 $x = 0$ 处无定义，但极限是 $1$。函数在该点附近"几乎水平"。</p>`;
+      renderAllMath(container);
+    },
+    'viz-l9': () => {
+      const svg1 = svgPlot({
+        fn: [{fn: x => x*x - 2, color: '#2c4a7a'}],
+        xMin: -3, xMax: 3, yMin: -3, yMax: 5,
+        title: '连续：y = x² - 2',
+        width: 280, height: 220,
+      });
+      const svg2 = svgPlot({
+        fn: [
+          {fn: x => x < 1 ? x + 1 : NaN, color: '#b04030'},
+          {fn: x => x >= 1 ? x*x : NaN, color: '#b04030'},
+        ],
+        xMin: -1, xMax: 3, yMin: -1, yMax: 5,
+        points: [{x: 1, y: 2, hollow: true, color: '#b04030'}, {x: 1, y: 1, color: '#b04030'}],
+        title: '不连续：跳跃',
+        width: 280, height: 220,
+      });
+      container.innerHTML = `
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.5em;">
+          <div>${svg1}</div>
+          <div>${svg2}</div>
+        </div>`;
+    },
+    'viz-l10': () => {
+      const a = svgPlot({
+        fn: [{fn: x => Math.abs(x) < 0.001 ? NaN : Math.sin(x)/x, color: '#2c4a7a'}],
+        xMin: -4, xMax: 4, yMin: -0.4, yMax: 1.3,
+        points: [{x: 0, y: 1, hollow: true, color: '#b04030'}],
+        title: '可去：sin(x)/x 在 x=0',
+        width: 260, height: 200,
+      });
+      const b = svgPlot({
+        fn: [
+          {fn: x => x < 0 ? -1 : NaN, color: '#b04030'},
+          {fn: x => x > 0 ? 1 : NaN, color: '#b04030'},
+        ],
+        xMin: -2, xMax: 2, yMin: -1.5, yMax: 1.5,
+        points: [{x: 0, y: 0, color: '#b04030'}],
+        title: '跳跃：sgn(x) 在 x=0',
+        width: 260, height: 200,
+      });
+      const c = svgPlot({
+        fn: [{fn: x => Math.abs(x) < 0.05 ? NaN : 1/x, color: '#b04030'}],
+        xMin: -3, xMax: 3, yMin: -5, yMax: 5,
+        title: '无穷：1/x 在 x=0',
+        width: 260, height: 200,
+      });
+      container.innerHTML = `
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0.5em;">
+          <div>${a}</div><div>${b}</div><div>${c}</div>
+        </div>`;
+    },
+    'viz-l11': () => {
+      let h = 1.5;
+      const a = 1;
+      const fx = x => x * x;
+      const draw = () => {
+        const f0 = fx(a);
+        const f1 = fx(a + h);
+        const slope = (f1 - f0) / h;
+        const secantFn = x => slope * (x - a) + f0;
+        const svg = svgPlot({
+          fn: [
+            {fn: fx, color: '#2c4a7a', label: 'f(x) = x²'},
+            {fn: secantFn, color: '#b04030', label: '割线（斜率 = ' + slope.toFixed(3) + '）'},
+          ],
+          xMin: -1, xMax: 3.5, yMin: -1, yMax: 9,
+          points: [
+            {x: a, y: f0, color: '#2c4a7a'},
+            {x: a + h, y: f1, color: '#b04030'},
+          ],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        container.querySelector('.viz-readout').innerHTML =
+          `h = ${h.toFixed(3)} &nbsp;|&nbsp; 割线斜率 = (f(1+h) - f(1)) / h = <strong>${slope.toFixed(4)}</strong> &nbsp;|&nbsp; 当 h → 0 极限 = 2 = f′(1)`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">缩小 h（窗口）:</span>
+          <input type="range" min="0.05" max="2" step="0.01" value="${h}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;line-height:1.6;"></div>`;
+      container.querySelector('input').oninput = e => { h = parseFloat(e.target.value); draw(); };
+      draw();
+    },
+    'viz-l12': () => {
+      const funcs = {
+        'x²':    {fn: x => x*x,            deriv: x => 2*x,              label: 'f(x) = x²',          yMin: -2, yMax: 7},
+        'x³':    {fn: x => x*x*x,          deriv: x => 3*x*x,            label: 'f(x) = x³',          yMin: -8, yMax: 8},
+        'sin x': {fn: x => Math.sin(x),    deriv: x => Math.cos(x),      label: 'f(x) = sin(x)',      yMin: -1.5, yMax: 1.5},
+        'eˣ/3':  {fn: x => Math.exp(x)/3,  deriv: x => Math.exp(x)/3,    label: 'f(x) = eˣ/3',        yMin: -1, yMax: 7},
+      };
+      const keys = Object.keys(funcs);
+      let currentKey = keys[0];
+      let x0 = 1;
+      const draw = () => {
+        const f = funcs[currentKey];
+        const slope = f.deriv(x0);
+        const y0 = f.fn(x0);
+        const tangentFn = x => slope * (x - x0) + y0;
+        const svg = svgPlot({
+          fn: [
+            {fn: f.fn,      color: '#2c4a7a', label: f.label},
+            {fn: tangentFn, color: '#b04030', label: '切线 (斜率 ' + slope.toFixed(3) + ')'},
+          ],
+          xMin: -2.5, xMax: 2.5, yMin: f.yMin, yMax: f.yMax,
+          points: [{x: x0, y: y0, color: '#b04030'}],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        container.querySelector('.viz-readout').innerHTML =
+          `x₀ = ${x0.toFixed(2)} &nbsp;|&nbsp; f(x₀) = ${y0.toFixed(3)} &nbsp;|&nbsp; <strong>f′(x₀) = ${slope.toFixed(3)}</strong> （切线斜率）`;
+      };
+      const fnBtns = keys.map(k => `<button data-k="${k}">${k}</button>`).join('');
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">${fnBtns}</div>
+        <div class="viz-controls" style="margin-top:0.5em;">
+          <span style="font-size:0.85em;color:#666;">x₀:</span>
+          <input type="range" min="-2.3" max="2.3" step="0.05" value="${x0}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;line-height:1.6;"></div>`;
+      container.querySelectorAll('[data-k]').forEach(b => {
+        b.classList.toggle('active', b.dataset.k === currentKey);
+        b.onclick = () => {
+          currentKey = b.dataset.k;
+          container.querySelectorAll('[data-k]').forEach(x => x.classList.toggle('active', x.dataset.k === currentKey));
+          draw();
+        };
+      });
+      container.querySelector('input[type=range]').oninput = e => { x0 = parseFloat(e.target.value); draw(); };
+      draw();
+    },
+  };
+  if (renderers[id]) renderers[id]();
+  else container.innerHTML = '<p style="color:#888;font-size:0.85em;">（可视化加载中…）</p>';
+}
+
+// ---------- State & Storage ----------
+const STORAGE_KEY = 'calculus-tutorial-progress-v1';
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {done: [], current: 1}; }
+  catch (e) { return {done: [], current: 1}; }
+}
+function saveProgress(p) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } catch (e) {}
+}
+const state = loadProgress();
+
+// ---------- Math rendering ----------
+function renderAllMath(scope) {
+  if (!window.__katexReady || !window.renderMathInElement) return;
+  window.renderMathInElement(scope || document.body, {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '$', right: '$', display: false},
+    ],
+    throwOnError: false,
+  });
+}
+
+// ---------- Renderers ----------
+function renderNav() {
+  const nav = document.getElementById('course-nav');
+  const byMod = {};
+  for (const l of LESSONS) (byMod[l.module] = byMod[l.module] || []).push(l);
+
+  nav.innerHTML = MODULES.map(m => {
+    const lessons = byMod[m.id] || [];
+    const items = lessons.length
+      ? lessons.map(l => `
+          <li>
+            <a href="#" data-lid="${l.id}"
+               class="nav-item block px-3 py-1.5 rounded
+                      ${state.current === l.id ? 'nav-active' : ''}
+                      ${state.done.includes(l.id) ? 'nav-done' : ''}">
+              <span class="text-xs text-[var(--muted)] mr-1">${l.id}.</span>${l.title}
+            </a>
+          </li>`).join('')
+      : `<li class="px-3 py-1 text-xs text-[var(--muted)] italic">${m.desc}</li>`;
+    return `
+      <div>
+        <div class="text-xs uppercase tracking-wider text-[var(--muted)] mb-1.5 px-3">
+          ${m.id} · ${m.name}
+        </div>
+        <ul class="space-y-0.5">${items}</ul>
+      </div>`;
+  }).join('');
+
+  nav.querySelectorAll('[data-lid]').forEach(a => {
+    a.onclick = e => {
+      e.preventDefault();
+      navigateTo(parseInt(a.dataset.lid));
+      // close mobile drawer
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('drawer-backdrop').classList.remove('open');
+    };
+  });
+
+  // progress summary
+  const doneCount = state.done.length;
+  const total = LESSONS.length; // 10 so far
+  document.getElementById('progress-summary').innerHTML =
+    `已完成 <strong>${doneCount}</strong> / ${total} 节 · M1–M2 完整 · M3 前 3 节`;
+}
+
+function renderLesson(id) {
+  const lesson = LESSONS.find(l => l.id === id);
+  if (!lesson) return;
+  const view = document.getElementById('lesson-view');
+
+  let sectionsHtml = '';
+  for (const s of lesson.sections) {
+    if (s.type === 'text') {
+      sectionsHtml += `<div class="prose-body">${s.html}</div>`;
+    } else if (s.type === 'viz') {
+      sectionsHtml += `
+        <div class="viz-wrap">
+          <div class="text-xs text-[var(--muted)] mb-2">${s.label || '可视化'}</div>
+          <div id="${s.id}-host"></div>
+        </div>`;
+    }
+  }
+
+  const exercisesHtml = lesson.exercises.map((ex, i) => {
+    const hintHtml = ex.hint ? `
+      <div class="mt-1 mb-1"><button class="ex-hint-btn">看提示</button></div>
+      <div class="hint-block hidden ex-hint">
+        <span class="text-xs uppercase tracking-wide font-semibold mr-1" style="color:#8c6b3a;">提示</span>
+        ${ex.hint}
+      </div>` : '';
+
+    if (ex.type === 'mc') {
+      return `
+        <div class="lesson-card rounded-lg p-5 mb-4" data-ex="${i}" data-type="mc">
+          <div class="text-xs text-[var(--muted)] mb-2">练习 ${i+1} · 选择题</div>
+          <div class="ex-q mb-3">${ex.q}</div>
+          ${hintHtml}
+          <div class="space-y-2 ex-options mt-3">
+            ${ex.options.map((opt, j) => `
+              <button class="ex-option w-full text-left px-4 py-2.5 rounded-md" data-opt="${j}">
+                <span class="text-[var(--muted)] mr-2">${String.fromCharCode(65+j)}.</span> ${opt}
+              </button>`).join('')}
+          </div>
+          <div class="solution-block hidden ex-solution">
+            <div class="text-xs uppercase tracking-wide font-semibold mb-1">解答</div>
+            ${ex.solution}
+          </div>
+        </div>`;
+    } else if (ex.type === 'fill') {
+      return `
+        <div class="lesson-card rounded-lg p-5 mb-4" data-ex="${i}" data-type="fill">
+          <div class="text-xs text-[var(--muted)] mb-2">练习 ${i+1} · 填空题</div>
+          <div class="ex-q mb-3">${ex.q} <input class="fill-input ex-input" placeholder="答案" /></div>
+          ${hintHtml}
+          <div class="flex gap-2 items-center text-sm mt-3 flex-wrap">
+            <button class="ex-check px-3 py-1.5 rounded-md bg-[var(--accent)] text-white">检查</button>
+            <button class="ex-show px-3 py-1.5 rounded-md border border-[var(--line)]">看解答</button>
+            <span class="ex-feedback text-xs"></span>
+          </div>
+          <div class="solution-block hidden ex-solution">
+            <div class="text-xs uppercase tracking-wide font-semibold mb-1">解答</div>
+            ${ex.solution}
+          </div>
+        </div>`;
+    }
+    return '';
+  }).join('');
+
+  const doneClass = state.done.includes(id) ? 'bg-[var(--good)] text-white border-[var(--good)]' : 'border-[var(--line)] hover:bg-[var(--accent-soft)]';
+  const doneLabel = state.done.includes(id) ? '✓ 已完成本节' : '标记本节为已完成';
+
+  view.innerHTML = `
+    <div class="text-xs text-[var(--muted)] uppercase tracking-wider mb-2">
+      ${lesson.module} · ${MODULES.find(m => m.id === lesson.module).name} · 第 ${lesson.id} 节
+    </div>
+    <h1 class="serif text-3xl md:text-4xl font-semibold leading-tight mb-3">${lesson.title}</h1>
+    <p class="text-lg text-[var(--muted)] mb-8 leading-relaxed">${lesson.hook}</p>
+
+    ${sectionsHtml}
+
+    <h2 class="serif text-2xl font-semibold mt-12 mb-4">练习</h2>
+    ${exercisesHtml}
+
+    <div class="mt-8">
+      <button id="mark-done"
+              class="px-4 py-2 rounded-md border ${doneClass} text-sm transition">
+        ${doneLabel}
+      </button>
+    </div>
+  `;
+
+  // Render visualizations
+  lesson.sections.filter(s => s.type === 'viz').forEach(s => {
+    const host = document.getElementById(`${s.id}-host`);
+    if (host) renderViz(s.id, host);
+  });
+
+  // Wire exercises
+  view.querySelectorAll('[data-type="mc"]').forEach(card => {
+    const i = parseInt(card.dataset.ex);
+    const ex = lesson.exercises[i];
+    card.querySelectorAll('.ex-option').forEach(btn => {
+      btn.onclick = () => {
+        const chosen = parseInt(btn.dataset.opt);
+        card.querySelectorAll('.ex-option').forEach(b => b.classList.remove('correct', 'wrong', 'selected'));
+        btn.classList.add('selected');
+        if (chosen === ex.answer) {
+          btn.classList.add('correct');
+          card.querySelector('.ex-solution').classList.remove('hidden');
+        } else {
+          btn.classList.add('wrong');
+          const right = card.querySelector(`[data-opt="${ex.answer}"]`);
+          if (right) right.classList.add('correct');
+          card.querySelector('.ex-solution').classList.remove('hidden');
+        }
+        renderAllMath(card);
+      };
+    });
+  });
+
+  view.querySelectorAll('[data-type="fill"]').forEach(card => {
+    const i = parseInt(card.dataset.ex);
+    const ex = lesson.exercises[i];
+    const input = card.querySelector('.ex-input');
+    const feedback = card.querySelector('.ex-feedback');
+
+    const check = () => {
+      const val = input.value.trim().replace(/\s+/g, '').toLowerCase();
+      const accept = (ex.accept || [ex.answer]).map(a => String(a).trim().replace(/\s+/g,'').toLowerCase());
+      let ok = accept.includes(val);
+      if (!ok) {
+        const numVal = parseFloat(val);
+        const numAns = parseFloat(ex.answer);
+        if (!isNaN(numVal) && !isNaN(numAns) && Math.abs(numVal - numAns) < 1e-6) ok = true;
+      }
+      input.classList.remove('correct', 'wrong');
+      if (ok) {
+        input.classList.add('correct');
+        feedback.textContent = '✓ 正确';
+        feedback.style.color = 'var(--good)';
+        card.querySelector('.ex-solution').classList.remove('hidden');
+        renderAllMath(card);
+      } else {
+        input.classList.add('wrong');
+        feedback.textContent = '× 再想想';
+        feedback.style.color = 'var(--bad)';
+      }
+    };
+
+    card.querySelector('.ex-check').onclick = check;
+    input.onkeydown = e => { if (e.key === 'Enter') check(); };
+    card.querySelector('.ex-show').onclick = () => {
+      card.querySelector('.ex-solution').classList.remove('hidden');
+      renderAllMath(card);
+    };
+  });
+
+  // Hint buttons (applies to both MC and fill)
+  view.querySelectorAll('.ex-hint-btn').forEach(btn => {
+    btn.onclick = () => {
+      const card = btn.closest('[data-ex]');
+      const hint = card.querySelector('.ex-hint');
+      if (hint) {
+        hint.classList.remove('hidden');
+        btn.style.display = 'none';
+        renderAllMath(card);
+      }
+    };
+  });
+
+  // Mark done
+  document.getElementById('mark-done').onclick = () => {
+    const idx = state.done.indexOf(id);
+    if (idx === -1) state.done.push(id);
+    else state.done.splice(idx, 1);
+    saveProgress(state);
+    renderNav();
+    renderLesson(id);
+  };
+
+  // Prev/Next
+  document.getElementById('prev-btn').disabled = id <= 1;
+  document.getElementById('next-btn').disabled = id >= LESSONS.length;
+  document.getElementById('prev-btn').onclick = () => navigateTo(id - 1);
+  document.getElementById('next-btn').onclick = () => navigateTo(id + 1);
+
+  renderAllMath();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function navigateTo(id) {
+  if (id < 1 || id > LESSONS.length) return;
+  state.current = id;
+  saveProgress(state);
+  renderNav();
+  renderLesson(id);
+}
+
+// ---------- Init ----------
+document.addEventListener('DOMContentLoaded', () => {
+  renderNav();
+  renderLesson(state.current);
+
+  // mobile drawer
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('drawer-backdrop');
+  document.getElementById('menu-btn')?.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    backdrop.classList.toggle('open');
+  });
+  backdrop.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    backdrop.classList.remove('open');
+  });
+});
+
+// re-render math when katex finishes loading after content is built
+window.renderAllMath = renderAllMath;
+</script>
+</body>
+</html>
