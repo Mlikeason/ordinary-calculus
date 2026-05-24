@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>一个普通人的微积分</title>
 <meta name="description" content="一个普通人的微积分 · 由浅入深，36 节课配交互可视化与练习提示。" />
-<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-title" content="微积分" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -129,6 +130,15 @@
     .drawer-backdrop.open { opacity: 1; pointer-events: auto; }
   }
 
+  /* Brand mark (handwritten lim x→∞) */
+  .brand-mark {
+    display: block;
+    width: 72px; height: 72px;
+    margin: 0 0 14px -6px;
+    mix-blend-mode: multiply;
+    opacity: 0.92;
+  }
+
   /* Scrollbar */
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-thumb { background: #d4cec3; border-radius: 4px; }
@@ -154,6 +164,7 @@
   <aside id="sidebar" class="sidebar-drawer md:sidebar-static md:w-72 lg:w-80 md:sticky md:top-0 md:h-screen md:border-r md:border-[var(--line)] md:bg-[var(--paper)] flex-shrink-0 overflow-y-auto"
          style="--sidebar-static-static:true;">
     <div class="p-6">
+      <img src="newicon.png" alt="" class="brand-mark" width="72" height="72" />
       <div class="text-xs text-[var(--muted)] tracking-wide mb-1">一个普通人的</div>
       <div class="serif text-3xl font-semibold leading-tight mb-1">微积分</div>
       <div class="text-sm text-[var(--muted)] mb-6">由浅入深 · 36 节</div>
