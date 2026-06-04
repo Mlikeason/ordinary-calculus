@@ -294,7 +294,7 @@ const MODULES = [
   { id: 'M1', name: '预备知识', desc: '函数与初等运算' },
   { id: 'M2', name: '极限与连续', desc: '微积分的基石' },
   { id: 'M3', name: '导数', desc: '微积分的核心 · 7 节完整' },
-  { id: 'M4', name: '导数的应用', desc: '即将开放…' },
+  { id: 'M4', name: '导数的应用', desc: '6 节完整 · 求导的实战' },
   { id: 'M5', name: '积分', desc: '即将开放…' },
   { id: 'M6', name: '积分的应用', desc: '即将开放…' },
 ];
@@ -1601,6 +1601,491 @@ x = 0.01 →  x = 0.01    x² = 0.0001   x³ = 0.000001</pre>
       },
     ],
   },
+
+  // ============== M4 导数的应用 ==============
+  {
+    id: 18, module: 'M4', title: '函数的单调性',
+    hook: 'M3 学了怎么<strong>算</strong>导数；从这一节开始用导数<strong>解决问题</strong>。最直观的应用：导数的<strong>正负</strong>，告诉你函数在<strong>上升还是下降</strong>。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">导数符号决定升降</h3>
+        <p>回想 L12：导数 $f'(x)$ 是切线斜率。斜率为正 → 切线向上倾斜 → 函数在<strong>上升</strong>；斜率为负 → 函数在<strong>下降</strong>。把这个观察推广到一整段区间：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          <strong>判定法</strong>：在区间 $I$ 上，
+          <ul style="margin-top:0.4em;margin-bottom:0;">
+            <li>若 $f'(x) > 0$ 处处成立 → $f$ 在 $I$ 上 <strong>单调递增</strong></li>
+            <li>若 $f'(x) < 0$ 处处成立 → $f$ 在 $I$ 上 <strong>单调递减</strong></li>
+            <li>若 $f'(x) = 0$ 处处成立 → $f$ 在 $I$ 上 <strong>是常数</strong></li>
+          </ul>
+        </div>
+        <p>这条规则是 M4 一切应用的根基。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">求单调区间的标准流程</h3>
+        <ol style="list-style:decimal;padding-left:1.5em;">
+          <li>算 $f'(x)$</li>
+          <li>解方程 $f'(x) = 0$（或 $f'$ 不存在的点）——这些叫<strong>驻点</strong>，是单调性可能切换的"分界点"</li>
+          <li>用驻点把数轴切成几段，每一段任取一个测试点判断 $f'$ 的符号</li>
+          <li>$f'>0$ 的段就是递增区间，$f'<0$ 的段就是递减区间</li>
+        </ol>
+      ` },
+      { type: 'viz', id: 'viz-l18', label: '蓝色 f 与红色 f′ 的对应关系' },
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做一道</h3>
+        <p>求 $f(x) = x^3 - 3x$ 的单调区间。</p>
+        <p>第一步：$f'(x) = 3x^2 - 3 = 3(x-1)(x+1)$。</p>
+        <p>第二步：$f'(x) = 0 \\Rightarrow x = \\pm 1$。这两个驻点把数轴切成三段：$(-\\infty, -1)$、$(-1, 1)$、$(1, +\\infty)$。</p>
+        <p>第三步：每段任取一个测试点判断 $f'$ 符号：</p>
+        <ul>
+          <li>$x = -2$：$f'(-2) = 3(4) - 3 = 9 > 0$ → 递增</li>
+          <li>$x = 0$：$f'(0) = -3 < 0$ → 递减</li>
+          <li>$x = 2$：$f'(2) = 9 > 0$ → 递增</li>
+        </ul>
+        <p><strong>结论</strong>：$f$ 在 $(-\\infty, -1)$ 和 $(1, +\\infty)$ 上递增，在 $(-1, 1)$ 上递减。</p>
+        <p>这正是上图显示的——红色 $f'$ 在 $(-1, 1)$ 段位于 $x$ 轴下方，对应蓝色 $f$ 在那一段下降。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：判断单调性<strong>不需要</strong>画图。算导数 → 找驻点 → 列符号表，机械四步。<strong>关键易错</strong>：解 $f'(x) = 0$ 时不要漏解；测试点要在每段的"内部"取（避免取到端点正好让 $f' = 0$）。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '若 $f(x) = x^3 - 12x$，则 $f\'(x) = 0$ 的所有解中最小的 $x$ = ',
+        answer: '-2',
+        hint: '$f\'(x) = 3x^2 - 12 = 3(x-2)(x+2)$。解 $f\' = 0$。',
+        solution: '$f\'(x) = 3x^2 - 12 = 0 \\Rightarrow x^2 = 4 \\Rightarrow x = \\pm 2$。最小的是 $-2$。',
+      },
+      {
+        type: 'mc',
+        q: '已知 $f$ 在区间 $(a, b)$ 上 $f\'(x) > 0$ 处处成立，则 $f$ 在 $(a, b)$ 上：',
+        options: [
+          '单调递减',
+          '单调递增',
+          '可能升可能降',
+          '是常数',
+        ],
+        answer: 1,
+        hint: '$f\' > 0$ 是导数为正——切线斜率向上——函数在...？',
+        solution: '$f\' > 0$ 处处成立 $\\Rightarrow$ $f$ 单调递增。这是判定法的直接结论。',
+      },
+      {
+        type: 'fill',
+        q: '$f(x) = x^2 - 6x + 5$ 在哪个 $x$ 处发生"由减到增"的切换？',
+        answer: '3',
+        hint: '$f\'(x) = 2x - 6$。让 $f\' = 0$ 求出转折点。',
+        solution: '$f\'(x) = 2x - 6 = 0 \\Rightarrow x = 3$。这是抛物线的对称轴 / 顶点 / 极小值点。',
+      },
+    ],
+  },
+
+  {
+    id: 19, module: 'M4', title: '极值',
+    hook: '函数图像上的"小山顶"和"小山谷"——它们是哪些点？怎么找？这是上一节单调性概念的直接应用。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">什么是极值</h3>
+        <p><strong>极大值</strong>：在某点 $c$ 附近（一个小邻域内），$f(c)$ 是最大的。"邻域内"是关键——这是<strong>局部</strong>概念，不是全局最大。</p>
+        <p><strong>极小值</strong>：类似，在某点附近 $f(c)$ 最小。</p>
+        <p>注意：函数可以有多个极大值（多个小山顶）和多个极小值（多个山谷）。一个极大值未必比另一个极大值大——它们都只在<strong>各自附近</strong>最大。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">必要条件：驻点</h3>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          <strong>费马定理</strong>：若 $c$ 是 $f$ 的极值点（且 $f$ 在 $c$ 处可导），则必有 $f'(c) = 0$。
+        </div>
+        <p>直觉：在山顶/山谷处，切线必须水平（不然就还能更高/更低）。</p>
+        <p>使 $f'(c) = 0$ 或 $f'$ 不存在的点统称为<strong>驻点</strong>（critical points）。<strong>所有极值都在驻点中</strong>——所以找极值的第一步就是找驻点。</p>
+        <p><strong>陷阱</strong>：驻点不一定是极值点。如 $f(x) = x^3$，$f'(0) = 0$ 但 $x = 0$ 既不是极大也不是极小（它是个"拐点"，下下节会专讲）。所以费马定理是<strong>必要</strong>条件，不是充分条件。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">充分条件：一阶导数变号</h3>
+        <p>要确认一个驻点 $c$ 是哪种极值：看 $f'(x)$ 在 $c$ 两侧的<strong>符号变化</strong>。</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          <ul style="margin:0;">
+            <li>$f'$ 由 $+$ 变 $-$：$c$ 是<strong>极大值点</strong>（先升后降，山顶）</li>
+            <li>$f'$ 由 $-$ 变 $+$：$c$ 是<strong>极小值点</strong>（先降后升，山谷）</li>
+            <li>$f'$ 不变号：$c$ <strong>不是</strong>极值点</li>
+          </ul>
+        </div>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做一道</h3>
+        <p>求 $f(x) = x^3 - 3x$ 的所有极值。</p>
+        <p>这就是上一节用过的函数，已知驻点是 $x = \\pm 1$。</p>
+        <p>已经做过符号分析：$f'$ 在 $(-\\infty, -1)$ 为正，$(-1, 1)$ 为负，$(1, \\infty)$ 为正。</p>
+        <ul>
+          <li>$x = -1$：$f'$ 由 $+$ 变 $-$ → <strong>极大值点</strong>。$f(-1) = -1 + 3 = 2$，所以极大值 $= 2$。</li>
+          <li>$x = 1$：$f'$ 由 $-$ 变 $+$ → <strong>极小值点</strong>。$f(1) = 1 - 3 = -2$，极小值 $= -2$。</li>
+        </ul>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：找极值就是<strong>"找驻点 → 验符号变化"</strong>两步。第二步可以用一阶导数变号检验（最通用），也可以用<strong>二阶导数</strong>检验（下下节会讲：$f''(c) > 0$ 是极小，$f''(c) < 0$ 是极大）。两种方法熟一种即可，但二阶导数检验更快——不用列符号表。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$f(x) = x^3 - 6x^2 + 9x + 1$ 的较小驻点 $x = $',
+        answer: '1',
+        hint: '$f\'(x) = 3x^2 - 12x + 9 = 3(x-1)(x-3)$。两个驻点分别为？',
+        solution: '$f\' = 3(x^2 - 4x + 3) = 3(x-1)(x-3) = 0 \\Rightarrow x = 1$ 或 $3$。较小的是 $1$。',
+      },
+      {
+        type: 'mc',
+        q: '若 $f\'(c) = 0$，则 $c$ 一定是 $f$ 的极值点吗？',
+        options: [
+          '是的，必然是',
+          '不一定。$f\'(c) = 0$ 只是必要条件',
+          '不一定。还可能是无穷间断',
+          '取决于 $f$ 是否连续',
+        ],
+        answer: 1,
+        hint: '想想 $f(x) = x^3$ 在 $x = 0$ 处。$f\'(0) = 0$，但 $x = 0$ 是极值吗？',
+        solution: '$f(x) = x^3$ 是反例：$f\'(0) = 0$ 但 $x = 0$ 既非极大也非极小。所以"$f\' = 0$"是必要条件不是充分条件。',
+      },
+      {
+        type: 'fill',
+        q: '$f(x) = x^3 - 3x^2$ 的极大值（不是极大值点）= ',
+        answer: '0',
+        hint: '$f\'(x) = 3x^2 - 6x = 3x(x-2)$，驻点 $x = 0, 2$。先判断哪个是极大值点，再代入算 $f$。',
+        solution: '$f\' = 3x(x-2)$。$x=0$ 处 $f\'$ 由 $+$ 变 $-$（极大），$x=2$ 处 $-$ 变 $+$（极小）。极大值 $= f(0) = 0$。',
+      },
+    ],
+  },
+
+  {
+    id: 20, module: 'M4', title: '最优化问题',
+    hook: '商业、工程、生活里全是这些问题：<strong>最大利润、最小成本、最短路径、最大体积...</strong> 这是微积分最强大也最实用的应用之一。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">五步法</h3>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          <ol style="list-style:decimal;padding-left:1.5em;margin:0;">
+            <li><strong>读题画图</strong>：标注变量，写出题目要求的"目标量"</li>
+            <li><strong>用约束条件减少变量</strong>：把目标量写成单个自变量的函数</li>
+            <li><strong>求导，找驻点</strong>：让 $f' = 0$</li>
+            <li><strong>验证</strong>：用一阶或二阶导数确认是最大/最小</li>
+            <li><strong>检查端点</strong>：闭区间上最值可能出现在端点</li>
+          </ol>
+        </div>
+        <p>关键的难点常在第 1、2 步——把"实际问题"翻译成数学式。一旦写出函数，第 3-5 步是机械的。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">经典例题：靠河围矩形</h3>
+        <p><strong>问题</strong>：用 $24$ 米篱笆围一个矩形养鸡场，<strong>一边贴河</strong>不需要篱笆。怎样围使面积最大？</p>
+        <p><strong>第 1 步，画图设变量</strong>：设矩形宽（垂直于河）为 $x$ 米，长（沿河）为 $y$ 米。要最大化的是面积 $A = xy$。</p>
+        <p><strong>第 2 步，约束消元</strong>：篱笆只用于宽两条 + 长一条（沿河那条不要），所以 $2x + y = 24$，即 $y = 24 - 2x$。</p>
+        <p>代入面积：$A(x) = x(24 - 2x) = 24x - 2x^2$。</p>
+        <p>定义域：$x > 0$ 且 $y > 0 \\Rightarrow 0 < x < 12$。</p>
+        <p><strong>第 3 步，求导</strong>：$A'(x) = 24 - 4x$。让 $A' = 0$：$x = 6$。</p>
+        <p><strong>第 4 步，验证</strong>：$A''(x) = -4 < 0$ → 凹向下 → $x = 6$ 是<strong>极大值</strong>（也是最大）。</p>
+        <p><strong>第 5 步，端点</strong>：在 $x = 0$ 或 $x = 12$ 时 $A = 0$，所以极大值 $A(6) = 6 \\cdot 12 = 72$ 平方米就是最大。</p>
+        <p><strong>答</strong>：宽 $6$ 米，长 $12$ 米，最大面积 $72$ 平方米。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">第二个例题：剪角折盒</h3>
+        <p><strong>问题</strong>：从一张 $12 \\times 12$ 厘米正方形纸板的四角各剪掉一个边长 $x$ 的小正方形，折成无盖盒子。$x$ 取多少时盒子体积最大？</p>
+        <p><strong>设</strong>：剪掉边长 $x$ 后，盒底是 $(12 - 2x) \\times (12 - 2x)$ 正方形，高度 $= x$。</p>
+        <p>体积 $V(x) = x(12 - 2x)^2$，定义域 $0 < x < 6$。</p>
+        <p>展开：$V(x) = x(144 - 48x + 4x^2) = 4x^3 - 48x^2 + 144x$。</p>
+        <p>求导：$V'(x) = 12x^2 - 96x + 144 = 12(x - 2)(x - 6)$。</p>
+        <p>$V' = 0 \\Rightarrow x = 2$ 或 $x = 6$。但 $x = 6$ 在边界（盒子退化），舍去。</p>
+        <p>$V''(x) = 24x - 96$，$V''(2) = -48 < 0$ → 极大。</p>
+        <p>$V(2) = 2 \\cdot 8 \\cdot 8 = 128$ 立方厘米。<strong>答</strong>：剪角边长 $2$ 厘米，最大体积 $128$ 立方厘米。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：最优化题<strong>胜在审题</strong>。读完题先停下来问三个问题：① 要最大化/最小化什么？② 有什么约束？③ 自变量的合理范围是什么？把这些写下来，剩下的就是机械求导了。<strong>常见陷阱</strong>：忘记验证端点；忘记把答案"翻译"回原问题（题目问"宽是多少"，别只写 $x = 6$）。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '用 $20$ 米篱笆围一个完整矩形（四边都围），最大面积 = ？（平方米）',
+        answer: '25',
+        hint: '设两边 $x, y$，$2x + 2y = 20$ 即 $y = 10 - x$，面积 $A = x(10-x)$。求 $A\'$ 解出。',
+        solution: '$A(x) = x(10-x) = 10x - x^2$。$A\' = 10 - 2x = 0 \\Rightarrow x = 5$。最大面积 $= 5 \\cdot 5 = 25$（其实就是正方形）。',
+      },
+      {
+        type: 'fill',
+        q: '正数 $x$ 与 $y$ 满足 $x + y = 20$，求 $xy$ 的最大值。',
+        answer: '100',
+        hint: 'AM-GM 直觉：和固定时积在 $x = y$ 时最大。或代入 $y = 20 - x$，对 $x(20-x)$ 求导。',
+        solution: '$f(x) = x(20-x) = 20x - x^2$。$f\' = 20 - 2x = 0 \\Rightarrow x = 10$。所以 $y = 10$，$xy = 100$。',
+      },
+      {
+        type: 'mc',
+        q: '在闭区间 $[a, b]$ 上找连续函数 $f$ 的最大值，应该比较：',
+        options: [
+          '只比较所有驻点的值',
+          '只比较两个端点 $f(a), f(b)$',
+          '所有驻点的值 + 两个端点的值',
+          '只比较一阶导数',
+        ],
+        answer: 2,
+        hint: '闭区间最值要么在驻点（极值点），要么在端点（区间边界）。两类都要看。',
+        solution: '闭区间上连续函数的最值出现在驻点或端点。把所有候选点的 $f$ 值算出来比较，最大就是最大值。',
+      },
+    ],
+  },
+
+  {
+    id: 21, module: 'M4', title: '凹凸性与拐点',
+    hook: '上一阶段用 $f\'$ 找升降；这一节用 $f\'\'$ 看<strong>弯曲方向</strong>。两者结合，能完整描绘一个函数的"形状"。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">凹向上 vs 凹向下</h3>
+        <p>"凹向上"是个直觉概念：图像像一个<strong>碗 $\\cup$</strong>，能装水。</p>
+        <p>"凹向下"反之：像一个<strong>盖 $\\cap$</strong>，水会流下来。</p>
+        <p>怎么用导数判断？看二阶导数 $f''(x)$：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          <ul style="margin:0;">
+            <li>$f''(x) > 0$：图像<strong>凹向上</strong>（U 形）</li>
+            <li>$f''(x) < 0$：图像<strong>凹向下</strong>（∩ 形）</li>
+            <li>$f''(x) = 0$ 且变号：可能是<strong>拐点</strong>（凹凸切换）</li>
+          </ul>
+        </div>
+        <p>直觉：$f'$ 是斜率，$f'' > 0$ 意味着斜率在<strong>变大</strong>——切线越来越往上倾——这正是凹向上的样子。$f'' < 0$ 反之。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">拐点</h3>
+        <p>函数从凹向上变成凹向下（或反过来）的那一点叫<strong>拐点</strong>（inflection point）。</p>
+        <p>找拐点的方法：</p>
+        <ol style="list-style:decimal;padding-left:1.5em;">
+          <li>算 $f''(x)$</li>
+          <li>解 $f''(x) = 0$（或 $f''$ 不存在的点）</li>
+          <li>验证 $f''$ 在该点两侧符号是否真的发生切换（不切换就不是拐点）</li>
+        </ol>
+      ` },
+      { type: 'viz', id: 'viz-l21', label: 'f, f′, f″ 三条曲线的对应' },
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">二阶导数检验法（找极值的快捷方式）</h3>
+        <p>有了 $f''$，找极值可以不用列符号表了：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          <strong>二阶导数检验</strong>：若 $f'(c) = 0$，则
+          <ul style="margin-top:0.4em;margin-bottom:0;">
+            <li>$f''(c) > 0$ → $c$ 是<strong>极小值点</strong>（碗底）</li>
+            <li>$f''(c) < 0$ → $c$ 是<strong>极大值点</strong>（盖顶）</li>
+            <li>$f''(c) = 0$ → 检验<strong>失效</strong>，需用一阶变号法</li>
+          </ul>
+        </div>
+        <p>直觉：在水平切线（$f' = 0$）的点，如果是凹向上（$f'' > 0$），那是 U 形底部 → 极小；凹向下是 ∩ 形顶端 → 极大。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做一道</h3>
+        <p>求 $f(x) = x^3 - 3x^2$ 的极值和拐点。</p>
+        <p><strong>极值</strong>：</p>
+        <ul>
+          <li>$f'(x) = 3x^2 - 6x = 3x(x - 2)$，驻点 $x = 0, 2$</li>
+          <li>$f''(x) = 6x - 6$</li>
+          <li>$f''(0) = -6 < 0$ → $x = 0$ 是极大值点；$f(0) = 0$，极大值 $0$</li>
+          <li>$f''(2) = 6 > 0$ → $x = 2$ 是极小值点；$f(2) = -4$，极小值 $-4$</li>
+        </ul>
+        <p><strong>拐点</strong>：</p>
+        <ul>
+          <li>解 $f''(x) = 6x - 6 = 0 \\Rightarrow x = 1$</li>
+          <li>验证：$x < 1$ 时 $f'' < 0$，$x > 1$ 时 $f'' > 0$，符号切换 ✓</li>
+          <li>$f(1) = 1 - 3 = -2$，所以拐点是 $(1, -2)$</li>
+        </ul>
+        <p>形状描述：在 $x = 0$ 处一个山顶 → 凹向下 → 经过拐点 $(1, -2)$ → 凹向上 → 在 $x = 2$ 处一个山谷。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：$f'$ 和 $f''$ 各管一半信息——$f'$ 管"升降"（一阶），$f''$ 管"凹凸"（二阶）。<strong>合起来才能完整描绘曲线的形状</strong>。考试题常考"画 $f$ 的草图"——就是用这两个信息。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$f(x) = x^3 - 6x^2$ 的拐点的 $x$ 坐标 = ',
+        answer: '2',
+        hint: '$f\'\'(x) = 6x - 12$。让 $f\'\' = 0$。',
+        solution: '$f\'\'(x) = 6x - 12 = 0 \\Rightarrow x = 2$。验证 $f\'\'$ 在 $x = 2$ 两侧由 $-$ 变 $+$，是拐点。',
+      },
+      {
+        type: 'mc',
+        q: '若 $f\'(c) = 0$ 且 $f\'\'(c) < 0$，则 $c$ 是？',
+        options: [
+          '极大值点',
+          '极小值点',
+          '拐点',
+          '不能判断',
+        ],
+        answer: 0,
+        hint: '$f\' = 0$ → 切线水平；$f\'\' < 0$ → 凹向下（盖 $\\cap$ 形）。盖的顶部是？',
+        solution: '$f\'\' < 0$ 表示凹向下，水平切线在盖形的顶部即极大值。所以 $c$ 是极大值点。',
+      },
+      {
+        type: 'fill',
+        q: '$f(x) = x^4$，则 $f\'\'(x) = $（用 $x$ 的形式）',
+        answer: '12x^2',
+        accept: ['12x^2', '12x²', '12*x^2'],
+        hint: '$f\'(x) = 4x^3$，再求一次导。',
+        solution: '$f\'(x) = 4x^3$，$f\'\'(x) = 12x^2$。注意 $12x^2 \\geq 0$ 对所有 $x$，所以 $x^4$ 处处凹向上。',
+      },
+    ],
+  },
+
+  {
+    id: 22, module: 'M4', title: '相关变化率',
+    hook: '生活中很多变量<strong>同时</strong>在变：球被吹气时半径和体积都在变；梯子滑落时底部速度和顶部速度都在变。它们之间有数学关系——这一节教你怎么从一个变化率推出另一个。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">核心思路</h3>
+        <p>"相关变化率"问题的共同结构：</p>
+        <ol style="list-style:decimal;padding-left:1.5em;">
+          <li>有几个变量随时间 $t$ 同时变化</li>
+          <li>它们之间满足某个<strong>静态关系</strong>（几何/物理公式）</li>
+          <li>已知一个变量的变化率，要求另一个变量的变化率</li>
+        </ol>
+        <p>解法核心：把静态关系<strong>对时间 $t$ 求导</strong>。每个变量都看作 $t$ 的函数，所以求导时要用<strong>链式法则</strong>（每个变量后跟个 $\\dfrac{d\\text{变量}}{dt}$）。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">标准五步法</h3>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          <ol style="list-style:decimal;padding-left:1.5em;margin:0;">
+            <li><strong>画图</strong>，标注变量名（用字母，不要先代数值）</li>
+            <li>列出已知变化率（用 $\\dfrac{d?}{dt}$ 表示）和要求的</li>
+            <li>写出变量间的<strong>关系式</strong>（几何/物理公式）</li>
+            <li>两边对 $t$ 求导（链式法则！）</li>
+            <li><strong>最后</strong>代入数值</li>
+          </ol>
+        </div>
+        <p>关键：<strong>不要太早代数值</strong>。让方程保持字母形式直到求导完毕——否则导数会出错。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">经典题：球膨胀</h3>
+        <p><strong>问题</strong>：一个球以 $5$ 立方厘米/秒的速度被吹气。当半径为 $4$ 厘米时，半径增长率是多少？</p>
+        <p><strong>第 1 步</strong>：变量 $r$（半径），$V$（体积）。</p>
+        <p><strong>第 2 步</strong>：已知 $\\dfrac{dV}{dt} = 5$；求 $\\dfrac{dr}{dt}$（在 $r = 4$ 时）。</p>
+        <p><strong>第 3 步</strong>：球的体积公式 $V = \\dfrac{4}{3}\\pi r^3$。</p>
+        <p><strong>第 4 步</strong>：两边对 $t$ 求导（$r$ 是 $t$ 的函数，用链式法则）：</p>
+        <p>$$\\frac{dV}{dt} = 4\\pi r^2 \\cdot \\frac{dr}{dt}.$$</p>
+        <p><strong>第 5 步</strong>：代入 $\\dfrac{dV}{dt} = 5$，$r = 4$：</p>
+        <p>$$5 = 4\\pi \\cdot 16 \\cdot \\frac{dr}{dt} = 64\\pi \\cdot \\frac{dr}{dt}.$$</p>
+        <p>解得 $\\dfrac{dr}{dt} = \\dfrac{5}{64\\pi} \\approx 0.025$ 厘米/秒。</p>
+        <p>注意：随着 $r$ 变大，半径的<strong>增长率会越来越慢</strong>（公式里 $r^2$ 在分母）——直觉对：大球增大半径需要"更多"体积。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">第二题：梯子滑落</h3>
+        <p><strong>问题</strong>：$5$ 米长的梯子靠墙竖立。底部以 $1$ 米/秒速度沿地面滑离墙。当底部离墙 $3$ 米时，顶部下滑速度是多少？</p>
+        <p><strong>设</strong>：$x$ = 底部到墙的距离，$y$ = 顶部到地面的高度。已知 $\\dfrac{dx}{dt} = 1$，求 $\\dfrac{dy}{dt}$（在 $x = 3$ 时）。</p>
+        <p><strong>关系式</strong>（勾股定理）：$x^2 + y^2 = 25$。</p>
+        <p><strong>对 $t$ 求导</strong>：$2x \\cdot \\dfrac{dx}{dt} + 2y \\cdot \\dfrac{dy}{dt} = 0$。</p>
+        <p><strong>代数值</strong>：$x = 3$ 时，$y = \\sqrt{25 - 9} = 4$。</p>
+        <p>$$2(3)(1) + 2(4) \\cdot \\frac{dy}{dt} = 0 \\Rightarrow \\frac{dy}{dt} = -\\frac{6}{8} = -0.75.$$</p>
+        <p>负号表示 $y$ 在<strong>减小</strong>——顶部以 $0.75$ 米/秒往下滑。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：相关变化率题<strong>看起来吓人但模板固定</strong>——五步走死磕。<strong>最常错</strong>的是第 5 步顺序——先求导后代值，反过来错。看到求导式子里出现 $\\dfrac{d}{dt}(r^3) = 3r^2 \\cdot \\dfrac{dr}{dt}$ 这种链式结果是对的，没有 $\\dfrac{dr}{dt}$ 的话就漏了链式法则。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '球的体积 $V = \\dfrac{4}{3}\\pi r^3$。$\\dfrac{dV}{dr} = $（体积对半径的导数）',
+        answer: '4πr^2',
+        accept: ['4πr^2', '4*pi*r^2', '4pi*r^2', '4πr²', '4 pi r^2'],
+        hint: '幂函数 $(r^3)\' = 3r^2$。前面的 $\\frac{4}{3}\\pi$ 是常数。',
+        solution: '$\\dfrac{dV}{dr} = \\dfrac{4}{3}\\pi \\cdot 3r^2 = 4\\pi r^2$。<strong>趣事</strong>：这正好是球的<strong>表面积公式</strong>——不是巧合，几何上"体积增长 = 表面积 × 厚度增量"。',
+      },
+      {
+        type: 'fill',
+        q: '球以 $\\dfrac{dr}{dt} = 2$ 厘米/秒膨胀。$r = 3$ 时，$\\dfrac{dV}{dt} = $（用 $\\pi$ 表示）',
+        answer: '72π',
+        accept: ['72π', '72pi', '72*pi'],
+        hint: '$\\dfrac{dV}{dt} = 4\\pi r^2 \\cdot \\dfrac{dr}{dt}$。代入 $r = 3, \\dfrac{dr}{dt} = 2$。',
+        solution: '$\\dfrac{dV}{dt} = 4\\pi (3)^2 \\cdot 2 = 4\\pi \\cdot 9 \\cdot 2 = 72\\pi$ 立方厘米/秒。',
+      },
+      {
+        type: 'mc',
+        q: '相关变化率题中，关系式 $x^2 + y^2 = 25$ 对 $t$ 求导后变成：',
+        options: [
+          '$2x + 2y = 0$',
+          '$2x \\cdot \\dfrac{dx}{dt} + 2y \\cdot \\dfrac{dy}{dt} = 0$',
+          '$\\dfrac{dx}{dt} + \\dfrac{dy}{dt} = 0$',
+          '$x + y = 0$',
+        ],
+        answer: 1,
+        hint: '把 $x, y$ 都视为 $t$ 的函数。$(x^2)\' = 2x \\cdot x\'$ ——别忘了 $x\'$ 这个链式因子。',
+        solution: '链式法则：$(x^2)$ 对 $t$ 求导 $= 2x \\cdot \\dfrac{dx}{dt}$，$(y^2)$ 对 $t$ 求导 $= 2y \\cdot \\dfrac{dy}{dt}$。常数 $25$ 求导为 $0$。',
+      },
+    ],
+  },
+
+  {
+    id: 23, module: 'M4', title: '微分与线性近似',
+    hook: '切线在切点附近"贴"得很紧——可以用直线代替曲线做近似。这是 200 多年前没有计算器时代的"神器"，但它揭示的<strong>本质思想</strong>（局部用线性逼近非线性）至今仍是工程、机器学习等领域的核心。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">什么是微分</h3>
+        <p>对函数 $y = f(x)$，给一个微小变化 $dx$（自变量改变量），相应的 $y$ 改变量近似为：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          $$dy = f'(x) \\, dx.$$
+        </div>
+        <p>这里 $dy$ 叫做<strong>微分</strong>（differential）。它<strong>不是</strong> $\\Delta y$（实际改变量），而是切线上对应的改变量。</p>
+        <p>区别：</p>
+        <ul>
+          <li>$\\Delta y = f(x + \\Delta x) - f(x)$ —— 函数实际的改变（沿曲线）</li>
+          <li>$dy = f'(x) \\, dx$ —— 切线上对应的改变（沿切线）</li>
+        </ul>
+        <p>当 $\\Delta x$ 很小时 $\\Delta y \\approx dy$——这是核心。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">线性近似公式</h3>
+        <p>把上面写成"用 $a$ 附近的切线代替函数"的形式：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          $$f(x) \\approx f(a) + f'(a) \\cdot (x - a) \\quad (\\text{当 } x \\text{ 接近 } a).$$
+        </div>
+        <p>右边就是 $a$ 处切线方程（L12 学过）。意思是：在 $x = a$ 附近，函数和它的切线<strong>几乎重合</strong>，所以可以用切线代替函数做近似。</p>
+      ` },
+      { type: 'viz', id: 'viz-l23', label: '拖动切点 a，观察切线在切点附近紧贴 √x' },
+      { type: 'text', html: `
+        <p>注意：离切点越远，近似越差——切线只在切点的<strong>邻域内</strong>有效。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做一道：估算 $\\sqrt{4.04}$</h3>
+        <p>没有计算器，估算 $\\sqrt{4.04}$。</p>
+        <p><strong>第 1 步，选 $a$</strong>：选一个靠近 $4.04$ 且容易算的——显然是 $a = 4$（$\\sqrt{4} = 2$ 直接知道）。</p>
+        <p><strong>第 2 步，选 $f$</strong>：$f(x) = \\sqrt{x}$，$f'(x) = \\dfrac{1}{2\\sqrt{x}}$。</p>
+        <p><strong>第 3 步，算切点信息</strong>：$f(4) = 2$，$f'(4) = \\dfrac{1}{4}$。</p>
+        <p><strong>第 4 步，套公式</strong>：</p>
+        <p>$$\\sqrt{4.04} \\approx 2 + \\frac{1}{4}(4.04 - 4) = 2 + \\frac{1}{4}(0.04) = 2 + 0.01 = 2.01.$$</p>
+        <p>真值 $\\sqrt{4.04} \\approx 2.00998\\ldots$，误差 $\\approx 0.00002$，<strong>极小</strong>。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">为什么这件事重要</h3>
+        <p>线性近似不只是"没有计算器时代的伎俩"——它揭示了微积分的一个核心思想：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          在<strong>足够小的尺度</strong>下，任何光滑函数都可以用<strong>线性函数</strong>近似。
+        </div>
+        <p>这就是为什么导数（线性逼近的斜率）能描述这么多复杂现象。物理（牛顿力学的瞬时速度）、工程（误差分析）、机器学习（梯度下降，本质就是反复用线性近似找最优）——都建立在这个思想上。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：用线性近似估算的<strong>三步</strong>：① 选一个邻近的"好算"$a$；② 算 $f(a)$ 和 $f\'(a)$；③ 套 $f(x) \\approx f(a) + f\'(a)(x-a)$。常用场景：估开方、估三角函数小角度值（$\\sin x \\approx x$ 就是 $a = 0$ 处的线性近似）、估指数对数。<strong>误差大小</strong>由 $f\'\'$ 控制——二阶导数大的地方近似容易差。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '若 $f(2) = 5$，$f\'(2) = 3$，则 $f(2.1)$ 的线性近似 ≈ ',
+        answer: '5.3',
+        hint: '套公式 $f(x) \\approx f(a) + f\'(a)(x - a)$。这里 $a = 2$，$x = 2.1$。',
+        solution: '$f(2.1) \\approx f(2) + f\'(2) \\cdot (2.1 - 2) = 5 + 3 \\cdot 0.1 = 5.3$。',
+      },
+      {
+        type: 'fill',
+        q: '用线性近似估算 $\\sqrt{9.06}$ ≈（保留两位小数）',
+        answer: '3.01',
+        hint: '$f(x) = \\sqrt{x}$，选 $a = 9$。$f(9) = 3$，$f\'(9) = \\dfrac{1}{2\\sqrt{9}} = \\dfrac{1}{6}$。',
+        solution: '$\\sqrt{9.06} \\approx 3 + \\dfrac{1}{6}(0.06) = 3 + 0.01 = 3.01$。（真值 $\\approx 3.00998$。）',
+      },
+      {
+        type: 'mc',
+        q: '微分 $dy$ 的几何意义是？',
+        options: [
+          '函数实际的改变量 $\\Delta y$',
+          '切线上对应于 $dx$ 的改变量',
+          '$f$ 在该点的值',
+          '函数和切线的差',
+        ],
+        answer: 1,
+        hint: '$dy = f\'(x) \\, dx$ —— $f\'$ 是切线斜率，乘 $dx$ 得到切线上的高度变化。',
+        solution: '$dy = f\'(x) \\, dx$ 是切线在该点处对应于水平移动 $dx$ 的垂直变化。$\\Delta y$ 是沿曲线的实际变化，两者只在 $dx$ 很小时近似相等。',
+      },
+    ],
+  },
 ];
 
 // ---------- Visualizations ----------
@@ -1912,6 +2397,65 @@ function renderViz(id, container) {
       container.innerHTML = `<div class="viz-svg">${svg}</div>
         <p style="font-size:0.85em;color:#666;margin-top:0.5em;line-height:1.5;">sin 的高阶导数 4 阶一个周期。注意每条曲线相对前一条「向左平移 π/2」——这就是"求导 = 相位前移 90°"的几何对应。</p>`;
     },
+    'viz-l18': () => {
+      const fx  = x => x*x*x - 3*x;
+      const fpx = x => 3*x*x - 3;
+      const svg = svgPlot({
+        fn: [
+          {fn: fx,  color: '#2c4a7a', label: 'f(x) = x³ − 3x'},
+          {fn: fpx, color: '#b04030', label: "f′(x) = 3x² − 3"},
+        ],
+        xMin: -2.5, xMax: 2.5, yMin: -4, yMax: 7,
+      });
+      container.innerHTML = `<div class="viz-svg">${svg}</div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;line-height:1.5;">注意：红色 f′ 在 (−1, 1) 区间为负 (位于 x 轴下方) → 蓝色 f 在该区间下降。其他区间 f′ &gt; 0 → f 上升。<strong>f′ 的符号 100% 决定了 f 的升降</strong>。</p>`;
+    },
+    'viz-l21': () => {
+      const fx   = x => x*x*x - 3*x*x;
+      const fpx  = x => 3*x*x - 6*x;
+      const fppx = x => 6*x - 6;
+      const svg = svgPlot({
+        fn: [
+          {fn: fx,   color: '#2c4a7a', label: 'f(x) = x³ − 3x²'},
+          {fn: fpx,  color: '#b04030', label: "f′(x)"},
+          {fn: fppx, color: '#2f7a4d', label: "f″(x)"},
+        ],
+        xMin: -1.2, xMax: 3.5, yMin: -7, yMax: 7,
+      });
+      container.innerHTML = `<div class="viz-svg">${svg}</div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;line-height:1.5;">绿色 f″ 在 x = 1 处穿越 x 轴：左侧 f″ &lt; 0 (蓝色 f 凹向下)，右侧 f″ &gt; 0 (f 凹向上)。所以 x = 1 是<strong>拐点</strong>。蓝色曲线确实在那里"换了弯曲方向"。</p>`;
+    },
+    'viz-l23': () => {
+      let a = 4;
+      const fx  = x => Math.sqrt(x);
+      const fpx = x => 1 / (2 * Math.sqrt(x));
+      const draw = () => {
+        const ya = fx(a);
+        const slope = fpx(a);
+        const tangent = x => slope * (x - a) + ya;
+        const svg = svgPlot({
+          fn: [
+            {fn: fx,      color: '#2c4a7a', label: 'f(x) = √x'},
+            {fn: tangent, color: '#b04030', label: '切线 / 线性近似'},
+          ],
+          xMin: 0, xMax: 9, yMin: 0, yMax: 4,
+          points: [{x: a, y: ya, color: '#b04030'}],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        container.querySelector('.viz-readout').innerHTML =
+          `切点 a = <strong>${a.toFixed(2)}</strong> &nbsp;|&nbsp; f(a) = ${ya.toFixed(3)} &nbsp;|&nbsp; 切线: y ≈ ${ya.toFixed(3)} + ${slope.toFixed(3)}·(x − ${a.toFixed(2)})`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">切点 a:</span>
+          <input type="range" min="0.5" max="8" step="0.1" value="${a}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;line-height:1.6;"></div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.6em;line-height:1.5;">红色切线在切点附近紧贴蓝色 √x ——离得越远偏离越大。线性近似只在切点的<strong>邻域内</strong>有效。</p>`;
+      container.querySelector('input').oninput = e => { a = parseFloat(e.target.value); draw(); };
+      draw();
+    },
   };
   if (renderers[id]) renderers[id]();
   else container.innerHTML = '<p style="color:#888;font-size:0.85em;">（可视化加载中…）</p>';
@@ -1982,7 +2526,7 @@ function renderNav() {
   const doneCount = state.done.length;
   const total = LESSONS.length; // 10 so far
   document.getElementById('progress-summary').innerHTML =
-    `已完成 <strong>${doneCount}</strong> / ${total} 节 · M1 + M2 + M3 全部上线`;
+    `已完成 <strong>${doneCount}</strong> / ${total} 节 · M1–M4 全部上线`;
 }
 
 function renderLesson(id) {
