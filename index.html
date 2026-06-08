@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>一个普通人的微积分</title>
-<meta name="description" content="一个普通人的微积分 · 由浅入深，36 节课配交互可视化与练习提示。" />
+<meta name="description" content="一个普通人的微积分 · 36 节课全部完成，配交互可视化与练习。从函数到积分应用，由浅入深。" />
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -295,8 +295,8 @@ const MODULES = [
   { id: 'M2', name: '极限与连续', desc: '微积分的基石' },
   { id: 'M3', name: '导数', desc: '微积分的核心 · 7 节完整' },
   { id: 'M4', name: '导数的应用', desc: '6 节完整 · 求导的实战' },
-  { id: 'M5', name: '积分', desc: '即将开放…' },
-  { id: 'M6', name: '积分的应用', desc: '即将开放…' },
+  { id: 'M5', name: '积分', desc: '7 节完整 · 导数的逆运算' },
+  { id: 'M6', name: '积分的应用', desc: '6 节完整 · 面积、体积、弧长' },
 ];
 
 const LESSONS = [
@@ -1167,6 +1167,7 @@ x = 0.01 →  x = 0.01    x² = 0.0001   x³ = 0.000001</pre>
           <strong>经验之谈</strong>：这张表必须像九九乘法表一样熟。建议拿张白纸默写一遍，错的地方画圈，反复几次。后面的<strong>所有</strong>导数题都建立在这张表上——四则法则（下节）、链式法则（再下节）、隐函数（再下节），全是"把复杂函数拆成基本函数，套表 + 套法则"的组合拳。
         </div>
       ` },
+      { type: 'viz', id: 'viz-l13', label: '选一个基本函数，看它和导数的对应' },
     ],
     exercises: [
       {
@@ -1254,6 +1255,7 @@ x = 0.01 →  x = 0.01    x² = 0.0001   x³ = 0.000001</pre>
           <strong>经验之谈</strong>：乘积法则<strong>最常错</strong>——很多人会想当然写成 $f'g'$。用"左导右不导 + 左不导右导"的口诀避免。商法则的减号顺序也容易反——记住<strong>分子开头是"上导×下"</strong>就不会错。
         </div>
       ` },
+      { type: 'viz', id: 'viz-l14', label: '乘积法则：$(fg)\' = f\'g + fg\'$ 的图形分解' },
     ],
     exercises: [
       {
@@ -1367,6 +1369,7 @@ x = 0.01 →  x = 0.01    x² = 0.0001   x³ = 0.000001</pre>
           <strong>经验之谈</strong>：链式法则是<strong>练出来的</strong>能力——读 10 次不如做 5 道题。看到复合函数，先停下来识别"外层是什么、内层是什么"。多层嵌套时，从外到内，机械地按"外导（保留内）× 内导"一层层处理。配合 Leibniz 记号 $\\dfrac{dy}{du} \\cdot \\dfrac{du}{dx}$，更不容易出错。
         </div>
       ` },
+      { type: 'viz', id: 'viz-l15', label: '链式法则：内外函数与复合的导数对比' },
     ],
     exercises: [
       {
@@ -1720,6 +1723,7 @@ x = 0.01 →  x = 0.01    x² = 0.0001   x³ = 0.000001</pre>
           <strong>经验之谈</strong>：找极值就是<strong>"找驻点 → 验符号变化"</strong>两步。第二步可以用一阶导数变号检验（最通用），也可以用<strong>二阶导数</strong>检验（下下节会讲：$f''(c) > 0$ 是极小，$f''(c) < 0$ 是极大）。两种方法熟一种即可，但二阶导数检验更快——不用列符号表。
         </div>
       ` },
+      { type: 'viz', id: 'viz-l19', label: '拖动参数 a，观察驻点和极值如何变化' },
     ],
     exercises: [
       {
@@ -1794,6 +1798,7 @@ x = 0.01 →  x = 0.01    x² = 0.0001   x³ = 0.000001</pre>
           <strong>经验之谈</strong>：最优化题<strong>胜在审题</strong>。读完题先停下来问三个问题：① 要最大化/最小化什么？② 有什么约束？③ 自变量的合理范围是什么？把这些写下来，剩下的就是机械求导了。<strong>常见陷阱</strong>：忘记验证端点；忘记把答案"翻译"回原问题（题目问"宽是多少"，别只写 $x = 6$）。
         </div>
       ` },
+      { type: 'viz', id: 'viz-l20', label: '拖动剪角 x，看开口盒子的体积变化' },
     ],
     exercises: [
       {
@@ -1972,6 +1977,7 @@ x = 0.01 →  x = 0.01    x² = 0.0001   x³ = 0.000001</pre>
           <strong>经验之谈</strong>：相关变化率题<strong>看起来吓人但模板固定</strong>——五步走死磕。<strong>最常错</strong>的是第 5 步顺序——先求导后代值，反过来错。看到求导式子里出现 $\\dfrac{d}{dt}(r^3) = 3r^2 \\cdot \\dfrac{dr}{dt}$ 这种链式结果是对的，没有 $\\dfrac{dr}{dt}$ 的话就漏了链式法则。
         </div>
       ` },
+      { type: 'viz', id: 'viz-l22', label: '梯子滑落动画：拖动底部看顶部速度' },
     ],
     exercises: [
       {
@@ -2083,6 +2089,933 @@ x = 0.01 →  x = 0.01    x² = 0.0001   x³ = 0.000001</pre>
         answer: 1,
         hint: '$dy = f\'(x) \\, dx$ —— $f\'$ 是切线斜率，乘 $dx$ 得到切线上的高度变化。',
         solution: '$dy = f\'(x) \\, dx$ 是切线在该点处对应于水平移动 $dx$ 的垂直变化。$\\Delta y$ 是沿曲线的实际变化，两者只在 $dx$ 很小时近似相等。',
+      },
+    ],
+  },
+
+  // ============== M5 积分 ==============
+  {
+    id: 24, module: 'M5', title: '不定积分：导数的逆运算',
+    hook: '你已经学会了"给曲线求斜率"（求导）。现在反过来问：如果我告诉你每一点的斜率，你能还原出那条曲线吗？这就是积分——导数的"逆操作"。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">从速度还原位置</h3>
+        <p>导数的故事是"已知位置 $s(t)$，求速度 $v(t) = s'(t)$"。现在反过来：</p>
+        <p><strong>已知速度 $v(t) = 2t$（匀加速），求位置 $s(t)$。</strong></p>
+        <p>我们需要找一个函数，它的导数恰好是 $2t$。你想一下——哪个函数求导后得 $2t$？</p>
+        <p>答案是 $t^2$，因为 $(t^2)' = 2t$。</p>
+        <p>但等等——$t^2 + 1$ 的导数也是 $2t$，$t^2 + 100$ 也是，$t^2 - 3.7$ 也是。<strong>加一个常数并不影响导数</strong>（常数的导数为零）。</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          <strong>原函数不唯一</strong>：如果 $F'(x) = f(x)$，那么 $F(x) + C$（$C$ 为任意常数）的导数也是 $f(x)$。所有原函数之间只差一个竖直平移。
+        </div>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">不定积分的定义</h3>
+        <p>我们把"找原函数"这件事记作：</p>
+        <p>$$\\int f(x)\\,dx = F(x) + C$$</p>
+        <p>其中 $F'(x) = f(x)$，$C$ 是<strong>任意常数</strong>（积分常数）。</p>
+        <p>各部分含义：</p>
+        <ul>
+          <li>$\\int$ ——积分号，拉丁字母 S 的拉长，代表"求和"（Sum）</li>
+          <li>$f(x)$ ——被积函数（已知的东西）</li>
+          <li>$dx$ ——指明自变量是 $x$</li>
+          <li>$F(x) + C$ ——原函数族</li>
+        </ul>
+        <p>所以 $\\int 2t\\,dt = t^2 + C$，因为 $(t^2 + C)' = 2t$。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">验证：求完积分怎么确认？</h3>
+        <p>积分和求导互逆。所以：<strong>把你的答案求导一下，如果得回被积函数，就对了。</strong></p>
+        <p>例如，你声称 $\\int \\cos x\\,dx = \\sin x + C$。验证：$(\\sin x + C)' = \\cos x$。✓</p>
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：积分比求导难得多。求导有机械化的公式和链式法则，总能算出来。但积分很多时候需要"猜"——猜一个函数，验证它的导数对不对。后面几节学的各种技巧（换元、分部），本质上都是帮你"更聪明地猜"。
+        </div>
+      ` },
+      { type: 'viz', id: 'viz-l24', label: '同一个导数 $2x$ 对应一族原函数 $x^2 + C$' },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$\\int 3x^2\\,dx = $ （写出 $F(x) + C$ 的形式）',
+        answer: 'x^3+C',
+        accept: ['x^3+C', 'x^3 + C', 'x³+C', 'x³ + C'],
+        hint: '哪个函数求导后得 $3x^2$？想想幂函数的导数公式 $(x^n)\' = nx^{n-1}$。',
+        solution: '$(x^3)\' = 3x^2$，所以 $\\int 3x^2\\,dx = x^3 + C$。',
+      },
+      {
+        type: 'mc',
+        q: '$\\int \\cos x\\,dx$ 等于？',
+        options: ['$-\\sin x + C$', '$\\sin x + C$', '$\\cos x + C$', '$\\tan x + C$'],
+        answer: 1,
+        hint: '谁的导数是 $\\cos x$？回忆：$(\\sin x)\' = \\cos x$。',
+        solution: '$(\\sin x)\' = \\cos x$，所以 $\\int \\cos x\\,dx = \\sin x + C$。',
+      },
+      {
+        type: 'mc',
+        q: '为什么不定积分必须写 "$+ C$"？',
+        options: [
+          '因为导数会消灭常数——无穷多函数有同样的导数',
+          '因为计算过程有误差',
+          '只是一种记号惯例，可以不写',
+          '因为 $C$ 代表定义域的限制',
+        ],
+        answer: 0,
+        hint: '$(F(x))\'$ 和 $(F(x) + 7)\'$ 有区别吗？',
+        solution: '常数的导数为 0，所以 $F(x)$ 和 $F(x) + C$ 的导数相同。不写 $C$ 就会漏掉无穷多解。',
+      },
+    ],
+  },
+
+  {
+    id: 25, module: 'M5', title: '基本积分公式',
+    hook: '求导有公式表，积分自然也有。好消息：积分公式本质就是"把求导公式反过来读"——你已经会了 80%。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">"反读"求导公式</h3>
+        <p>求导时你背了 $(x^n)' = nx^{n-1}$。反过来读：什么函数求导得 $x^n$？答案是 $\\dfrac{x^{n+1}}{n+1}$（验证：$\\left(\\dfrac{x^{n+1}}{n+1}\\right)' = x^n$）。</p>
+        <p>用同样的思路，把每条求导公式"翻转"，就得到积分公式表。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">核心公式表</h3>
+        <p><strong>幂函数</strong>（最常用）：</p>
+        <p>$$\\int x^n\\,dx = \\frac{x^{n+1}}{n+1} + C \\quad (n \\neq -1)$$</p>
+        <p>特别地：$\\int 1\\,dx = x + C$（$n = 0$），$\\int x\\,dx = \\dfrac{x^2}{2} + C$（$n = 1$）。</p>
+        <p>当 $n = -1$ 时例外：$\\int \\dfrac{1}{x}\\,dx = \\ln|x| + C$。</p>
+
+        <p style="margin-top:1.2em;"><strong>三角函数</strong>：</p>
+        <p>$$\\int \\sin x\\,dx = -\\cos x + C, \\quad \\int \\cos x\\,dx = \\sin x + C$$</p>
+        <p>$$\\int \\sec^2 x\\,dx = \\tan x + C, \\quad \\int \\csc^2 x\\,dx = -\\cot x + C$$</p>
+
+        <p style="margin-top:1.2em;"><strong>指数与对数</strong>：</p>
+        <p>$$\\int e^x\\,dx = e^x + C, \\quad \\int a^x\\,dx = \\frac{a^x}{\\ln a} + C$$</p>
+
+        <p style="margin-top:1.2em;"><strong>反三角</strong>：</p>
+        <p>$$\\int \\frac{1}{\\sqrt{1-x^2}}\\,dx = \\arcsin x + C, \\quad \\int \\frac{1}{1+x^2}\\,dx = \\arctan x + C$$</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">线性性质</h3>
+        <p>和求导一样，积分对加减和常数倍"守规矩"：</p>
+        <p>$$\\int [f(x) \\pm g(x)]\\,dx = \\int f(x)\\,dx \\pm \\int g(x)\\,dx$$</p>
+        <p>$$\\int k f(x)\\,dx = k \\int f(x)\\,dx \\quad (k \\text{ 为常数})$$</p>
+        <p>这意味着多项式可以<strong>逐项积分</strong>：</p>
+        <p>$$\\int (3x^2 + 2x - 5)\\,dx = x^3 + x^2 - 5x + C.$$</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做一道</h3>
+        <p>求 $\\int \\left(\\sqrt{x} + \\dfrac{1}{x^2}\\right)dx$。</p>
+        <p><strong>第 1 步</strong>，改写成幂函数：$\\sqrt{x} = x^{1/2}$，$\\dfrac{1}{x^2} = x^{-2}$。</p>
+        <p><strong>第 2 步</strong>，逐项套幂函数公式：</p>
+        <p>$$\\int x^{1/2}\\,dx = \\frac{x^{3/2}}{3/2} = \\frac{2}{3}x^{3/2}$$</p>
+        <p>$$\\int x^{-2}\\,dx = \\frac{x^{-1}}{-1} = -\\frac{1}{x}$$</p>
+        <p><strong>答</strong>：$\\dfrac{2}{3}x^{3/2} - \\dfrac{1}{x} + C$。</p>
+        <p>验证：$\\left(\\dfrac{2}{3}x^{3/2} - x^{-1}\\right)' = \\dfrac{2}{3} \\cdot \\dfrac{3}{2} x^{1/2} + x^{-2} = \\sqrt{x} + \\dfrac{1}{x^2}$。✓</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>记忆诀窍</strong>：幂函数公式只有一条——"指数加 1，除以新指数"。唯一例外是 $n = -1$（$\\int 1/x = \\ln|x|$）。三角和指数的记忆：把求导公式表翻过来看就行，注意正负号。
+        </div>
+      ` },
+      { type: 'viz', id: 'viz-l25', label: '输入被积函数，查看对应原函数' },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$\\int x^4\\,dx = $',
+        answer: 'x^5/5+C',
+        accept: ['x^5/5+C', 'x^5/5 + C', '(1/5)x^5+C', '(1/5)x^5 + C'],
+        hint: '幂函数公式：指数加 1，除以新指数。$n = 4$，新指数 $= 5$。',
+        solution: '$\\int x^4\\,dx = \\dfrac{x^5}{5} + C$。',
+      },
+      {
+        type: 'fill',
+        q: '$\\int (6x^2 - 4x + 1)\\,dx = $',
+        answer: '2x^3-2x^2+x+C',
+        accept: ['2x^3-2x^2+x+C', '2x^3 - 2x^2 + x + C'],
+        hint: '逐项积分：$\\int 6x^2 = 6 \\cdot \\dfrac{x^3}{3} = 2x^3$，以此类推。',
+        solution: '$6 \\cdot \\dfrac{x^3}{3} - 4 \\cdot \\dfrac{x^2}{2} + x + C = 2x^3 - 2x^2 + x + C$。',
+      },
+      {
+        type: 'mc',
+        q: '$\\int \\sin x\\,dx$ 等于？',
+        options: ['$\\cos x + C$', '$-\\cos x + C$', '$\\sin x + C$', '$-\\sin x + C$'],
+        answer: 1,
+        hint: '谁的导数是 $\\sin x$？$(\\cos x)\' = -\\sin x$，差个负号…',
+        solution: '$(-\\cos x)\' = \\sin x$，所以 $\\int \\sin x\\,dx = -\\cos x + C$。',
+      },
+    ],
+  },
+
+  {
+    id: 26, module: 'M5', title: '第一类换元法（凑微分）',
+    hook: '公式表只能处理"长得规规矩矩"的函数。可现实中的被积函数常常是复合函数——$\\sin(3x)$、$e^{2x}$、$\\sqrt{1+x^2} \\cdot x$。怎么办？换元法就是"把复杂的内层换个名字，回到公式表"。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">核心思想：链式法则的逆运算</h3>
+        <p>回忆链式法则：$[F(g(x))]' = F'(g(x)) \\cdot g'(x)$。</p>
+        <p>反过来读：<strong>如果被积函数恰好长成 $f(g(x)) \\cdot g'(x)$ 的模样</strong>，那么它的原函数就是 $F(g(x))$（其中 $F' = f$）。</p>
+        <p>$$\\int f(g(x)) \\cdot g'(x)\\,dx = F(g(x)) + C.$$</p>
+        <p>这就是<strong>换元公式</strong>。实际操作时，令 $u = g(x)$，则 $du = g'(x)\\,dx$，代入后变成：</p>
+        <p>$$\\int f(u)\\,du = F(u) + C.$$</p>
+        <p>内层函数"换了个名字 $u$"之后，问题就回到了基本公式表。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">操作步骤</h3>
+        <p><strong>第 1 步</strong>：观察被积函数，找出一个"内层"$u = g(x)$，使得 $g'(x)$ 也出现在被积式里（或者差一个常数倍）。</p>
+        <p><strong>第 2 步</strong>：令 $u = g(x)$，算出 $du = g'(x)\\,dx$，把式子里所有 $x$ 替换掉。</p>
+        <p><strong>第 3 步</strong>：对 $u$ 用基本公式求积分。</p>
+        <p><strong>第 4 步</strong>：把 $u = g(x)$ 代回去。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">例题详解</h3>
+        <p><strong>例 1</strong>：求 $\\int \\cos(3x)\\,dx$。</p>
+        <p>观察：内层 $u = 3x$，$du = 3\\,dx$，即 $dx = \\dfrac{du}{3}$。</p>
+        <p>代入：$\\int \\cos u \\cdot \\dfrac{du}{3} = \\dfrac{1}{3}\\sin u + C = \\dfrac{1}{3}\\sin(3x) + C$。</p>
+        <p>验证：$\\left(\\dfrac{1}{3}\\sin(3x)\\right)' = \\dfrac{1}{3} \\cdot \\cos(3x) \\cdot 3 = \\cos(3x)$。✓</p>
+
+        <p style="margin-top:1.4em;"><strong>例 2</strong>：求 $\\int x \\cdot e^{x^2}\\,dx$。</p>
+        <p>观察：内层 $u = x^2$，$du = 2x\\,dx$。被积式里有 $x\\,dx = \\dfrac{1}{2}du$。</p>
+        <p>代入：$\\int e^u \\cdot \\dfrac{1}{2}\\,du = \\dfrac{1}{2}e^u + C = \\dfrac{1}{2}e^{x^2} + C$。</p>
+
+        <p style="margin-top:1.4em;"><strong>例 3</strong>：求 $\\int \\dfrac{x}{\\sqrt{1 + x^2}}\\,dx$。</p>
+        <p>令 $u = 1 + x^2$，$du = 2x\\,dx$，$x\\,dx = \\dfrac{du}{2}$。</p>
+        <p>$\\int \\dfrac{1}{\\sqrt{u}} \\cdot \\dfrac{du}{2} = \\dfrac{1}{2}\\int u^{-1/2}\\,du = \\dfrac{1}{2} \\cdot 2u^{1/2} + C = \\sqrt{1 + x^2} + C$。</p>
+
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          <strong>找 $u$ 的直觉</strong>：看看谁是"被嵌套"的那一层（出现在 $\\sin(\\cdot), e^{(\\cdot)}, (\\cdot)^n, \\ln(\\cdot)$ 的括号里）。如果它的导数也在式子里晃悠，那就是你的 $u$。
+        </div>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：换元法的难点不在"代入"这步，而在<strong>观察——选哪个做 $u$</strong>。选错了会越换越复杂。一个好的信号是：选完 $u$ 之后，$du$ 里包含的 $x$ 部分能把被积式里剩余的 $x$ 项"吃掉"，只剩 $u$。
+        </div>
+      ` },
+      { type: 'viz', id: 'viz-l26', label: '换元前后的积分对比' },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$\\int e^{5x}\\,dx = $',
+        answer: '(1/5)e^(5x)+C',
+        accept: ['(1/5)e^(5x)+C', 'e^(5x)/5+C', 'e^(5x)/5 + C', '(1/5)e^{5x}+C'],
+        hint: '令 $u = 5x$，$du = 5\\,dx$。$\\int e^u \\cdot \\dfrac{du}{5} = ?$',
+        solution: '令 $u = 5x$，$du = 5dx$。$\\int e^u \\dfrac{du}{5} = \\dfrac{1}{5}e^u + C = \\dfrac{1}{5}e^{5x} + C$。',
+      },
+      {
+        type: 'fill',
+        q: '$\\int 2x \\cos(x^2)\\,dx = $',
+        answer: 'sin(x^2)+C',
+        accept: ['sin(x^2)+C', 'sin(x^2) + C', 'sin(x²)+C'],
+        hint: '令 $u = x^2$，$du = 2x\\,dx$——被积式里恰好有 $2x\\,dx$！',
+        solution: '令 $u = x^2$，$du = 2x\\,dx$。$\\int \\cos u\\,du = \\sin u + C = \\sin(x^2) + C$。',
+      },
+      {
+        type: 'mc',
+        q: '求 $\\int \\dfrac{\\cos(\\ln x)}{x}\\,dx$ 时，最好令 $u = $？',
+        options: ['$\\cos(\\ln x)$', '$\\ln x$', '$1/x$', '$x$'],
+        answer: 1,
+        hint: '谁在"内层"？$\\cos$ 的括号里是 $\\ln x$。而 $(\\ln x)\' = 1/x$ 恰好也在式子里。',
+        solution: '令 $u = \\ln x$，$du = \\dfrac{1}{x}dx$。原式 $= \\int \\cos u\\,du = \\sin(\\ln x) + C$。',
+      },
+    ],
+  },
+
+  {
+    id: 27, module: 'M5', title: '分部积分法',
+    hook: '换元法对付的是"复合函数"。但有时被积函数是两个不同类型的东西<strong>相乘</strong>——比如 $x \\cdot e^x$、$x \\cdot \\sin x$、$\\ln x$。这时候需要另一件武器：分部积分，本质是乘法法则的逆运算。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">从乘法法则到分部公式</h3>
+        <p>乘法法则：$(uv)' = u'v + uv'$。</p>
+        <p>两边积分：$uv = \\int u'v\\,dx + \\int uv'\\,dx$。</p>
+        <p>移项得到<strong>分部积分公式</strong>：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          $$\\int u\\,dv = uv - \\int v\\,du$$
+        </div>
+        <p>它的含义：原来的积分 $\\int u\\,dv$ 算不出来，但"转嫁"一下（$u$ 变成 $du$，$dv$ 变成 $v$），得到一个新积分 $\\int v\\,du$，也许这个新的就好算了。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">怎么选 $u$ 和 $dv$？</h3>
+        <p>诀窍：<strong>让 $u$ 求导后更简单，让 $dv$ 积分后不更复杂</strong>。记一个优先级口诀：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          <strong>LIATE</strong>：$u$ 的优先级从高到低——<br/>
+          <strong>L</strong>og（对数）> <strong>I</strong>nverse trig（反三角）> <strong>A</strong>lgebraic（多项式）> <strong>T</strong>rig（三角）> <strong>E</strong>xponential（指数）
+        </div>
+        <p>排在前面的更适合做 $u$（因为它们求导会变简单），排在后面的做 $dv$（因为它们积分还是自己）。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">例题详解</h3>
+        <p><strong>例 1</strong>：求 $\\int x e^x\\,dx$。</p>
+        <p>按 LIATE：$x$（代数）排在 $e^x$（指数）前面。所以：</p>
+        <ul>
+          <li>$u = x$，$du = dx$</li>
+          <li>$dv = e^x\\,dx$，$v = e^x$</li>
+        </ul>
+        <p>套公式：$\\int x e^x\\,dx = x e^x - \\int e^x\\,dx = x e^x - e^x + C = e^x(x - 1) + C$。</p>
+        <p>验证：$[e^x(x-1)]' = e^x(x-1) + e^x = xe^x$。✓</p>
+
+        <p style="margin-top:1.4em;"><strong>例 2</strong>：求 $\\int \\ln x\\,dx$。</p>
+        <p>只有一个函数？没关系——把 $1$ 当作 $dv$。</p>
+        <ul>
+          <li>$u = \\ln x$，$du = \\dfrac{1}{x}dx$</li>
+          <li>$dv = dx$，$v = x$</li>
+        </ul>
+        <p>$\\int \\ln x\\,dx = x\\ln x - \\int x \\cdot \\dfrac{1}{x}\\,dx = x\\ln x - \\int 1\\,dx = x\\ln x - x + C$。</p>
+
+        <p style="margin-top:1.4em;"><strong>例 3</strong>：求 $\\int x^2 \\sin x\\,dx$（需要两次分部）。</p>
+        <p>第一次：$u = x^2, dv = \\sin x\\,dx \\Rightarrow du = 2x\\,dx, v = -\\cos x$。</p>
+        <p>$= -x^2\\cos x + \\int 2x\\cos x\\,dx$。</p>
+        <p>第二次：$u = 2x, dv = \\cos x\\,dx \\Rightarrow du = 2\\,dx, v = \\sin x$。</p>
+        <p>$= -x^2\\cos x + 2x\\sin x - \\int 2\\sin x\\,dx = -x^2\\cos x + 2x\\sin x + 2\\cos x + C$。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>何时用分部</strong>：被积函数是"两种不同类型相乘"且换元搞不定时。典型场景：$x^n e^x$、$x^n \\sin x$、$x^n \\cos x$、$x^n \\ln x$、$e^x \\sin x$。
+        </div>
+      ` },
+      { type: 'viz', id: 'viz-l27', label: '分部积分的"转嫁"过程' },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$\\int x \\cos x\\,dx = $ （写出答案）',
+        answer: 'xsinx+cosx+C',
+        accept: ['xsinx+cosx+C', 'x sin x + cos x + C', 'x*sin(x)+cos(x)+C', 'xsin(x)+cos(x)+C'],
+        hint: '$u = x$，$dv = \\cos x\\,dx$。套 $uv - \\int v\\,du$。',
+        solution: '$u=x, dv=\\cos x\\,dx$，$v=\\sin x, du=dx$。$= x\\sin x - \\int \\sin x\\,dx = x\\sin x + \\cos x + C$。',
+      },
+      {
+        type: 'mc',
+        q: '求 $\\int x^2 e^x\\,dx$ 需要几次分部积分？',
+        options: ['1 次', '2 次', '3 次', '不能用分部积分'],
+        answer: 1,
+        hint: '每做一次分部，$x^2$ 的次数降 1。需要降到 $x^0 = 1$ 才能直接积出 $e^x$。',
+        solution: '$x^2 \\to 2x \\to 2$，次数从 2 降到 0，需要 2 次分部积分。',
+      },
+      {
+        type: 'mc',
+        q: '求 $\\int e^x \\sin x\\,dx$ 时，以下哪种策略正确？',
+        options: [
+          '做两次分部后，方程两边出现同一个积分，解方程',
+          '换元 $u = e^x$',
+          '只需一次分部就能直接得到答案',
+          '无法用初等方法求解',
+        ],
+        answer: 0,
+        hint: '$e^x$ 积分还是自己，$\\sin$ 求导两次回到自己——两次分部后"绕了一圈"回来了。',
+        solution: '两次分部后，右边又出现 $\\int e^x \\sin x\\,dx$，设它为 $I$，解方程 $I = \\ldots - I$ 即得答案。',
+      },
+    ],
+  },
+
+  {
+    id: 28, module: 'M5', title: '定积分与面积',
+    hook: '不定积分是"找原函数"的代数游戏。定积分是<strong>几何</strong>的——它算的是曲线与 $x$ 轴之间围成的面积。两件看似不相关的事，下一节会揭示它们的深刻联系。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">从"数格子"到"无穷细分"</h3>
+        <p>想算 $y = x^2$ 在 $[0, 1]$ 上围成的面积。曲线不是规则形状，不能直接用长乘宽。</p>
+        <p><strong>办法</strong>：把区间切成 $n$ 小段，每段上用矩形近似，然后加起来。</p>
+        <ul>
+          <li>$n = 4$ 个矩形：面积近似但有误差（阶梯状）</li>
+          <li>$n = 10$：更精确</li>
+          <li>$n = 100$：几乎看不到阶梯了</li>
+          <li>$n \\to \\infty$：矩形无穷多、无穷窄——极限就是真面积</li>
+        </ul>
+      ` },
+      { type: 'viz', id: 'viz-l28', label: '拖动滑块增加矩形数量，观察黎曼和趋近面积' },
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">黎曼和的公式</h3>
+        <p>把 $[a, b]$ 均分成 $n$ 段，每段宽度 $\\Delta x = \\dfrac{b-a}{n}$。取第 $i$ 段右端点 $x_i = a + i \\cdot \\Delta x$。</p>
+        <p>$$S_n = \\sum_{i=1}^{n} f(x_i) \\cdot \\Delta x$$</p>
+        <p>当 $n \\to \\infty$ 时，如果极限存在，就是<strong>定积分</strong>：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          $$\\int_a^b f(x)\\,dx = \\lim_{n \\to \\infty} \\sum_{i=1}^{n} f(x_i)\\,\\Delta x$$
+        </div>
+        <p>符号含义：$a, b$ 是积分的<strong>下限</strong>和<strong>上限</strong>。和不定积分最大的区别：<strong>定积分是一个数</strong>（面积），不定积分是一个函数族。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">关于正负面积</h3>
+        <p>当 $f(x) < 0$ 时，矩形高度为负——算出来的面积带<strong>负号</strong>。</p>
+        <p>$$\\int_a^b f(x)\\,dx = (x\\text{ 轴以上的面积}) - (x\\text{ 轴以下的面积})$$</p>
+        <p>这不是 bug，是 feature——它让定积分具有"方向性"，在物理中对应位移（不是路程）。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">基本性质</h3>
+        <p>$$\\int_a^a f(x)\\,dx = 0, \\quad \\int_a^b f(x)\\,dx = -\\int_b^a f(x)\\,dx$$</p>
+        <p>$$\\int_a^b f(x)\\,dx + \\int_b^c f(x)\\,dx = \\int_a^c f(x)\\,dx$$</p>
+        <p>第三条像是"拼接面积"——$[a,b]$ 的面积加上 $[b,c]$ 的面积等于 $[a,c]$ 的面积。非常直觉。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：定积分的"定义"（黎曼和的极限）理解就好，实际计算<strong>绝不会</strong>真的去求 $n \\to \\infty$ 的极限。下一节的基本定理给出了一个无比优雅的捷径。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'mc',
+        q: '定积分 $\\int_0^1 x^2\\,dx$ 的几何意义是？',
+        options: [
+          '$y = x^2$ 在 $[0,1]$ 上与 $x$ 轴围成的面积',
+          '$y = x^2$ 的原函数',
+          '$y = x^2$ 在 $x = 1$ 处的斜率',
+          '$y = x^2$ 的最大值',
+        ],
+        answer: 0,
+        hint: '定积分算的是曲线下方（和 $x$ 轴之间）的面积。',
+        solution: '$\\int_a^b f(x)\\,dx$ 表示 $f(x)$ 在 $[a,b]$ 上与 $x$ 轴围成的（带符号的）面积。',
+      },
+      {
+        type: 'mc',
+        q: '若 $f(x) < 0$ 在 $[a,b]$ 上恒成立，则 $\\int_a^b f(x)\\,dx$：',
+        options: ['$> 0$', '$= 0$', '$< 0$', '不确定'],
+        answer: 2,
+        hint: '函数在 $x$ 轴下方，矩形的"高度"为负。',
+        solution: '当 $f(x) < 0$ 时，所有矩形面积为负，所以定积分为负数。',
+      },
+      {
+        type: 'fill',
+        q: '若 $\\int_0^3 f(x)\\,dx = 7$，$\\int_0^5 f(x)\\,dx = 12$，则 $\\int_3^5 f(x)\\,dx = $',
+        answer: '5',
+        hint: '区间可以拼接：$\\int_0^3 + \\int_3^5 = \\int_0^5$。',
+        solution: '$\\int_3^5 = \\int_0^5 - \\int_0^3 = 12 - 7 = 5$。',
+      },
+    ],
+  },
+
+  {
+    id: 29, module: 'M5', title: '微积分基本定理',
+    hook: '这是整个微积分中<strong>最深刻的结论</strong>——导数（瞬时变化率）和积分（累积面积）看似毫无关系，却被一条定理优雅地串连：<strong>积分就是反导数在端点的差</strong>。从此，算面积再也不用切无穷多矩形了。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">定理的陈述</h3>
+        <p>设 $f$ 在 $[a,b]$ 上连续，$F$ 是 $f$ 的任一原函数（$F' = f$），则：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          $$\\int_a^b f(x)\\,dx = F(b) - F(a)$$
+        </div>
+        <p>通常记作 $F(x)\\Big|_a^b = F(b) - F(a)$。</p>
+        <p><strong>翻译成人话</strong>：要算曲线下面积，只需找原函数 $F$，然后用"上限的值减去下限的值"。不需要切矩形，不需要求极限——一步到位。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">为什么 $+C$ 不再出现？</h3>
+        <p>因为 $F(b) - F(a)$ 会把常数抵消掉：$(F(b) + C) - (F(a) + C) = F(b) - F(a)$。不管你选哪个原函数，结果都一样。<strong>定积分是唯一确定的数。</strong></p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起算几道</h3>
+        <p><strong>例 1</strong>：$\\int_0^1 x^2\\,dx$。</p>
+        <p>原函数：$F(x) = \\dfrac{x^3}{3}$。</p>
+        <p>$F(1) - F(0) = \\dfrac{1}{3} - 0 = \\dfrac{1}{3}$。</p>
+        <p>所以 $y = x^2$ 在 $[0,1]$ 上围成的面积是 $\\dfrac{1}{3}$。</p>
+
+        <p style="margin-top:1.4em;"><strong>例 2</strong>：$\\int_0^{\\pi} \\sin x\\,dx$。</p>
+        <p>原函数：$F(x) = -\\cos x$。</p>
+        <p>$F(\\pi) - F(0) = -\\cos\\pi - (-\\cos 0) = -(-1) + 1 = 2$。</p>
+        <p>一个正弦"拱"的面积恰好是 $2$——漂亮的数字。</p>
+
+        <p style="margin-top:1.4em;"><strong>例 3</strong>：$\\int_1^e \\dfrac{1}{x}\\,dx$。</p>
+        <p>原函数：$F(x) = \\ln x$。</p>
+        <p>$\\ln e - \\ln 1 = 1 - 0 = 1$。</p>
+        <p>$y = 1/x$ 从 $1$ 到 $e$ 下方的面积恰好是 $1$——这是 $e$ 的另一种定义方式。</p>
+      ` },
+      { type: 'viz', id: 'viz-l29', label: '面积累积函数 $A(x) = \\int_a^x f(t)\\,dt$ 的斜率恰好是 $f(x)$' },
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">定理的"另一半"</h3>
+        <p>基本定理其实有两部分。上面那条（牛顿—莱布尼茨公式）用于<strong>计算</strong>。另一半更偏理论，但同样美妙：</p>
+        <p>定义<strong>面积累积函数</strong>：$A(x) = \\int_a^x f(t)\\,dt$（从 $a$ 积到可变上限 $x$）。</p>
+        <p>定理说：$A'(x) = f(x)$。即——<strong>面积的变化率就是高度</strong>。</p>
+        <p>直觉：把面积的右端往右推一小段 $\\Delta x$，增加的面积 $\\approx f(x) \\cdot \\Delta x$（一个窄矩形）。变化率 $= f(x)$。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：微积分基本定理 = "导数和积分互逆"的精确表述。从实用角度，它把"算面积"这个看似需要无穷操作的事，变成了"找原函数、代端点"这一步。整个后续的定积分计算都建立在它之上。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$\\int_0^2 3x^2\\,dx = $',
+        answer: '8',
+        hint: '原函数是 $x^3$。代入上下限：$F(2) - F(0) = ?$',
+        solution: '原函数 $F(x) = x^3$。$F(2) - F(0) = 8 - 0 = 8$。',
+      },
+      {
+        type: 'fill',
+        q: '$\\int_0^{\\pi/2} \\cos x\\,dx = $',
+        answer: '1',
+        hint: '$\\cos x$ 的原函数是 $\\sin x$。$\\sin(\\pi/2) - \\sin(0) = ?$',
+        solution: '原函数 $\\sin x$。$\\sin(\\pi/2) - \\sin(0) = 1 - 0 = 1$。',
+      },
+      {
+        type: 'mc',
+        q: '若 $A(x) = \\int_0^x (t^2 + 1)\\,dt$，则 $A\'(3)$ 等于？',
+        options: ['$0$', '$9$', '$10$', '$12$'],
+        answer: 2,
+        hint: '基本定理第二部分：$A\'(x) = f(x)$。这里 $f(t) = t^2 + 1$，直接代 $x = 3$。',
+        solution: '$A\'(x) = x^2 + 1$，所以 $A\'(3) = 9 + 1 = 10$。',
+      },
+    ],
+  },
+
+  {
+    id: 30, module: 'M5', title: '定积分的计算技巧',
+    hook: '有了基本定理，定积分的核心步骤是"找原函数 → 代端点"。但找原函数时可以用换元和分部——它们在定积分中有一些额外的技巧和简化。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">定积分的换元</h3>
+        <p>和不定积分一样令 $u = g(x)$，但<strong>上下限要跟着换</strong>——不需要换回 $x$。</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          $$\\int_a^b f(g(x)) \\cdot g'(x)\\,dx = \\int_{g(a)}^{g(b)} f(u)\\,du$$
+        </div>
+
+        <p><strong>例</strong>：$\\int_0^1 2x \\cdot e^{x^2}\\,dx$。</p>
+        <p>令 $u = x^2$，$du = 2x\\,dx$。上下限：$x=0 \\Rightarrow u=0$，$x=1 \\Rightarrow u=1$。</p>
+        <p>$= \\int_0^1 e^u\\,du = e^u\\Big|_0^1 = e - 1$。</p>
+        <p>注意：换完之后直接对 $u$ 积分并代 $u$ 的上下限，<strong>不用换回 $x$</strong>。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">定积分的分部</h3>
+        <p>$$\\int_a^b u\\,dv = \\left[uv\\right]_a^b - \\int_a^b v\\,du$$</p>
+        <p><strong>例</strong>：$\\int_0^1 x e^x\\,dx$。</p>
+        <p>$u = x, dv = e^x dx$，$v = e^x, du = dx$。</p>
+        <p>$= [xe^x]_0^1 - \\int_0^1 e^x\\,dx = (1 \\cdot e - 0) - [e^x]_0^1 = e - (e - 1) = 1$。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">奇偶性的妙用</h3>
+        <p>当积分区间<strong>关于原点对称</strong>（即 $[-a, a]$）时：</p>
+        <ul>
+          <li><strong>偶函数</strong>（$f(-x) = f(x)$）：$\\int_{-a}^a f(x)\\,dx = 2\\int_0^a f(x)\\,dx$</li>
+          <li><strong>奇函数</strong>（$f(-x) = -f(x)$）：$\\int_{-a}^a f(x)\\,dx = 0$</li>
+        </ul>
+        <p><strong>例</strong>：$\\int_{-1}^1 x^3\\,dx = 0$（$x^3$ 是奇函数，对称区间直接为零）。</p>
+        <p>$\\int_{-1}^1 (x^4 + x^3)\\,dx = \\int_{-1}^1 x^4\\,dx + 0 = 2\\int_0^1 x^4\\,dx = 2 \\cdot \\dfrac{1}{5} = \\dfrac{2}{5}$。</p>
+        <p>利用奇偶性，一半的计算量瞬间消失。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">总结：定积分计算流程</h3>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          <ol style="margin:0;padding-left:1.2em;">
+            <li><strong>先看</strong>：奇偶性能不能直接简化？</li>
+            <li><strong>再找原函数</strong>：能查表就查表；复合函数用换元；两类相乘用分部。</li>
+            <li><strong>最后代端点</strong>：$F(b) - F(a)$。注意换元时上下限要跟着变。</li>
+          </ol>
+        </div>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：定积分的换元比不定积分<strong>更爽</strong>——因为你可以直接换上下限，不用在最后费劲把 $u$ 换回 $x$。养成习惯：做定积分换元时，第一时间把新上下限写在积分号上。
+        </div>
+      ` },
+      { type: 'viz', id: 'viz-l30', label: '奇函数在对称区间 $[-a,a]$ 上面积互相抵消' },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$\\int_0^2 x e^{x^2}\\,dx = $（用 $e$ 表示）',
+        answer: '(e^4-1)/2',
+        accept: ['(e^4-1)/2', '(e^4 - 1)/2', '0.5(e^4-1)', '0.5e^4-0.5'],
+        hint: '令 $u = x^2$，$du = 2x\\,dx$，所以 $x\\,dx = du/2$。新上下限：$x=0 \\to u=0$，$x=2 \\to u=4$。',
+        solution: '令 $u = x^2$，$x\\,dx = du/2$。$\\int_0^4 \\dfrac{1}{2}e^u\\,du = \\dfrac{1}{2}(e^4 - e^0) = \\dfrac{e^4 - 1}{2}$。',
+      },
+      {
+        type: 'fill',
+        q: '$\\int_{-2}^{2} x^5\\,dx = $',
+        answer: '0',
+        hint: '$x^5$ 是什么函数——奇还是偶？区间关于原点对称吗？',
+        solution: '$x^5$ 是奇函数，区间 $[-2,2]$ 对称，所以积分为 $0$。',
+      },
+      {
+        type: 'fill',
+        q: '$\\int_1^4 \\dfrac{1}{\\sqrt{x}}\\,dx = $',
+        answer: '2',
+        hint: '$\\dfrac{1}{\\sqrt{x}} = x^{-1/2}$。原函数是 $\\dfrac{x^{1/2}}{1/2} = 2\\sqrt{x}$。',
+        solution: '原函数 $2\\sqrt{x}$。$2\\sqrt{4} - 2\\sqrt{1} = 4 - 2 = 2$。',
+      },
+    ],
+  },
+
+  // ============== M6 积分的应用 ==============
+  {
+    id: 31, module: 'M6', title: '两曲线之间的面积',
+    hook: '上一模块我们算的是"曲线和 $x$ 轴围成的面积"。但现实问题更常见的是：两条曲线之间夹着多大的区域？方法几乎一样——上面减下面，再积分。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">核心思想："上减下"</h3>
+        <p>两条曲线 $y = f(x)$（上方）和 $y = g(x)$（下方）在 $[a, b]$ 上围成的面积：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          $$A = \\int_a^b [f(x) - g(x)]\\,dx$$
+        </div>
+        <p>直觉：在每个 $x$ 处，竖直的"条带"高度是 $f(x) - g(x)$，宽度 $dx$。把所有条带加起来就是面积。</p>
+        <p>当只有一条曲线和 $x$ 轴时，$g(x) = 0$，就回到了 $\\int_a^b f(x)\\,dx$ ——之前的情形是这个的特例。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">操作步骤</h3>
+        <p><strong>第 1 步</strong>：找交点——解 $f(x) = g(x)$，确定积分上下限 $a, b$。</p>
+        <p><strong>第 2 步</strong>：判断谁在上面——在 $[a,b]$ 内取个测试点比较 $f$ 和 $g$ 的大小。</p>
+        <p><strong>第 3 步</strong>：积分 $\\int_a^b (\\text{上} - \\text{下})\\,dx$。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">例题详解</h3>
+        <p><strong>例 1</strong>：求 $y = x^2$ 与 $y = x$ 围成的面积。</p>
+        <p>第 1 步，交点：$x^2 = x \\Rightarrow x(x-1) = 0 \\Rightarrow x = 0, 1$。</p>
+        <p>第 2 步，谁上谁下？取 $x = 0.5$：$f(0.5) = 0.5$，$g(0.5) = 0.25$。$y = x$ 在上方。</p>
+        <p>第 3 步：</p>
+        <p>$$A = \\int_0^1 (x - x^2)\\,dx = \\left[\\frac{x^2}{2} - \\frac{x^3}{3}\\right]_0^1 = \\frac{1}{2} - \\frac{1}{3} = \\frac{1}{6}.$$</p>
+      ` },
+      { type: 'viz', id: 'viz-l31', label: '两曲线之间的阴影面积' },
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">当上下交换时</h3>
+        <p>如果在某段区间里 $f$ 和 $g$ 交换了位置（谁上谁下换了），需要<strong>分段积分</strong>，或者用绝对值保证：</p>
+        <p>$$A = \\int_a^b |f(x) - g(x)|\\,dx$$</p>
+        <p>实操中先找所有交点，然后分段各算各的再加起来。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：第 1 步"找交点"往往是最花时间的——它本质上是解方程。画个草图能帮你快速确定谁在上面、区间怎么分段。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$y = x^2$ 与 $y = 2x$ 围成的面积 = ',
+        answer: '4/3',
+        accept: ['4/3', '1.333', '1.33'],
+        hint: '交点：$x^2 = 2x \\Rightarrow x = 0, 2$。在 $[0,2]$ 内，$2x > x^2$。积分 $\\int_0^2 (2x - x^2)\\,dx$。',
+        solution: '$\\int_0^2 (2x - x^2)\\,dx = [x^2 - x^3/3]_0^2 = 4 - 8/3 = 4/3$。',
+      },
+      {
+        type: 'mc',
+        q: '求 $y = x^2$ 与 $y = 4$ 围成面积时，积分上下限是？',
+        options: ['$[0, 4]$', '$[-2, 2]$', '$[0, 2]$', '$[-4, 4]$'],
+        answer: 1,
+        hint: '交点：$x^2 = 4 \\Rightarrow x = \\pm 2$。',
+        solution: '解 $x^2 = 4$ 得 $x = -2, 2$，所以积分区间是 $[-2, 2]$。',
+      },
+      {
+        type: 'fill',
+        q: '$y = x^2$ 与 $y = 4$ 围成的面积 = ',
+        answer: '32/3',
+        accept: ['32/3', '10.67', '10.667'],
+        hint: '在 $[-2,2]$ 上，$4 > x^2$。$\\int_{-2}^2 (4 - x^2)\\,dx$。利用偶函数：$= 2\\int_0^2 (4-x^2)\\,dx$。',
+        solution: '$2\\int_0^2(4-x^2)dx = 2[4x - x^3/3]_0^2 = 2(8 - 8/3) = 2 \\cdot 16/3 = 32/3$。',
+      },
+    ],
+  },
+
+  {
+    id: 32, module: 'M6', title: '旋转体的体积',
+    hook: '把一段曲线绕 $x$ 轴转一圈，它在空间中扫出一个旋转体——花瓶、漏斗、球体都是旋转体。怎么算它的体积？切成薄片，每片是一个圆盘。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">圆盘法</h3>
+        <p>把 $y = f(x)$ 在 $[a, b]$ 上的图像绕 $x$ 轴旋转。在每个 $x$ 处切一片，得到一个薄圆盘：</p>
+        <ul>
+          <li>半径 $= f(x)$（曲线到 $x$ 轴的距离）</li>
+          <li>厚度 $= dx$</li>
+          <li>体积 $= \\pi r^2 \\cdot dx = \\pi [f(x)]^2\\,dx$</li>
+        </ul>
+        <p>把所有薄片加起来：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          $$V = \\int_a^b \\pi [f(x)]^2\\,dx = \\pi \\int_a^b [f(x)]^2\\,dx$$
+        </div>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">例 1：圆锥</h3>
+        <p>把 $y = x$（$0 \\leq x \\leq h$）绕 $x$ 轴旋转得到圆锥（底半径 $= h$，高 $= h$）。</p>
+        <p>$$V = \\pi \\int_0^h x^2\\,dx = \\pi \\cdot \\frac{h^3}{3} = \\frac{\\pi h^3}{3}$$</p>
+        <p>和你在中学学的 $\\dfrac{1}{3}\\pi r^2 h$（这里 $r = h$）一致。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">例 2：球体</h3>
+        <p>球可以看成 $y = \\sqrt{r^2 - x^2}$（半圆）绕 $x$ 轴旋转。</p>
+        <p>$$V = \\pi \\int_{-r}^r (r^2 - x^2)\\,dx = \\pi \\left[r^2 x - \\frac{x^3}{3}\\right]_{-r}^r = \\pi\\left(\\frac{2r^3}{1} - \\frac{2r^3}{3}\\right) = \\frac{4}{3}\\pi r^3$$</p>
+        <p>球体体积公式 $\\dfrac{4}{3}\\pi r^3$，就这么用积分推出来了。</p>
+      ` },
+      { type: 'viz', id: 'viz-l32', label: '旋转体横截面（圆盘）' },
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">垫圈法（环形区域旋转）</h3>
+        <p>如果旋转的区域不贴着 $x$ 轴（两条曲线之间），每片截面是一个"甜甜圈"（环形/垫圈）：</p>
+        <p>$$V = \\pi \\int_a^b \\left([R(x)]^2 - [r(x)]^2\\right)dx$$</p>
+        <p>$R(x)$ 是外半径（离轴更远的曲线），$r(x)$ 是内半径（离轴更近的曲线）。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：圆盘法的核心就是 $V = \\pi \\int r^2\\,dx$——<strong>面积公式 $\\pi r^2$</strong> 乘以<strong>厚度 $dx$</strong> 再积分。垫圈法多减一个内圆。选哪种取决于截面长什么样——画个草图一目了然。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$y = \\sqrt{x}$（$0 \\leq x \\leq 4$）绕 $x$ 轴旋转的体积 = ',
+        answer: '8π',
+        accept: ['8π', '8pi', '8*pi'],
+        hint: '$[f(x)]^2 = (\\sqrt{x})^2 = x$。$V = \\pi \\int_0^4 x\\,dx$。',
+        solution: '$V = \\pi \\int_0^4 x\\,dx = \\pi[x^2/2]_0^4 = \\pi \\cdot 8 = 8\\pi$。',
+      },
+      {
+        type: 'mc',
+        q: '$y = x^2$（$0 \\leq x \\leq 1$）绕 $x$ 轴旋转的体积是？',
+        options: ['$\\dfrac{\\pi}{5}$', '$\\dfrac{\\pi}{4}$', '$\\dfrac{\\pi}{3}$', '$\\pi$'],
+        answer: 0,
+        hint: '$[f(x)]^2 = x^4$。$V = \\pi \\int_0^1 x^4\\,dx = \\pi \\cdot [x^5/5]_0^1$。',
+        solution: '$V = \\pi \\int_0^1 x^4\\,dx = \\pi/5$。',
+      },
+      {
+        type: 'mc',
+        q: '用积分推导球体体积，需要把什么函数绕 $x$ 轴旋转？',
+        options: ['$y = r$（常数）', '$y = \\sqrt{r^2 - x^2}$', '$y = r - x$', '$y = r^2 - x^2$'],
+        answer: 1,
+        hint: '球的截面是圆。半径为 $r$ 的圆方程 $x^2 + y^2 = r^2$，解出上半部分 $y = ?$',
+        solution: '圆 $x^2+y^2=r^2$ 的上半部分是 $y=\\sqrt{r^2-x^2}$，绕 $x$ 轴旋转得球体。',
+      },
+    ],
+  },
+
+  {
+    id: 33, module: 'M6', title: '弧长',
+    hook: '一根弯曲的电线有多长？不能直接用"两点距离"，因为它是弯的。和面积一样的思路：切成无穷多段极短的"小直线"，每段用勾股定理，再加起来。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">从勾股定理到弧长公式</h3>
+        <p>一小段曲线，水平走了 $dx$，竖直走了 $dy$。这一小段的长度（近似为直线）：</p>
+        <p>$$ds = \\sqrt{dx^2 + dy^2} = \\sqrt{1 + \\left(\\frac{dy}{dx}\\right)^2}\\,dx = \\sqrt{1 + [f'(x)]^2}\\,dx$$</p>
+        <p>把所有小段加起来：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          $$L = \\int_a^b \\sqrt{1 + [f'(x)]^2}\\,dx$$
+        </div>
+        <p>这就是<strong>弧长公式</strong>。本质就是"微小勾股定理的积分"。</p>
+      ` },
+      { type: 'viz', id: 'viz-l33', label: '曲线上的微元 $ds$ 与勾股定理' },
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">例 1：直线的弧长</h3>
+        <p>先验证公式对直线正确。$f(x) = 2x + 1$，$[0, 3]$ 上的弧长。</p>
+        <p>$f'(x) = 2$，$L = \\int_0^3 \\sqrt{1 + 4}\\,dx = 3\\sqrt{5}$。</p>
+        <p>直接用两点距离：$\\sqrt{3^2 + 6^2} = \\sqrt{45} = 3\\sqrt{5}$。✓ 一致。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">例 2：抛物线</h3>
+        <p>$f(x) = x^2$，$[0, 1]$ 上的弧长。</p>
+        <p>$f'(x) = 2x$，$L = \\int_0^1 \\sqrt{1 + 4x^2}\\,dx$。</p>
+        <p>这个积分需要三角换元（令 $2x = \\tan\\theta$），计算较复杂。结果为：</p>
+        <p>$$L = \\frac{\\sqrt{5}}{2} + \\frac{\\ln(2 + \\sqrt{5})}{4} \\approx 1.4789$$</p>
+        <p>比直线距离 $\\sqrt{1^2 + 1^2} = \\sqrt{2} \\approx 1.414$ 稍长——曲线总是比直线长，符合直觉。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">例 3：一个"能算干净"的例子</h3>
+        <p>$f(x) = \\dfrac{x^3}{3} + \\dfrac{1}{4x}$，$[1, 2]$ 上弧长。</p>
+        <p>$f'(x) = x^2 - \\dfrac{1}{4x^2}$。</p>
+        <p>$1 + [f']^2 = 1 + x^4 - \\dfrac{1}{2} + \\dfrac{1}{16x^4} = x^4 + \\dfrac{1}{2} + \\dfrac{1}{16x^4} = \\left(x^2 + \\dfrac{1}{4x^2}\\right)^2$。</p>
+        <p>开根号后被积函数变成 $x^2 + \\dfrac{1}{4x^2}$——可以直接积分！</p>
+        <p>$$L = \\int_1^2 \\left(x^2 + \\frac{1}{4x^2}\\right)dx = \\left[\\frac{x^3}{3} - \\frac{1}{4x}\\right]_1^2 = \\left(\\frac{8}{3} - \\frac{1}{8}\\right) - \\left(\\frac{1}{3} - \\frac{1}{4}\\right) = \\frac{59}{24}$$</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：弧长积分 $\\int\\sqrt{1 + (f')^2}\\,dx$ 里的根号很讨厌——大多数情况算不出"干净"的答案。教材里能算的例子都是精心构造的。实际应用中，弧长往往靠数值积分（L36）来近似。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$y = 3x + 2$ 在 $[0, 4]$ 上的弧长 = ',
+        answer: '4√10',
+        accept: ['4√10', '4sqrt(10)', '4*sqrt(10)', '4根号10'],
+        hint: '$f\'(x) = 3$。$L = \\int_0^4 \\sqrt{1+9}\\,dx = 4\\sqrt{10}$。',
+        solution: '$L = \\int_0^4 \\sqrt{1+9}\\,dx = 4\\sqrt{10}$。',
+      },
+      {
+        type: 'mc',
+        q: '弧长公式 $\\sqrt{1 + [f\'(x)]^2}$ 中的根号来源于？',
+        options: ['三角恒等式', '勾股定理（微元的水平和垂直分量）', '均值不等式', '泰勒展开'],
+        answer: 1,
+        hint: '一小段曲线的长度 $ds \\approx \\sqrt{dx^2 + dy^2}$——这是什么定理？',
+        solution: '微元 $(dx, dy)$ 构成直角三角形，斜边 $ds = \\sqrt{dx^2+dy^2}$，就是勾股定理。',
+      },
+      {
+        type: 'mc',
+        q: '以下哪个弧长积分最难求精确值？',
+        options: ['$\\int_0^1 \\sqrt{1+4}\\,dx$（直线）', '$\\int_0^1 \\sqrt{1+4x^2}\\,dx$（抛物线）', '$\\int_0^{2\\pi} 1\\,dx$（水平线）'],
+        answer: 1,
+        hint: '常数的根号直接提出来。含 $x$ 的根号通常需要三角换元或查表。',
+        solution: '$\\sqrt{1+4x^2}$ 需要三角换元，计算远比常数根号复杂。',
+      },
+    ],
+  },
+
+  {
+    id: 34, module: 'M6', title: '物理应用：功',
+    hook: '力 × 距离 = 功。但如果力随位置变化呢？恒力 $F$ 做功 $W = Fd$ 变成了一个积分——把变力沿路径"逐寸累积"。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">变力做功</h3>
+        <p>中学物理：恒力 $F$ 推物体走 $d$ 米，做功 $W = Fd$。</p>
+        <p>如果力不恒定——比如弹簧越拉越紧（$F$ 随位移 $x$ 增大），怎么办？</p>
+        <p>老思路：把路程切成极小段 $dx$，每段上力近似恒定 $F(x)$，做功 $\\approx F(x)\\,dx$。全程累加：</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          $$W = \\int_a^b F(x)\\,dx$$
+        </div>
+        <p>$a$ 到 $b$ 是物体运动的起止位置。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">例 1：弹簧（胡克定律）</h3>
+        <p>弹簧的恢复力 $F(x) = kx$（$k$ 为弹性系数，$x$ 为拉伸量）。</p>
+        <p>把弹簧从自然长度拉伸 $d$ 米所做的功：</p>
+        <p>$$W = \\int_0^d kx\\,dx = k \\cdot \\frac{x^2}{2}\\Big|_0^d = \\frac{1}{2}kd^2$$</p>
+        <p>这就是弹性势能公式 $\\dfrac{1}{2}kd^2$ 的来源。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">例 2：提水桶</h3>
+        <p>一根 20 米长的绳子（重 0.5 kg/m）挂着一个 10 kg 的桶。把桶从井底提到顶端需要多少功？</p>
+        <p>设 $x$ = 已提升的高度（$0 \\to 20$）。此时剩余绳重 $= 0.5(20 - x)$ kg。加上桶：$F(x) = [10 + 0.5(20-x)] \\times 9.8$。</p>
+        <p>$$W = 9.8\\int_0^{20} [10 + 10 - 0.5x]\\,dx = 9.8\\int_0^{20}(20 - 0.5x)\\,dx$$</p>
+        <p>$$= 9.8\\left[20x - 0.25x^2\\right]_0^{20} = 9.8(400 - 100) = 2940\\,\\text{J}$$</p>
+      ` },
+      { type: 'viz', id: 'viz-l34', label: '弹簧力 $F=kx$ 的功 = 曲线下面积' },
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">为什么"功 = 面积"？</h3>
+        <p>画 $F(x)$ vs. $x$ 的图像，$\\int_a^b F(x)\\,dx$ 就是图像下方的面积——力 - 位移图下的面积就是功。这个直觉在物理里非常有用。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：只要看到"某个量随位置/时间变化，要求总累积"——功、热量、总质量、总电荷——都是<strong>定积分的应用</strong>。套路统一：找到被积量（力/密度/速率），确定积分变量的范围，然后积分。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '弹性系数 $k = 100$ N/m 的弹簧，从自然长度拉伸 0.3 m，做的功 = （单位 J）',
+        answer: '4.5',
+        hint: '$W = \\dfrac{1}{2}kd^2 = \\dfrac{1}{2}(100)(0.3)^2$。',
+        solution: '$W = \\frac{1}{2}(100)(0.09) = 4.5$ J。',
+      },
+      {
+        type: 'fill',
+        q: '力 $F(x) = 3x^2$（N）把物体从 $x=0$ 推到 $x=2$ m，做的功 = （N·m）',
+        answer: '8',
+        hint: '$W = \\int_0^2 3x^2\\,dx$。',
+        solution: '$W = \\int_0^2 3x^2\\,dx = [x^3]_0^2 = 8$ N·m。',
+      },
+      {
+        type: 'mc',
+        q: '以下哪个场景<strong>不需要</strong>用积分算功？',
+        options: ['恒力 5 N 推箱子走 3 m', '弹簧从 0 拉伸到 0.1 m', '变力 $F = x^2$ 作用物体走 $0$ 到 $1$ m', '重力提水（桶在变轻）'],
+        answer: 0,
+        hint: '恒力的功直接 $F \\times d$，不需要积分。',
+        solution: '恒力做功 $W = Fd = 5 \\times 3 = 15$ J，直接乘法即可，无需积分。',
+      },
+    ],
+  },
+
+  {
+    id: 35, module: 'M6', title: '反常积分',
+    hook: '定积分要求区间有限、函数有界。但有时我们想积到无穷远（$\\int_1^\\infty$），或者函数在某点趋于无穷。这些"越界"的积分叫反常积分——用极限来处理。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">第一类：积到无穷远</h3>
+        <p>$$\\int_1^\\infty \\frac{1}{x^2}\\,dx = \\lim_{t \\to \\infty}\\int_1^t \\frac{1}{x^2}\\,dx = \\lim_{t \\to \\infty}\\left[-\\frac{1}{x}\\right]_1^t = \\lim_{t \\to \\infty}\\left(-\\frac{1}{t} + 1\\right) = 1.$$</p>
+        <p>无穷长的区间，面积居然有限！曲线 $1/x^2$ 衰减得"够快"，尾巴的面积可以忽略。</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          <strong>定义</strong>：$\\int_a^\\infty f(x)\\,dx = \\lim\\limits_{t \\to \\infty}\\int_a^t f(x)\\,dx$。极限存在 → <strong>收敛</strong>；极限不存在 → <strong>发散</strong>。
+        </div>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">$p$-判别法</h3>
+        <p>最常用的判断工具：</p>
+        <p>$$\\int_1^\\infty \\frac{1}{x^p}\\,dx \\begin{cases} \\text{收敛} & \\text{若 } p > 1 \\\\ \\text{发散} & \\text{若 } p \\leq 1 \\end{cases}$$</p>
+        <p>例如 $\\int_1^\\infty \\dfrac{1}{x}\\,dx$ 发散（$\\ln x \\to \\infty$），但 $\\int_1^\\infty \\dfrac{1}{x^2}\\,dx = 1$ 收敛。$p = 1$ 是分界线。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">第二类：被积函数无界</h3>
+        <p>$$\\int_0^1 \\frac{1}{\\sqrt{x}}\\,dx = \\lim_{t \\to 0^+}\\int_t^1 x^{-1/2}\\,dx = \\lim_{t \\to 0^+}\\left[2\\sqrt{x}\\right]_t^1 = 2 - 0 = 2.$$</p>
+        <p>虽然 $1/\\sqrt{x}$ 在 $x=0$ 处"爆炸"到无穷，但面积仍然有限。</p>
+      ` },
+      { type: 'viz', id: 'viz-l35', label: '$1/x$ 发散 vs $1/x^2$ 收敛——尾巴面积的对比' },
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">直觉：收敛 vs 发散</h3>
+        <p>能不能积到无穷还得出有限值？取决于函数<strong>衰减得够不够快</strong>。</p>
+        <ul>
+          <li>$1/x$ 衰减太慢——面积无限累积，发散</li>
+          <li>$1/x^2$ 衰减够快——尾巴面积趋于 0，收敛</li>
+          <li>$e^{-x}$ 指数衰减——衰减更快，当然收敛（$\\int_0^\\infty e^{-x}\\,dx = 1$）</li>
+        </ul>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：反常积分在概率论中极为重要——概率密度函数必须满足 $\\int_{-\\infty}^\\infty f(x)\\,dx = 1$，这就是一个反常积分。正态分布的"钟形曲线"积到 $\\pm\\infty$ 恰好等于 1，是数学中最漂亮的结果之一。
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '$\\int_1^\\infty \\dfrac{1}{x^3}\\,dx = $（用分数）',
+        answer: '1/2',
+        accept: ['1/2', '0.5'],
+        hint: '原函数 $= -\\dfrac{1}{2x^2}$。代上限 $t \\to \\infty$ 时趋于 $0$，代下限 $1$ 得 $-1/2$。',
+        solution: '$\\lim_{t\\to\\infty}[-\\frac{1}{2x^2}]_1^t = 0 - (-1/2) = 1/2$。',
+      },
+      {
+        type: 'mc',
+        q: '$\\int_1^\\infty \\dfrac{1}{\\sqrt{x}}\\,dx$ 是收敛还是发散？',
+        options: ['收敛', '发散'],
+        answer: 1,
+        hint: '$1/\\sqrt{x} = x^{-1/2}$，$p = 1/2 < 1$。',
+        solution: '$p = 1/2 \\leq 1$，由 $p$-判别法，发散。',
+      },
+      {
+        type: 'fill',
+        q: '$\\int_0^\\infty e^{-x}\\,dx = $',
+        answer: '1',
+        hint: '原函数 $= -e^{-x}$。当 $t \\to \\infty$，$-e^{-t} \\to 0$。',
+        solution: '$\\lim_{t\\to\\infty}[-e^{-x}]_0^t = 0 - (-1) = 1$。',
+      },
+    ],
+  },
+
+  {
+    id: 36, module: 'M6', title: '数值积分',
+    hook: '大部分积分算不出"干净"的原函数——$\\int e^{-x^2}dx$、$\\int \\sqrt{1+x^3}\\,dx$ 都没有初等形式。现实中怎么办？用数值方法<strong>近似</strong>：把曲线用简单形状（梯形、抛物线）拟合，精度想要多高有多高。',
+    sections: [
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-2 mb-3">为什么需要数值积分</h3>
+        <p>你已经掌握了换元、分部等"解析方法"。但事实是：<strong>绝大多数积分没有初等原函数</strong>。</p>
+        <p>经典的例子：$\\int e^{-x^2}\\,dx$（正态分布的核心），$\\int \\dfrac{\\sin x}{x}\\,dx$，$\\int \\sqrt{1 + x^4}\\,dx$——全都算不出来。</p>
+        <p>工程和科学的解决方案：<strong>用数值方法近似到任意精度</strong>。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">梯形法则</h3>
+        <p>把 $[a,b]$ 分成 $n$ 等份，每小段上用<strong>梯形</strong>（连接两端的直线）代替曲线。</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          $$T_n = \\frac{\\Delta x}{2}\\left[f(x_0) + 2f(x_1) + 2f(x_2) + \\cdots + 2f(x_{n-1}) + f(x_n)\\right]$$
+        </div>
+        <p>其中 $\\Delta x = \\dfrac{b-a}{n}$，$x_i = a + i \\cdot \\Delta x$。</p>
+        <p>直觉：梯形面积 $= \\dfrac{\\text{上底}+\\text{下底}}{2} \\times \\text{高}$，加起来就是上面的公式。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">辛普森法则</h3>
+        <p>梯形用直线拟合每段曲线。更高明：每<strong>两段</strong>（三个点）用<strong>抛物线</strong>拟合。</p>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-3">
+          $$S_n = \\frac{\\Delta x}{3}\\left[f(x_0) + 4f(x_1) + 2f(x_2) + 4f(x_3) + \\cdots + 4f(x_{n-1}) + f(x_n)\\right]$$
+        </div>
+        <p>系数规律：$1, 4, 2, 4, 2, \\ldots, 4, 1$。要求 $n$ 为偶数。</p>
+        <p>辛普森法则的精度远高于梯形——对多项式函数（≤ 3 次），它<strong>给出精确答案</strong>。</p>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">一起做一道</h3>
+        <p>用 $n = 4$ 的梯形法则估算 $\\int_0^2 e^{-x^2}\\,dx$。</p>
+        <p>$\\Delta x = 0.5$，节点：$x_0=0, x_1=0.5, x_2=1, x_3=1.5, x_4=2$。</p>
+        <p>函数值：$f(0) = 1$，$f(0.5) \\approx 0.7788$，$f(1) \\approx 0.3679$，$f(1.5) \\approx 0.1054$，$f(2) \\approx 0.0183$。</p>
+        <p>$$T_4 = \\frac{0.5}{2}[1 + 2(0.7788) + 2(0.3679) + 2(0.1054) + 0.0183]$$</p>
+        <p>$$= 0.25 \\times [1 + 1.5576 + 0.7358 + 0.2108 + 0.0183] = 0.25 \\times 3.5225 \\approx 0.8806$$</p>
+        <p>真值 $\\approx 0.8821$，误差约 $0.17\\%$——只用 4 段就有这精度。</p>
+      ` },
+      { type: 'viz', id: 'viz-l36', label: '梯形法则 vs 辛普森法则的精度对比' },
+      { type: 'text', html: `
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">误差与精度</h3>
+        <ul>
+          <li><strong>梯形法则</strong>：误差 $\\sim O(\\Delta x^2)$（$n$ 翻倍，误差缩 4 倍）</li>
+          <li><strong>辛普森法则</strong>：误差 $\\sim O(\\Delta x^4)$（$n$ 翻倍，误差缩 16 倍）</li>
+        </ul>
+        <p>所以辛普森法则"性价比"极高——同样的计算量，精度高得多。计算器和电脑内部计算积分时，用的正是这类方法的升级版。</p>
+
+        <div class="rounded-md p-4 my-5" style="background:#fdf6ec;border:1px solid #ead9b5;">
+          <strong>经验之谈</strong>：数值积分是"理论到实践"的桥梁。微积分课上我们追求精确的原函数，但真实世界中，绝大多数积分靠数值方法计算。重要的是理解<strong>误差阶</strong>——这样你知道"我需要取多少段才能满足精度要求"。
+        </div>
+
+        <h3 class="serif text-xl font-semibold mt-8 mb-3">课程总结</h3>
+        <div class="rounded-md bg-[var(--accent-soft)] border-l-[3px] border-[var(--accent)] p-4 my-5">
+          <p style="margin:0;"><strong>恭喜你走完了 36 节。</strong></p>
+          <p style="margin:0.5em 0 0;">从函数、极限，到导数、积分，再到实际应用——你掌握了微积分的核心框架。这套工具描述的是<strong>变化</strong>：怎么刻画变化（导数），怎么累积变化（积分），以及它们互为逆运算（基本定理）。世界上几乎所有关于"连续变化"的定量描述，都建立在这个框架之上。</p>
+        </div>
+      ` },
+    ],
+    exercises: [
+      {
+        type: 'fill',
+        q: '用梯形法则，$n=2$，估算 $\\int_0^1 x^2\\,dx$。（$\\Delta x = 0.5$，节点 $0, 0.5, 1$）',
+        answer: '0.375',
+        accept: ['0.375', '3/8'],
+        hint: '$T_2 = \\dfrac{0.5}{2}[f(0) + 2f(0.5) + f(1)] = 0.25[0 + 2(0.25) + 1]$。',
+        solution: '$T_2 = 0.25[0 + 0.5 + 1] = 0.375$。（真值 $1/3 \\approx 0.333$，略大——梯形在凸曲线上总是偏大。）',
+      },
+      {
+        type: 'mc',
+        q: '辛普森法则比梯形法则更精确，是因为它用什么拟合每段曲线？',
+        options: ['直线', '抛物线（二次曲线）', '三次曲线', '圆弧'],
+        answer: 1,
+        hint: '梯形 = 直线连接两端。辛普森 = 每三个点拟合一条…？',
+        solution: '辛普森法则每两段（三个点）用抛物线拟合，比直线（梯形）更贴合曲线。',
+      },
+      {
+        type: 'mc',
+        q: '若梯形法则用 $n$ 段的误差约为 $E$，用 $2n$ 段后误差约为？',
+        options: ['$E/2$', '$E/4$', '$E/8$', '$E/16$'],
+        answer: 1,
+        hint: '梯形法则误差 $\\sim O(\\Delta x^2)$。$n$ 翻倍 → $\\Delta x$ 减半 → $\\Delta x^2$ 变为原来的…？',
+        solution: '$\\Delta x$ 减半 → $\\Delta x^2$ 变为 $1/4$ → 误差缩小到 $E/4$。',
       },
     ],
   },
@@ -2351,6 +3284,132 @@ function renderViz(id, container) {
       container.querySelector('input[type=range]').oninput = e => { x0 = parseFloat(e.target.value); draw(); };
       draw();
     },
+    'viz-l13': () => {
+      const fns = {
+        '$x^n$（幂）': {fn: x => x*x*x, deriv: x => 3*x*x, fLabel: 'f = x³', dLabel: "f' = 3x²"},
+        '$\\sin x$': {fn: x => Math.sin(x), deriv: x => Math.cos(x), fLabel: 'f = sin x', dLabel: "f' = cos x"},
+        '$\\cos x$': {fn: x => Math.cos(x), deriv: x => -Math.sin(x), fLabel: 'f = cos x', dLabel: "f' = -sin x"},
+        '$e^x$': {fn: x => Math.exp(x), deriv: x => Math.exp(x), fLabel: 'f = eˣ', dLabel: "f' = eˣ"},
+        '$\\ln x$': {fn: x => x > 0.05 ? Math.log(x) : NaN, deriv: x => x > 0.05 ? 1/x : NaN, fLabel: 'f = ln x', dLabel: "f' = 1/x"},
+        '$\\sqrt{x}$': {fn: x => x >= 0 ? Math.sqrt(x) : NaN, deriv: x => x > 0.05 ? 1/(2*Math.sqrt(x)) : NaN, fLabel: 'f = √x', dLabel: "f' = 1/(2√x)"},
+      };
+      const keys = Object.keys(fns);
+      let current = keys[0];
+      let x0 = 1;
+      const draw = () => {
+        const f = fns[current];
+        const y0 = f.fn(x0);
+        const slope = f.deriv(x0);
+        const svg = svgPlot({
+          fn: [
+            {fn: f.fn, color: '#2c4a7a', label: f.fLabel},
+            {fn: f.deriv, color: '#b04030', dashed: true, label: f.dLabel},
+          ],
+          xMin: -3, xMax: 4, yMin: -3, yMax: 5,
+          points: [{x: x0, y: y0, color: '#2c4a7a', label: `f(${x0.toFixed(1)})`}],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        container.querySelector('.viz-readout').innerHTML =
+          `x = <strong>${x0.toFixed(2)}</strong> &nbsp;|&nbsp; f(x) = ${isNaN(y0) ? '—' : y0.toFixed(3)} &nbsp;|&nbsp; <strong>f′(x) = ${isNaN(slope) ? '—' : slope.toFixed(3)}</strong>（红色虚线在该 x 处的值）`;
+      };
+      const btns = keys.map(k => `<button data-k="${k}">${k}</button>`).join('');
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">${btns}</div>
+        <div class="viz-controls" style="margin-top:0.4em;">
+          <span style="font-size:0.85em;color:#666;">x:</span>
+          <input type="range" min="-2.5" max="3.5" step="0.05" value="${x0}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>`;
+      draw();
+      container.querySelectorAll('button').forEach(b => {
+        b.classList.toggle('active', b.dataset.k === current);
+        b.onclick = () => {
+          current = b.dataset.k;
+          container.querySelectorAll('button').forEach(x => x.classList.toggle('active', x.dataset.k === current));
+          draw();
+          renderAllMath(container);
+        };
+      });
+      container.querySelector('input[type=range]').oninput = e => { x0 = parseFloat(e.target.value); draw(); };
+      renderAllMath(container);
+    },
+
+    'viz-l14': () => {
+      let x0 = 1;
+      const u = x => x * x;
+      const v = x => Math.sin(x);
+      const up = x => 2 * x;
+      const vp = x => Math.cos(x);
+      const prod = x => u(x) * v(x);
+      const prodDeriv = x => up(x) * v(x) + u(x) * vp(x);
+      const draw = () => {
+        const svg = svgPlot({
+          fn: [
+            {fn: prod, color: '#2c4a7a', label: 'f·g = x²sin(x)'},
+            {fn: prodDeriv, color: '#b04030', label: "(f·g)' = 2x·sin(x) + x²·cos(x)"},
+          ],
+          xMin: -4, xMax: 4, yMin: -8, yMax: 8,
+          points: [
+            {x: x0, y: prod(x0), color: '#2c4a7a'},
+            {x: x0, y: prodDeriv(x0), color: '#b04030'},
+          ],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        const tangentSlope = prodDeriv(x0);
+        container.querySelector('.viz-readout').innerHTML =
+          `x = <strong>${x0.toFixed(2)}</strong> &nbsp;|&nbsp; f′g = ${(up(x0)*v(x0)).toFixed(2)} &nbsp;+&nbsp; fg′ = ${(u(x0)*vp(x0)).toFixed(2)} &nbsp;=&nbsp; <strong>(fg)′ = ${tangentSlope.toFixed(3)}</strong>`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">x:</span>
+          <input type="range" min="-3.5" max="3.5" step="0.05" value="${x0}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">蓝色 = $x^2 \\sin x$（乘积），红色 = 其导数。下方分解展示了乘积法则的两个分量 $f'g + fg'$ 如何加在一起。</p>`;
+      container.querySelector('input').oninput = e => { x0 = parseFloat(e.target.value); draw(); };
+      draw();
+      renderAllMath(container);
+    },
+
+    'viz-l15': () => {
+      let x0 = 1;
+      const inner = x => x * x;
+      const outer = x => Math.sin(x);
+      const composite = x => Math.sin(x * x);
+      const compositeD = x => Math.cos(x * x) * 2 * x;
+      const draw = () => {
+        const y0 = composite(x0);
+        const slope = compositeD(x0);
+        const tangent = x => slope * (x - x0) + y0;
+        const svg = svgPlot({
+          fn: [
+            {fn: composite, color: '#2c4a7a', label: 'sin(x²)（复合）'},
+            {fn: tangent, color: '#b04030', label: `切线（斜率 = ${slope.toFixed(2)}）`},
+          ],
+          xMin: -3, xMax: 3, yMin: -1.5, yMax: 1.5,
+          points: [{x: x0, y: y0, color: '#b04030'}],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        const outerD = Math.cos(inner(x0));
+        const innerD = 2 * x0;
+        container.querySelector('.viz-readout').innerHTML =
+          `x = <strong>${x0.toFixed(2)}</strong> &nbsp;|&nbsp; 外导 cos(x²) = ${outerD.toFixed(3)} &nbsp;×&nbsp; 内导 2x = ${innerD.toFixed(2)} &nbsp;=&nbsp; <strong>${slope.toFixed(3)}</strong>`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">x:</span>
+          <input type="range" min="-2.5" max="2.5" step="0.05" value="${x0}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">链式法则：$[\\sin(x^2)]' = \\underbrace{\\cos(x^2)}_{\\text{外导}} \\times \\underbrace{2x}_{\\text{内导}}$。拖动 x 看两个因子如何相乘得到切线斜率。</p>`;
+      container.querySelector('input').oninput = e => { x0 = parseFloat(e.target.value); draw(); };
+      draw();
+      renderAllMath(container);
+    },
+
     'viz-l16': () => {
       let theta = Math.PI / 6;
       const draw = () => {
@@ -2398,32 +3457,191 @@ function renderViz(id, container) {
         <p style="font-size:0.85em;color:#666;margin-top:0.5em;line-height:1.5;">sin 的高阶导数 4 阶一个周期。注意每条曲线相对前一条「向左平移 π/2」——这就是"求导 = 相位前移 90°"的几何对应。</p>`;
     },
     'viz-l18': () => {
+      let x0 = 0;
       const fx  = x => x*x*x - 3*x;
       const fpx = x => 3*x*x - 3;
-      const svg = svgPlot({
-        fn: [
-          {fn: fx,  color: '#2c4a7a', label: 'f(x) = x³ − 3x'},
-          {fn: fpx, color: '#b04030', label: "f′(x) = 3x² − 3"},
-        ],
-        xMin: -2.5, xMax: 2.5, yMin: -4, yMax: 7,
-      });
-      container.innerHTML = `<div class="viz-svg">${svg}</div>
-        <p style="font-size:0.85em;color:#666;margin-top:0.5em;line-height:1.5;">注意：红色 f′ 在 (−1, 1) 区间为负 (位于 x 轴下方) → 蓝色 f 在该区间下降。其他区间 f′ &gt; 0 → f 上升。<strong>f′ 的符号 100% 决定了 f 的升降</strong>。</p>`;
+      const draw = () => {
+        const y0 = fx(x0);
+        const slope = fpx(x0);
+        const tangent = x => slope * (x - x0) + y0;
+        const svg = svgPlot({
+          fn: [
+            {fn: fx, color: '#2c4a7a', label: 'f(x) = x³ − 3x'},
+            {fn: fpx, color: '#b04030', dashed: true, label: "f′(x) = 3x² − 3"},
+            {fn: tangent, color: '#b04030', width: 1.5},
+          ],
+          xMin: -2.5, xMax: 2.5, yMin: -4, yMax: 7,
+          points: [{x: x0, y: y0, color: '#b04030'}],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        const sign = slope > 0.01 ? '> 0 → f 上升 ↗' : (slope < -0.01 ? '< 0 → f 下降 ↘' : '= 0 → 驻点（水平切线）');
+        container.querySelector('.viz-readout').innerHTML =
+          `x = <strong>${x0.toFixed(2)}</strong> &nbsp;|&nbsp; f′(x) = <strong>${slope.toFixed(2)}</strong> &nbsp;${sign}`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">x:</span>
+          <input type="range" min="-2.2" max="2.2" step="0.05" value="${x0}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">红色虚线 = f′。<strong>f′ > 0 的区间 f 上升，f′ < 0 的区间 f 下降</strong>。拖到 $x = \\pm 1$ 看水平切线（驻点）。</p>`;
+      container.querySelector('input').oninput = e => { x0 = parseFloat(e.target.value); draw(); };
+      draw();
+      renderAllMath(container);
     },
+
+    'viz-l19': () => {
+      let a = 3;
+      const draw = () => {
+        const fx = x => x*x*x - a*x;
+        const fpx = x => 3*x*x - a;
+        const crit = Math.sqrt(a/3);
+        const svg = svgPlot({
+          fn: [
+            {fn: fx, color: '#2c4a7a', label: `f(x) = x³ − ${a.toFixed(1)}x`},
+            {fn: fpx, color: '#b04030', dashed: true, label: "f′(x)"},
+          ],
+          xMin: -3, xMax: 3, yMin: -6, yMax: 6,
+          points: a > 0 ? [
+            {x: -crit, y: fx(-crit), color: '#2f7a4d', label: '极大'},
+            {x: crit, y: fx(crit), color: '#c89860', label: '极小'},
+          ] : [],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        if (a > 0) {
+          container.querySelector('.viz-readout').innerHTML =
+            `a = <strong>${a.toFixed(1)}</strong> &nbsp;|&nbsp; 驻点 $x = \\pm\\sqrt{a/3}$ = ±${crit.toFixed(2)} &nbsp;|&nbsp; 极大 f(${(-crit).toFixed(2)}) = <strong>${fx(-crit).toFixed(2)}</strong> &nbsp;|&nbsp; 极小 f(${crit.toFixed(2)}) = <strong>${fx(crit).toFixed(2)}</strong>`;
+        } else {
+          container.querySelector('.viz-readout').innerHTML =
+            `a = <strong>${a.toFixed(1)}</strong> &nbsp;|&nbsp; a ≤ 0 时 f′ ≥ 0 恒成立，无极值（单调递增）`;
+        }
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">参数 a:</span>
+          <input type="range" min="-1" max="6" step="0.2" value="${a}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">拖动 a 观察：a > 0 时有两个极值点（绿/橙），a ≤ 0 时函数单调递增无极值。</p>`;
+      container.querySelector('input').oninput = e => { a = parseFloat(e.target.value); draw(); };
+      draw();
+      renderAllMath(container);
+    },
+
+    'viz-l20': () => {
+      let x = 2;
+      const side = 12;
+      const V = x => x * Math.pow(side - 2*x, 2);
+      const draw = () => {
+        const padL = 38, padR = 14, padT = 14, padB = 28;
+        const width = 560, height = 280;
+        const xMin = 0, xMax = 6, yMin = 0, yMax = 140;
+        const sxf = xx => padL + ((xx - xMin) / (xMax - xMin)) * (width - padL - padR);
+        const syf = yy => padT + (1 - (yy - yMin) / (yMax - yMin)) * (height - padT - padB);
+
+        const svg = svgPlot({
+          fn: [{fn: V, color: '#2c4a7a', label: 'V(x) = x(12−2x)²'}],
+          xMin, xMax, yMin, yMax, width, height,
+          points: [
+            {x: x, y: V(x), color: '#b04030', label: `V=${V(x).toFixed(1)}`},
+            {x: 2, y: V(2), color: '#2f7a4d', label: '最大 128'},
+          ],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        const boxW = side - 2*x;
+        container.querySelector('.viz-readout').innerHTML =
+          `剪角 x = <strong>${x.toFixed(2)}</strong> cm &nbsp;|&nbsp; 底边 = ${boxW.toFixed(1)} cm &nbsp;|&nbsp; 体积 = <strong>${V(x).toFixed(1)}</strong> cm³ &nbsp;|&nbsp; 最优 x = 2 → V = 128`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">剪角 x (cm):</span>
+          <input type="range" min="0.1" max="5.9" step="0.05" value="${x}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">12×12 纸板四角剪去边长 x 的正方形折成盒子。红点 = 当前体积，绿点 = 最大值（x=2）。</p>`;
+      container.querySelector('input').oninput = e => { x = parseFloat(e.target.value); draw(); };
+      draw();
+    },
+
     'viz-l21': () => {
+      let x0 = 1;
       const fx   = x => x*x*x - 3*x*x;
       const fpx  = x => 3*x*x - 6*x;
       const fppx = x => 6*x - 6;
-      const svg = svgPlot({
-        fn: [
-          {fn: fx,   color: '#2c4a7a', label: 'f(x) = x³ − 3x²'},
-          {fn: fpx,  color: '#b04030', label: "f′(x)"},
-          {fn: fppx, color: '#2f7a4d', label: "f″(x)"},
-        ],
-        xMin: -1.2, xMax: 3.5, yMin: -7, yMax: 7,
-      });
-      container.innerHTML = `<div class="viz-svg">${svg}</div>
-        <p style="font-size:0.85em;color:#666;margin-top:0.5em;line-height:1.5;">绿色 f″ 在 x = 1 处穿越 x 轴：左侧 f″ &lt; 0 (蓝色 f 凹向下)，右侧 f″ &gt; 0 (f 凹向上)。所以 x = 1 是<strong>拐点</strong>。蓝色曲线确实在那里"换了弯曲方向"。</p>`;
+      const draw = () => {
+        const y0 = fx(x0);
+        const fpp = fppx(x0);
+        const svg = svgPlot({
+          fn: [
+            {fn: fx,   color: '#2c4a7a', label: 'f(x) = x³ − 3x²'},
+            {fn: fpx,  color: '#b04030', dashed: true, label: "f′(x)"},
+            {fn: fppx, color: '#2f7a4d', dashed: true, label: "f″(x)"},
+          ],
+          xMin: -1.2, xMax: 3.5, yMin: -7, yMax: 7,
+          points: [{x: x0, y: y0, color: '#2c4a7a'}, {x: 1, y: fx(1), color: '#666', hollow: true, label: '拐点'}],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        const concavity = fpp > 0.1 ? '凹向上 ∪（f″ > 0）' : (fpp < -0.1 ? '凹向下 ∩（f″ < 0）' : '拐点（f″ = 0，凹凸转换）');
+        container.querySelector('.viz-readout').innerHTML =
+          `x = <strong>${x0.toFixed(2)}</strong> &nbsp;|&nbsp; f″(x) = <strong>${fpp.toFixed(2)}</strong> &nbsp;→&nbsp; ${concavity}`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">x:</span>
+          <input type="range" min="-0.8" max="3.2" step="0.05" value="${x0}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">绿色 f″ 过零点 x=1 处变号 → 蓝色 f 从「凹向下」变成「凹向上」→ 该点为<strong>拐点</strong>。</p>`;
+      container.querySelector('input').oninput = e => { x0 = parseFloat(e.target.value); draw(); };
+      draw();
+    },
+
+    'viz-l22': () => {
+      let xPos = 3;
+      const L = 5;
+      const draw = () => {
+        const yPos = Math.sqrt(L*L - xPos*xPos);
+        const dxdt = 1;
+        const dydt = -(xPos / yPos) * dxdt;
+
+        const padL = 38, padR = 14, padT = 14, padB = 28;
+        const width = 400, height = 400;
+        const plotW = width - padL - padR;
+        const plotH = height - padT - padB;
+        const xMin = -0.5, xMax = 5.5, yMin2 = -0.5, yMax2 = 5.5;
+        const sx = x => padL + ((x - xMin) / (xMax - xMin)) * plotW;
+        const sy = y => padT + (1 - (y - yMin2) / (yMax2 - yMin2)) * plotH;
+
+        const wall = `<line x1="${sx(0)}" y1="${sy(0)}" x2="${sx(0)}" y2="${sy(5.2)}" stroke="#666" stroke-width="3"/>`;
+        const floor = `<line x1="${sx(0)}" y1="${sy(0)}" x2="${sx(5.2)}" y2="${sy(0)}" stroke="#666" stroke-width="3"/>`;
+        const ladder = `<line x1="${sx(xPos)}" y1="${sy(0)}" x2="${sx(0)}" y2="${sy(yPos)}" stroke="#2c4a7a" stroke-width="3" stroke-linecap="round"/>`;
+        const bottomPt = `<circle cx="${sx(xPos)}" cy="${sy(0)}" r="5" fill="#b04030"/>`;
+        const topPt = `<circle cx="${sx(0)}" cy="${sy(yPos)}" r="5" fill="#2f7a4d"/>`;
+        const arrowR = `<text x="${sx(xPos)+8}" y="${sy(0)+16}" font-size="11" fill="#b04030">→ dx/dt = ${dxdt}</text>`;
+        const arrowD = `<text x="${sx(0)+8}" y="${sy(yPos)+4}" font-size="11" fill="#2f7a4d">↓ dy/dt = ${dydt.toFixed(3)}</text>`;
+
+        const svgEl = `<svg viewBox="0 0 ${width} ${height}" width="100%" style="max-width:${width}px;display:block;" xmlns="http://www.w3.org/2000/svg">
+          ${wall}${floor}${ladder}${bottomPt}${topPt}${arrowR}${arrowD}
+        </svg>`;
+        container.querySelector('.viz-svg').innerHTML = svgEl;
+        container.querySelector('.viz-readout').innerHTML =
+          `底部 x = <strong>${xPos.toFixed(2)}</strong> m &nbsp;|&nbsp; 顶部 y = <strong>${yPos.toFixed(2)}</strong> m &nbsp;|&nbsp; dy/dt = <strong>${dydt.toFixed(3)}</strong> m/s（负 = 下滑）`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg" style="display:flex;justify-content:center;"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">底部位置 x (m):</span>
+          <input type="range" min="0.5" max="4.8" step="0.05" value="${xPos}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">5 m 梯子靠墙，底部以 1 m/s 外滑。红点底部，绿点顶部。注意：底部越远，顶部下滑越快（$dy/dt = -x/y$）。</p>`;
+      container.querySelector('input').oninput = e => { xPos = parseFloat(e.target.value); draw(); };
+      draw();
+      renderAllMath(container);
     },
     'viz-l23': () => {
       let a = 4;
@@ -2455,6 +3673,498 @@ function renderViz(id, container) {
         <p style="font-size:0.85em;color:#666;margin-top:0.6em;line-height:1.5;">红色切线在切点附近紧贴蓝色 √x ——离得越远偏离越大。线性近似只在切点的<strong>邻域内</strong>有效。</p>`;
       container.querySelector('input').oninput = e => { a = parseFloat(e.target.value); draw(); };
       draw();
+    },
+
+    // ============== M5 Visualizations ==============
+    'viz-l24': () => {
+      let C = 0;
+      const draw = () => {
+        const curves = [];
+        for (let c = -3; c <= 3; c++) {
+          curves.push({fn: x => x*x + c, color: c === Math.round(C) ? '#2c4a7a' : '#ccc', width: c === Math.round(C) ? 2.5 : 1});
+        }
+        curves.push({fn: x => 2*x, color: '#b04030', dashed: true, label: "f'(x) = 2x（所有曲线共同的导数）"});
+        const svg = svgPlot({
+          fn: curves,
+          xMin: -3, xMax: 3, yMin: -4, yMax: 10,
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        container.querySelector('.viz-readout').innerHTML =
+          `高亮：$F(x) = x^2 + (${Math.round(C)})$ &nbsp;|&nbsp; 所有曲线的斜率（导数）都是 $2x$`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">常数 C:</span>
+          <input type="range" min="-3" max="3" step="1" value="${C}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">灰色曲线是 $x^2 + C$ 的不同成员（$C = -3$ 到 $3$），红色虚线是它们共同的导数 $2x$。</p>`;
+      container.querySelector('input').oninput = e => { C = parseFloat(e.target.value); draw(); };
+      draw();
+      renderAllMath(container);
+    },
+
+    'viz-l25': () => {
+      const pairs = {
+        '$x^n$': {integral: '$\\dfrac{x^{n+1}}{n+1} + C$', fn: x => x*x, Fn: x => x*x*x/3, label: '例: x² → x³/3'},
+        '$\\sin x$': {integral: '$-\\cos x + C$', fn: x => Math.sin(x), Fn: x => -Math.cos(x), label: 'sin x → -cos x'},
+        '$\\cos x$': {integral: '$\\sin x + C$', fn: x => Math.cos(x), Fn: x => Math.sin(x), label: 'cos x → sin x'},
+        '$e^x$': {integral: '$e^x + C$', fn: x => Math.exp(x), Fn: x => Math.exp(x), label: 'eˣ → eˣ'},
+        '$1/x$': {integral: '$\\ln|x| + C$', fn: x => Math.abs(x) < 0.05 ? NaN : 1/x, Fn: x => x > 0 ? Math.log(x) : NaN, label: '1/x → ln x'},
+      };
+      const keys = Object.keys(pairs);
+      let current = keys[0];
+      const draw = () => {
+        const p = pairs[current];
+        const svg = svgPlot({
+          fn: [
+            {fn: p.fn, color: '#b04030', label: '被积函数 f(x)'},
+            {fn: p.Fn, color: '#2c4a7a', label: '原函数 F(x)'},
+          ],
+          xMin: -4, xMax: 4, yMin: -4, yMax: 5,
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+      };
+      const btns = keys.map(k => `<button data-k="${k}">${k}</button>`).join('');
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">${btns}</div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">红色 = 被积函数 $f(x)$，蓝色 = 原函数 $F(x)$（$F' = f$）。注意蓝色曲线上升的地方恰好是红色为正的地方。</p>`;
+      draw();
+      container.querySelectorAll('button').forEach(b => {
+        b.classList.toggle('active', b.dataset.k === current);
+        b.onclick = () => {
+          current = b.dataset.k;
+          container.querySelectorAll('button').forEach(x => x.classList.toggle('active', x.dataset.k === current));
+          draw();
+          renderAllMath(container);
+        };
+      });
+      renderAllMath(container);
+    },
+
+    'viz-l26': () => {
+      const svg = svgPlot({
+        fn: [
+          {fn: x => x * Math.exp(x*x), color: '#b04030', label: 'x·e^(x²)（原式）'},
+          {fn: x => 0.5 * Math.exp(x*x), color: '#2c4a7a', label: '½e^(x²)（原函数）'},
+        ],
+        xMin: -2, xMax: 2, yMin: -1, yMax: 5,
+      });
+      container.innerHTML = `
+        <div class="viz-svg">${svg}</div>
+        <div style="font-size:0.85em;color:#666;margin-top:0.5em;line-height:1.6;">
+          <p>红色：$x \\cdot e^{x^2}$（被积函数）。换元 $u = x^2$ 后变成 $\\frac{1}{2}e^u$，积分得 $\\frac{1}{2}e^u = \\frac{1}{2}e^{x^2}$（蓝色）。</p>
+          <p style="margin-top:0.3em;">验证：蓝色曲线的斜率 = 红色曲线的值。在 $x=0$ 处，红色值为 $0$，蓝色确实水平（斜率 $0$）。✓</p>
+        </div>`;
+      renderAllMath(container);
+    },
+
+    'viz-l27': () => {
+      const svg = svgPlot({
+        fn: [
+          {fn: x => x * Math.exp(x), color: '#b04030', label: 'x·eˣ（被积函数）'},
+          {fn: x => Math.exp(x) * (x - 1), color: '#2c4a7a', label: 'eˣ(x-1)（原函数）'},
+        ],
+        xMin: -3, xMax: 2.5, yMin: -3, yMax: 6,
+      });
+      container.innerHTML = `
+        <div class="viz-svg">${svg}</div>
+        <div style="font-size:0.85em;color:#666;margin-top:0.5em;line-height:1.6;">
+          <p>分部积分：$\\int x e^x\\,dx$。令 $u = x$，$dv = e^x dx$。</p>
+          <p>结果：$xe^x - e^x + C = e^x(x-1) + C$（蓝色）。</p>
+          <p>验证：蓝色在 $x=1$ 处斜率 = 红色在 $x=1$ 处的值 $= 1 \\cdot e \\approx 2.72$。✓</p>
+        </div>`;
+      renderAllMath(container);
+    },
+
+    'viz-l28': () => {
+      let n = 4;
+      const f = x => x * x;
+      const a = 0, b = 1;
+      const trueArea = 1/3;
+      const draw = () => {
+        const dx = (b - a) / n;
+        let rects = '';
+        let sum = 0;
+        const padL = 38, padR = 14, padT = 14, padB = 28;
+        const width = 560, height = 320;
+        const plotW = width - padL - padR;
+        const plotH = height - padT - padB;
+        const xMin = -0.3, xMax = 1.5, yMin = -0.2, yMax = 1.3;
+        const sx = x => padL + ((x - xMin) / (xMax - xMin)) * plotW;
+        const sy = y => padT + (1 - (y - yMin) / (yMax - yMin)) * plotH;
+
+        for (let i = 0; i < n; i++) {
+          const xi = a + (i + 1) * dx;
+          const h = f(xi);
+          sum += h * dx;
+          const x1 = sx(a + i * dx), x2 = sx(xi);
+          const y1 = sy(0), y2 = sy(h);
+          rects += `<rect x="${Math.min(x1,x2)}" y="${Math.min(y1,y2)}" width="${Math.abs(x2-x1)}" height="${Math.abs(y2-y1)}" fill="rgba(44,74,122,0.2)" stroke="#2c4a7a" stroke-width="1"/>`;
+        }
+
+        const svg = svgPlot({
+          fn: [{fn: f, color: '#2c4a7a', label: 'y = x²'}],
+          xMin, xMax, yMin, yMax,
+          extras: [rects],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        container.querySelector('.viz-readout').innerHTML =
+          `矩形数 n = <strong>${n}</strong> &nbsp;|&nbsp; 黎曼和 ≈ <strong>${sum.toFixed(5)}</strong> &nbsp;|&nbsp; 真实面积 = 1/3 ≈ 0.33333 &nbsp;|&nbsp; 误差 = ${Math.abs(sum - trueArea).toFixed(5)}`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">矩形数 n:</span>
+          <input type="range" min="2" max="50" step="1" value="${n}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>`;
+      container.querySelector('input').oninput = e => { n = parseInt(e.target.value); draw(); };
+      draw();
+    },
+
+    'viz-l29': () => {
+      let xEnd = 1;
+      const f = x => x * x;
+      const F = x => x*x*x / 3;
+      const draw = () => {
+        const padL = 38, padR = 14, padT = 14, padB = 28;
+        const width = 560, height = 320;
+        const plotW = width - padL - padR;
+        const plotH = height - padT - padB;
+        const xMin = -0.5, xMax = 2.5, yMin = -0.5, yMax = 5;
+        const sx = x => padL + ((x - xMin) / (xMax - xMin)) * plotW;
+        const sy = y => padT + (1 - (y - yMin) / (yMax - yMin)) * plotH;
+
+        let fill = `M${sx(0).toFixed(1)},${sy(0).toFixed(1)}`;
+        const steps = 80;
+        for (let i = 0; i <= steps; i++) {
+          const xi = (i / steps) * xEnd;
+          fill += ` L${sx(xi).toFixed(1)},${sy(f(xi)).toFixed(1)}`;
+        }
+        fill += ` L${sx(xEnd).toFixed(1)},${sy(0).toFixed(1)} Z`;
+        const areaPath = `<path d="${fill}" fill="rgba(44,74,122,0.15)" stroke="none"/>`;
+
+        const svg = svgPlot({
+          fn: [
+            {fn: f, color: '#2c4a7a', label: 'f(x) = x²'},
+            {fn: F, color: '#b04030', dashed: true, label: 'A(x) = x³/3（面积函数）'},
+          ],
+          xMin, xMax, yMin, yMax,
+          extras: [areaPath],
+          points: [{x: xEnd, y: F(xEnd), color: '#b04030', label: `A(${xEnd.toFixed(1)})`}],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        container.querySelector('.viz-readout').innerHTML =
+          `上限 x = <strong>${xEnd.toFixed(2)}</strong> &nbsp;|&nbsp; $A(x) = \\int_0^x t^2\\,dt = \\frac{x^3}{3}$ = <strong>${F(xEnd).toFixed(4)}</strong> &nbsp;|&nbsp; $A'(x) = x^2$ = ${f(xEnd).toFixed(4)}（= 曲线高度 ✓）`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">上限 x:</span>
+          <input type="range" min="0" max="2" step="0.05" value="${xEnd}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">蓝色阴影 = 累积面积 $A(x)$。红色虚线 = 面积函数 $x^3/3$。注意：红色曲线的斜率（变化率）始终等于蓝色曲线的高度——这就是基本定理。</p>`;
+      container.querySelector('input').oninput = e => { xEnd = parseFloat(e.target.value); draw(); };
+      draw();
+      renderAllMath(container);
+    },
+
+    'viz-l30': () => {
+      const svg1 = svgPlot({
+        fn: [
+          {fn: x => x*x*x, color: '#2c4a7a', label: 'x³（奇函数）'},
+        ],
+        xMin: -2, xMax: 2, yMin: -4, yMax: 4,
+        width: 270, height: 220,
+        title: '奇函数：正负面积抵消',
+      });
+      const svg2 = svgPlot({
+        fn: [
+          {fn: x => x*x, color: '#b04030', label: 'x²（偶函数）'},
+        ],
+        xMin: -2, xMax: 2, yMin: -1, yMax: 4,
+        width: 270, height: 220,
+        title: '偶函数：左右面积相等',
+      });
+      container.innerHTML = `
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0.5em;">
+          <div>${svg1}
+            <p style="font-size:0.8em;color:#666;text-align:center;">$\\int_{-a}^a x^3\\,dx = 0$</p>
+          </div>
+          <div>${svg2}
+            <p style="font-size:0.8em;color:#666;text-align:center;">$\\int_{-a}^a x^2\\,dx = 2\\int_0^a x^2\\,dx$</p>
+          </div>
+        </div>`;
+      renderAllMath(container);
+    },
+
+    // ============== M6 Visualizations ==============
+    'viz-l31': () => {
+      const f = x => x;
+      const g = x => x * x;
+      const padL = 38, padR = 14, padT = 14, padB = 28;
+      const width = 560, height = 320;
+      const plotW = width - padL - padR;
+      const plotH = height - padT - padB;
+      const xMin = -0.3, xMax = 1.5, yMin = -0.3, yMax = 1.5;
+      const sx = x => padL + ((x - xMin) / (xMax - xMin)) * plotW;
+      const sy = y => padT + (1 - (y - yMin) / (yMax - yMin)) * plotH;
+
+      let fill = `M${sx(0).toFixed(1)},${sy(0).toFixed(1)}`;
+      for (let i = 0; i <= 60; i++) {
+        const xi = i / 60;
+        fill += ` L${sx(xi).toFixed(1)},${sy(f(xi)).toFixed(1)}`;
+      }
+      for (let i = 60; i >= 0; i--) {
+        const xi = i / 60;
+        fill += ` L${sx(xi).toFixed(1)},${sy(g(xi)).toFixed(1)}`;
+      }
+      fill += ' Z';
+      const areaPath = `<path d="${fill}" fill="rgba(44,74,122,0.15)" stroke="none"/>`;
+
+      const svg = svgPlot({
+        fn: [
+          {fn: f, color: '#2c4a7a', label: 'y = x（上）'},
+          {fn: g, color: '#b04030', label: 'y = x²（下）'},
+        ],
+        xMin, xMax, yMin, yMax,
+        extras: [areaPath],
+        points: [{x: 0, y: 0, color: '#666', label: '(0,0)'}, {x: 1, y: 1, color: '#666', label: '(1,1)'}],
+      });
+      container.innerHTML = `
+        <div class="viz-svg">${svg}</div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">阴影 = $\\int_0^1(x - x^2)\\,dx = 1/6$。"上减下"再积分。</p>`;
+      renderAllMath(container);
+    },
+
+    'viz-l32': () => {
+      let n = 10;
+      const f = x => Math.sqrt(x);
+      const draw = () => {
+        const padL = 38, padR = 14, padT = 14, padB = 28;
+        const width = 560, height = 320;
+        const plotW = width - padL - padR;
+        const plotH = height - padT - padB;
+        const xMin = -0.3, xMax = 4.5, yMin = -2.5, yMax = 2.5;
+        const sx = x => padL + ((x - xMin) / (xMax - xMin)) * plotW;
+        const sy = y => padT + (1 - (y - yMin) / (yMax - yMin)) * plotH;
+
+        let disks = '';
+        const dx = 4 / n;
+        for (let i = 0; i < n; i++) {
+          const xi = (i + 0.5) * dx;
+          const r = f(xi);
+          const cx = sx(xi);
+          const ry = Math.abs(sy(0) - sy(r));
+          const rx = Math.abs(sx(dx/2) - sx(0)) * 0.8;
+          disks += `<ellipse cx="${cx}" cy="${sy(0)}" rx="${rx}" ry="${ry}" fill="rgba(44,74,122,0.1)" stroke="#2c4a7a" stroke-width="0.8"/>`;
+        }
+
+        const svg = svgPlot({
+          fn: [
+            {fn: f, color: '#2c4a7a', label: 'y = √x'},
+            {fn: x => -f(x), color: '#2c4a7a', dashed: true},
+          ],
+          xMin, xMax, yMin, yMax,
+          extras: [disks],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        container.querySelector('.viz-readout').innerHTML =
+          `圆盘数 = <strong>${n}</strong> &nbsp;|&nbsp; $V = \\pi\\int_0^4 x\\,dx = 8\\pi \\approx 25.13$`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">圆盘数:</span>
+          <input type="range" min="3" max="30" step="1" value="${n}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">$y = \\sqrt{x}$ 绕 $x$ 轴旋转。每个椭圆代表一个圆盘截面（侧视图）。</p>`;
+      container.querySelector('input').oninput = e => { n = parseInt(e.target.value); draw(); };
+      draw();
+      renderAllMath(container);
+    },
+
+    'viz-l33': () => {
+      const f = x => x * x;
+      const fp = x => 2 * x;
+      const padL = 38, padR = 14, padT = 14, padB = 28;
+      const width = 560, height = 320;
+      const plotW = width - padL - padR;
+      const plotH = height - padT - padB;
+      const xMin = -0.5, xMax = 1.5, yMin = -0.3, yMax = 1.5;
+      const sx = x => padL + ((x - xMin) / (xMax - xMin)) * plotW;
+      const sy = y => padT + (1 - (y - yMin) / (yMax - yMin)) * plotH;
+
+      const x0 = 0.6;
+      const dx = 0.3;
+      const x1 = x0 + dx;
+      const y0 = f(x0), y1 = f(x1);
+      const dxPx = sx(x1) - sx(x0);
+      const dyPx = sy(y0) - sy(y1);
+
+      const triangle = `
+        <line x1="${sx(x0)}" y1="${sy(y0)}" x2="${sx(x1)}" y2="${sy(y0)}" stroke="#b04030" stroke-width="1.5"/>
+        <line x1="${sx(x1)}" y1="${sy(y0)}" x2="${sx(x1)}" y2="${sy(y1)}" stroke="#b04030" stroke-width="1.5"/>
+        <line x1="${sx(x0)}" y1="${sy(y0)}" x2="${sx(x1)}" y2="${sy(y1)}" stroke="#b04030" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="${(sx(x0)+sx(x1))/2}" y="${sy(y0)+16}" font-size="11" fill="#b04030" text-anchor="middle">dx</text>
+        <text x="${sx(x1)+14}" y="${(sy(y0)+sy(y1))/2}" font-size="11" fill="#b04030" text-anchor="start">dy</text>
+        <text x="${(sx(x0)+sx(x1))/2 - 15}" y="${(sy(y0)+sy(y1))/2 - 8}" font-size="11" fill="#b04030">ds</text>
+      `;
+
+      const svg = svgPlot({
+        fn: [{fn: f, color: '#2c4a7a', label: 'y = x²'}],
+        xMin, xMax, yMin, yMax,
+        extras: [triangle],
+        points: [{x: x0, y: y0, color: '#2c4a7a'}, {x: x1, y: y1, color: '#2c4a7a'}],
+      });
+      container.innerHTML = `
+        <div class="viz-svg">${svg}</div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">红色直角三角形：水平 $dx$，垂直 $dy = f'(x)\\,dx$，斜边 $ds = \\sqrt{dx^2 + dy^2}$。弧长 = 所有 $ds$ 的总和。</p>`;
+      renderAllMath(container);
+    },
+
+    'viz-l34': () => {
+      let k = 100;
+      let d = 0.3;
+      const draw = () => {
+        const padL = 38, padR = 14, padT = 14, padB = 28;
+        const width = 560, height = 280;
+        const plotW = width - padL - padR;
+        const plotH = height - padT - padB;
+        const xMin = -0.05, xMax = 0.5, yMin = -5, yMax = 55;
+        const sx = x => padL + ((x - xMin) / (xMax - xMin)) * plotW;
+        const sy = y => padT + (1 - (y - yMin) / (yMax - yMin)) * plotH;
+
+        let fill = `M${sx(0).toFixed(1)},${sy(0).toFixed(1)}`;
+        const steps = 50;
+        for (let i = 0; i <= steps; i++) {
+          const xi = (i / steps) * d;
+          fill += ` L${sx(xi).toFixed(1)},${sy(k*xi).toFixed(1)}`;
+        }
+        fill += ` L${sx(d).toFixed(1)},${sy(0).toFixed(1)} Z`;
+        const areaPath = `<path d="${fill}" fill="rgba(44,74,122,0.15)" stroke="none"/>`;
+
+        const svg = svgPlot({
+          fn: [{fn: x => k*x, color: '#2c4a7a', label: `F(x) = ${k}x`}],
+          xMin, xMax, yMin, yMax,
+          width, height,
+          extras: [areaPath],
+          points: [{x: d, y: k*d, color: '#b04030'}],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        const W = 0.5 * k * d * d;
+        container.querySelector('.viz-readout').innerHTML =
+          `拉伸 d = <strong>${d.toFixed(2)}</strong> m &nbsp;|&nbsp; $W = \\frac{1}{2}kd^2 = \\frac{1}{2}(${k})(${d.toFixed(2)})^2$ = <strong>${W.toFixed(2)}</strong> J &nbsp;(= 阴影面积)`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">拉伸量 d (m):</span>
+          <input type="range" min="0.05" max="0.45" step="0.01" value="${d}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>`;
+      container.querySelector('input').oninput = e => { d = parseFloat(e.target.value); draw(); };
+      draw();
+      renderAllMath(container);
+    },
+
+    'viz-l35': () => {
+      let t = 5;
+      const draw = () => {
+        const padL = 38, padR = 14, padT = 14, padB = 28;
+        const width = 560, height = 280;
+        const plotW = width - padL - padR;
+        const plotH = height - padT - padB;
+        const xMin = 0.2, xMax = t + 0.5, yMin = -0.2, yMax = 2;
+        const sx = x => padL + ((x - xMin) / (xMax - xMin)) * plotW;
+        const sy = y => padT + (1 - (y - yMin) / (yMax - yMin)) * plotH;
+
+        let fill1 = `M${sx(1).toFixed(1)},${sy(0).toFixed(1)}`;
+        for (let i = 0; i <= 80; i++) {
+          const xi = 1 + (i/80)*(t-1);
+          fill1 += ` L${sx(xi).toFixed(1)},${sy(1/(xi*xi)).toFixed(1)}`;
+        }
+        fill1 += ` L${sx(t).toFixed(1)},${sy(0).toFixed(1)} Z`;
+
+        const svg = svgPlot({
+          fn: [
+            {fn: x => x > 0.2 ? 1/x : NaN, color: '#b04030', dashed: true, label: '1/x（发散）'},
+            {fn: x => x > 0.2 ? 1/(x*x) : NaN, color: '#2c4a7a', label: '1/x²（收敛）'},
+          ],
+          xMin, xMax, yMin, yMax,
+          width, height,
+          extras: [`<path d="${fill1}" fill="rgba(44,74,122,0.12)" stroke="none"/>`],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        const area = 1 - 1/t;
+        container.querySelector('.viz-readout').innerHTML =
+          `积分上限 t = <strong>${t.toFixed(1)}</strong> &nbsp;|&nbsp; $\\int_1^t \\frac{1}{x^2}dx = 1 - 1/t$ = <strong>${area.toFixed(4)}</strong> → 1（收敛） &nbsp;|&nbsp; $\\int_1^t \\frac{1}{x}dx = \\ln t$ = <strong>${Math.log(t).toFixed(4)}</strong> → ∞（发散）`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">上限 t:</span>
+          <input type="range" min="2" max="20" step="0.5" value="${t}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">蓝色阴影 = $\\int_1^t 1/x^2\\,dx$，随 $t$ 增大趋于 $1$（收敛）。红色虚线 $1/x$ 衰减太慢，面积无限增长（发散）。</p>`;
+      container.querySelector('input').oninput = e => { t = parseFloat(e.target.value); draw(); };
+      draw();
+      renderAllMath(container);
+    },
+
+    'viz-l36': () => {
+      const f = x => Math.exp(-x*x);
+      let n = 4;
+      const a = 0, b = 2;
+      const trueVal = 0.88208;
+      const draw = () => {
+        const dx = (b - a) / n;
+        const padL = 38, padR = 14, padT = 14, padB = 28;
+        const width = 560, height = 280;
+        const plotW = width - padL - padR;
+        const plotH = height - padT - padB;
+        const xMin = -0.3, xMax = 2.5, yMin = -0.1, yMax = 1.2;
+        const sx = x => padL + ((x - xMin) / (xMax - xMin)) * plotW;
+        const sy = y => padT + (1 - (y - yMin) / (yMax - yMin)) * plotH;
+
+        let trapezoids = '';
+        let Tn = 0;
+        for (let i = 0; i < n; i++) {
+          const x0 = a + i * dx;
+          const x1 = a + (i+1) * dx;
+          const y0 = f(x0), y1 = f(x1);
+          Tn += (y0 + y1) * dx / 2;
+          trapezoids += `<path d="M${sx(x0).toFixed(1)},${sy(0).toFixed(1)} L${sx(x0).toFixed(1)},${sy(y0).toFixed(1)} L${sx(x1).toFixed(1)},${sy(y1).toFixed(1)} L${sx(x1).toFixed(1)},${sy(0).toFixed(1)} Z" fill="rgba(176,64,48,0.12)" stroke="#b04030" stroke-width="0.8"/>`;
+        }
+
+        const svg = svgPlot({
+          fn: [{fn: f, color: '#2c4a7a', label: 'e^(-x²)', width: 2.5}],
+          xMin, xMax, yMin, yMax,
+          width, height,
+          extras: [trapezoids],
+        });
+        container.querySelector('.viz-svg').innerHTML = svg;
+        const err = Math.abs(Tn - trueVal);
+        container.querySelector('.viz-readout').innerHTML =
+          `n = <strong>${n}</strong> &nbsp;|&nbsp; 梯形法则 $T_n$ = <strong>${Tn.toFixed(5)}</strong> &nbsp;|&nbsp; 真值 ≈ 0.88208 &nbsp;|&nbsp; 误差 = ${err.toFixed(5)}`;
+      };
+      container.innerHTML = `
+        <div class="viz-svg"></div>
+        <div class="viz-controls">
+          <span style="font-size:0.85em;color:#666;">梯形数 n:</span>
+          <input type="range" min="2" max="20" step="1" value="${n}">
+        </div>
+        <div class="viz-readout" style="font-size:0.85em;color:#666;font-family:ui-monospace,monospace;margin-top:0.4em;"></div>
+        <p style="font-size:0.85em;color:#666;margin-top:0.5em;">红色梯形拟合蓝色曲线 $e^{-x^2}$（没有初等原函数）。增加 n 观察误差下降。</p>`;
+      container.querySelector('input').oninput = e => { n = parseInt(e.target.value); draw(); };
+      draw();
+      renderAllMath(container);
     },
   };
   if (renderers[id]) renderers[id]();
@@ -2526,7 +4236,7 @@ function renderNav() {
   const doneCount = state.done.length;
   const total = LESSONS.length; // 10 so far
   document.getElementById('progress-summary').innerHTML =
-    `已完成 <strong>${doneCount}</strong> / ${total} 节 · M1–M4 全部上线`;
+    `已完成 <strong>${doneCount}</strong> / ${total} 节`;
 }
 
 function renderLesson(id) {
